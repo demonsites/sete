@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S7TE | Tecnologia em Odontologia Digital</title>
+    <meta name="description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM para odontologia digital.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
@@ -41,18 +44,8 @@
         a { text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; }
         img { max-width: 100%; display: block; }
         button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-        .view { display: none; animation: fadeIn 0.4s ease; }
-        .view.active { display: block; }
-        .hidden { display: none !important; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ====== BARRA DE URGÊNCIA ====== */
         .urgency-bar {
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
@@ -64,7 +57,6 @@
         }
         .urgency-bar strong { color: var(--gold); }
 
-        /* ====== HEADER ====== */
         header {
             position: sticky;
             top: 0;
@@ -74,7 +66,6 @@
             padding: 16px 0;
             box-shadow: var(--shadow);
         }
-
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         
         .logo { 
@@ -98,12 +89,11 @@
             text-transform: uppercase; 
             letter-spacing: 0.05em; 
             color: var(--text-dark);
-            position: relative;
         }
         .nav-desktop a:hover { color: var(--cobalt-main); }
         .nav-desktop a.promo-link { color: var(--danger); }
 
-        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
         
         .cart-btn { 
             position: relative; 
@@ -134,7 +124,6 @@
             justify-content: center;
         }
 
-        /* ====== HERO (CONVERSÃO) ====== */
         .hero {
             padding: 80px 0;
             background: linear-gradient(135deg, var(--cobalt-deep) 0%, var(--cobalt-main) 50%, var(--cobalt-bright) 100%);
@@ -212,7 +201,6 @@
             box-shadow: 0 8px 25px rgba(251, 191, 36, 0.6);
         }
 
-        /* ====== BENEFÍCIOS ====== */
         .benefits {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -243,7 +231,6 @@
         .benefit-text strong { display: block; font-size: 0.9rem; color: var(--cobalt-deep); }
         .benefit-text span { font-size: 0.75rem; color: var(--text-gray); }
 
-        /* ====== PRODUTOS ====== */
         .products-section { padding: 60px 0; }
         .section-header { 
             text-align: center; 
@@ -365,14 +352,9 @@
             color: var(--text-gray);
             text-decoration: line-through;
         }
-        .price-sale {
+        .price-sale, .price-single {
             font-size: 1.4rem; 
             font-weight: 900; 
-            color: var(--cobalt-deep);
-        }
-        .price-single {
-            font-size: 1.4rem; 
-            font-weight: 800; 
             color: var(--cobalt-deep);
         }
         .price-pix {
@@ -404,58 +386,19 @@
             transform: scale(1.02);
         }
 
-        /* ====== BANNER PROMO ====== */
-        .promo-banner { 
-            padding: 80px 0; 
-            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
-            color: white;
-            text-align: center;
-            position: relative;
+        .dynamic-banner {
+            width: 100%;
             overflow: hidden;
-        }
-        .promo-banner::before {
-            content: '%';
-            position: absolute;
-            font-size: 20rem;
-            font-weight: 900;
-            opacity: 0.05;
-            top: -50px;
-            right: -30px;
-        }
-        .promo-banner h2 { 
-            font-size: 3rem; 
-            font-weight: 900; 
-            margin-bottom: 16px;
-            position: relative;
-        }
-        .promo-banner p {
-            font-size: 1.2rem;
-            margin-bottom: 32px;
-            opacity: 0.95;
-            position: relative;
-        }
-        
-        .btn-outline {
-            border: 2px solid var(--gold); 
-            background: transparent;
-            padding: 14px 40px; 
-            font-size: 1rem; 
-            font-weight: 800;
-            text-transform: uppercase; 
-            letter-spacing: 0.1em; 
-            color: var(--gold);
-            transition: var(--transition); 
-            display: inline-block; 
-            border-radius: var(--radius);
             cursor: pointer;
-            position: relative;
+            display: none;
         }
-        .btn-outline:hover { 
-            background: var(--gold); 
-            color: var(--cobalt-deep);
+        .dynamic-banner img {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
         }
 
-        /* ====== NEWSLETTER ====== */
         .newsletter { 
             padding: 60px 0; 
             text-align: center; 
@@ -499,11 +442,11 @@
         }
         .newsletter-form button:hover { background: var(--cobalt-deep); }
 
-        /* ====== FOOTER ====== */
         footer { 
             background: var(--cobalt-deep); 
             color: white; 
             padding: 60px 0 30px; 
+            margin-top: 80px;
         }
         .footer-grid { 
             display: grid; 
@@ -527,17 +470,6 @@
             cursor: pointer;
         }
         .footer-col a:hover { color: var(--gold); }
-        .social-links { display: flex; gap: 16px; margin-top: 20px; }
-        .social-links a { 
-            width: 36px; height: 36px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-        }
-        .social-links a:hover { background: var(--gold); color: var(--cobalt-deep); }
         
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -549,11 +481,7 @@
             gap: 20px;
         }
         .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
-        .footer-bottom-links { display: flex; gap: 24px; }
-        .footer-bottom-links a { font-size: 0.8rem; color: #94a3b8; }
-        .footer-bottom-links a:hover { color: var(--gold); }
 
-        /* ====== CARRINHO LATERAL ====== */
         .cart-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 42, 110, 0.6); z-index: 1999;
@@ -671,314 +599,41 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
         }
-        .btn-checkout:disabled { 
-            background: var(--text-gray); 
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
 
-        /* ====== PAGE HEADER ====== */
-        .page-header { 
-            padding: 60px 0; 
-            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
-            text-align: center; 
-            margin-bottom: 40px;
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--success);
             color: white;
-        }
-        .page-header h1 { 
-            font-size: 2.8rem; 
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
-        .page-header p { opacity: 0.9; font-size: 1.1rem; }
-        
-        .breadcrumb {
-            padding: 16px 0;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-        .breadcrumb a { color: var(--cobalt-main); font-weight: 600; }
-        .breadcrumb a:hover { text-decoration: underline; }
-
-        /* ====== CHECKOUT ====== */
-        .checkout-container { 
-            display: grid; 
-            grid-template-columns: 1.5fr 1fr; 
-            gap: 48px; 
-        }
-        .checkout-section { 
-            margin-bottom: 40px; 
-            padding-bottom: 40px; 
-            border-bottom: 1px solid var(--border); 
-        }
-        .checkout-section h3 { 
-            font-size: 1.2rem; 
-            font-weight: 800; 
-            margin-bottom: 24px;
-            color: var(--cobalt-deep);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .checkout-section h3::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: var(--gold);
-            border-radius: 2px;
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { 
-            display: block; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            margin-bottom: 8px; 
-            color: var(--text-dark); 
-        }
-        .form-input { 
-            width: 100%; 
-            padding: 12px 14px; 
-            border: 2px solid var(--border); 
-            border-radius: var(--radius); 
-            font-family: inherit; 
-            font-size: 0.95rem; 
-            transition: var(--transition); 
-        }
-        .form-input:focus { 
-            outline: none; 
-            border-color: var(--cobalt-main);
-            box-shadow: 0 0 0 3px rgba(26, 79, 184, 0.1); 
-        }
-        textarea.form-input { resize: vertical; min-height: 120px; }
-
-        .payment-methods { display: flex; flex-direction: column; gap: 12px; }
-        .payment-option { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            padding: 18px; 
-            border: 2px solid var(--border); 
-            border-radius: var(--radius); 
-            cursor: pointer; 
-            transition: var(--transition);
-            background: white;
-        }
-        .payment-option:hover { border-color: var(--cobalt-main); }
-        .payment-option:has(input:checked) {
-            border-color: var(--cobalt-main);
-            background: rgba(26, 79, 184, 0.05);
-        }
-        .payment-option input { 
-            accent-color: var(--cobalt-main); 
-            width: 20px; 
-            height: 20px; 
-        }
-        .payment-option-text { flex: 1; }
-        .payment-option-text span { 
-            font-size: 1rem; 
-            font-weight: 700; 
-            display: block;
-            color: var(--text-dark);
-        }
-        .payment-option-text small {
-            color: var(--success);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .summary-box { 
-            background: white; 
-            padding: 32px; 
-            border-radius: 12px; 
-            position: sticky; 
-            top: 100px;
-            border: 2px solid var(--border);
-            box-shadow: var(--shadow-lg);
-        }
-        .summary-box h3 { 
-            font-size: 1.2rem; 
-            font-weight: 800; 
-            margin-bottom: 24px;
-            color: var(--cobalt-deep);
-        }
-        .summary-row { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 12px; 
-            font-size: 0.95rem; 
-            color: var(--text-gray); 
-        }
-        .summary-total { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-top: 24px; 
-            padding-top: 24px; 
-            border-top: 2px solid var(--border); 
-            font-size: 1.4rem; 
-            font-weight: 800; 
-            color: var(--cobalt-deep); 
-        }
-        .checkout-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .checkout-item img {
-            width: 50px; height: 60px;
-            object-fit: cover;
-            border-radius: 6px;
-            background: var(--bg-light);
-        }
-        .checkout-item-info { flex: 1; }
-        .checkout-item-name { font-size: 0.85rem; font-weight: 600; }
-        .checkout-item-qty { font-size: 0.75rem; color: var(--text-gray); }
-        .checkout-item-price { font-size: 0.85rem; font-weight: 700; color: var(--cobalt-main); }
-
-        /* ====== CONTATO ====== */
-        .contact-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 60px; 
-            padding: 60px 0; 
-        }
-        .contact-info h3, .contact-form h3 { 
-            font-size: 1.5rem; 
-            font-weight: 800; 
-            margin-bottom: 24px;
-            color: var(--cobalt-deep);
-        }
-        .contact-card {
-            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
-        }
-        .contact-card h3 { color: var(--gold); }
-        .contact-item {
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .contact-item:last-child { border-bottom: none; }
-        .contact-item strong { 
-            display: block; 
-            color: var(--gold);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 6px;
-        }
-        .contact-item p { color: white; font-size: 1rem; line-height: 1.6; }
-
-        /* ====== POLÍTICAS ====== */
-        .politicas-container { 
-            padding: 60px 0; 
-            max-width: 900px; 
-            margin: 0 auto; 
-        }
-        .politicas-container > h1 { 
-            font-size: 2.5rem; 
-            font-weight: 900; 
-            margin-bottom: 32px;
-            color: var(--cobalt-deep);
-        }
-        .politicas-nav { 
-            display: flex; 
-            gap: 12px; 
-            margin-bottom: 40px; 
-            flex-wrap: wrap; 
-        }
-        .politicas-nav button {
-            padding: 12px 24px; 
-            border: 2px solid var(--border); 
-            background: white;
-            font-size: 0.9rem; 
-            font-weight: 600; 
             border-radius: var(--radius);
-            transition: var(--transition);
-            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 4000;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .politicas-nav button.active, .politicas-nav button:hover {
-            background: var(--cobalt-main); 
-            color: white; 
-            border-color: var(--cobalt-main);
-        }
-        .politica-content h2 { 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            margin-bottom: 24px;
-            color: var(--cobalt-deep);
-        }
-        .politica-content h3 { 
-            font-size: 1.2rem; 
-            font-weight: 700; 
-            margin: 24px 0 12px;
-            color: var(--cobalt-main);
-        }
-        .politica-content p { 
-            color: var(--text-gray); 
-            margin-bottom: 16px; 
-            line-height: 1.8; 
-        }
-        .politica-content ul { 
-            margin-left: 24px; 
-            margin-bottom: 16px; 
-            color: var(--text-gray);
-        }
-        .politica-content li { 
-            margin-bottom: 8px; 
-            line-height: 1.8; 
-        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.error { background: var(--danger); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4); }
 
-        /* ====== SUCESSO ====== */
-        .success-container { 
-            text-align: center; 
-            max-width: 600px; 
-            margin: 80px auto; 
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            padding: 60px 0;
+            grid-column: 1 / -1;
         }
-        .success-icon { 
-            width: 100px; 
-            height: 100px; 
-            background: linear-gradient(135deg, var(--success), #059669); 
-            color: white; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 3rem; 
-            margin: 0 auto 24px;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--cobalt-main);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        .success-container h2 { 
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            margin-bottom: 16px;
-            color: var(--cobalt-deep);
-        }
-        .order-number-box {
-            background: var(--bg-light);
-            border: 2px dashed var(--cobalt-main);
-            padding: 24px;
-            border-radius: var(--radius);
-            margin: 24px 0;
-        }
-        .order-number-box span {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-bottom: 8px;
-        }
-        .order-number-box strong {
-            font-size: 1.5rem;
-            color: var(--cobalt-deep);
-            font-weight: 800;
-            letter-spacing: 0.05em;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ====== RESPONSIVO ====== */
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -998,7 +653,6 @@
             .price-sale, .price-single { font-size: 1.1rem; }
             
             .section-header h2 { font-size: 1.6rem; }
-            .promo-banner h2 { font-size: 1.8rem; }
             .newsletter h3 { font-size: 1.4rem; }
 
             .footer-grid { grid-template-columns: 1fr; }
@@ -1010,48 +664,21 @@
             
             .benefits { grid-template-columns: 1fr; padding: 20px 0; }
             .benefit-item { padding: 12px; }
-            
-            .checkout-container, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
-            .form-row { grid-template-columns: 1fr; }
-            .summary-box { position: static; margin-top: 24px; }
-            
-            .page-header { padding: 40px 0; }
-            .page-header h1 { font-size: 1.8rem; }
-            
-            .politicas-container { padding: 32px 0; }
-            .politicas-container > h1 { font-size: 1.6rem; }
-            .politica-content h2 { font-size: 1.3rem; }
-            
-            .contact-grid { padding: 32px 0; }
-            .contact-card { padding: 24px; }
-            
-            .success-container { margin: 40px auto; padding: 0 16px; }
-            .success-container h2 { font-size: 1.5rem; }
-            .success-icon { width: 70px; height: 70px; font-size: 2rem; }
-            
             .logo { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- BARRA DE URGÊNCIA -->
-        <div class="urgency-bar">DEMO
-        🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500 | ⚡ Entrega Expressa em 24h para SP
-    </div>
+    <div class="urgency-bar" id="urgency-bar"></div>
 
-    <!-- HEADER -->
     <header>
         <div class="container header-inner">
-            <a onclick="navigate('home')" class="logo"> S<span>7</span>TE</a>
+            <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
             
-            <nav class="nav-desktop">
-                <a onclick="navigate('categoria', 'zirconia')">Zircônia</a>
-                <a onclick="navigate('categoria', 'insumos')">Insumos</a>
-                <a onclick="navigate('categoria', 'instrumental')">Instrumental</a>
-                <a onclick="navigate('categoria', 'cadcam')">CAD/CAM</a>
-                <a onclick="navigate('categoria', 'promocoes')" class="promo-link">🔥 Promoções</a>
-                <a onclick="navigate('contato')">Contato</a>
+            <nav class="nav-desktop" id="nav-categorias">
+                <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
+                <a href="contato.html">Contato</a>
             </nav>
 
             <div class="header-actions">
@@ -1068,446 +695,101 @@
     </header>
 
     <main>
-        <!-- VIEW: HOME -->
-        <div id="view-home" class="view active">
-            <section class="hero">
-                <div class="container">
-                    <div class="hero-content">
-                        <span class="hero-badge">⚡ Estoque Limitado</span>
-                        <h1>Tecnologia de Ponta para Odontologia Digital</h1>
-                        <p>Insumos profissionais, zircônia premium e equipamentos CAD/CAM com entrega rápida e preços imbatíveis.</p>
-                        <button onclick="navigate('categoria', 'todos')" class="btn-primary">Ver Produtos em Oferta →</button>
-                        
-                        <div class="hero-stats">
-                            <div class="hero-stat">
-                                <strong>+15mil</strong>
-                                <span>Clientes ativos</span>
-                            </div>
-                            <div class="hero-stat">
-                                <strong>4.9★</strong>
-                                <span>Avaliação média</span>
-                            </div>
-                            <div class="hero-stat">
-                                <strong>24h</strong>
-                                <span>Entrega expressa</span>
-                            </div>
-                            <div class="hero-stat">
-                                <strong>5%</strong>
-                                <span>Off no PIX</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BENEFÍCIOS -->
+        <section class="hero">
             <div class="container">
-                <div class="benefits">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🚚</div>
-                        <div class="benefit-text">
-                            <strong>Frete Grátis</strong>
-                            <span>Acima de R$ 500</span>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">💳</div>
-                        <div class="benefit-text">
-                            <strong>Até 6x Sem Juros</strong>
-                            <span>Em todos os cartões</span>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">✓</div>
-                        <div class="benefit-text">
-                            <strong>Produtos Originais</strong>
-                            <span>Garantia de autenticidade</span>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">⚡</div>
-                        <div class="benefit-text">
-                            <strong>Entrega 24h</strong>
-                            <span>Para São Paulo capital</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <section class="products-section">
-                <div class="container">
-                    <div class="section-header">
-                        <h2>🔥 Mais Vendidos da Semana</h2>
-                        <p>Os produtos favoritos dos nossos clientes odontólogos</p>
-                    </div>
-                    <div id="products-grid" class="products-grid"></div>
-                </div>
-            </section>
-
-            <section class="promo-banner">
-                <div class="container">
-                    <h2>MEGAPROMO: Até 40% OFF</h2>
-                    <p>Aproveite antes que o estoque acabe — mais de 50 produtos em oferta</p>
-                    <button onclick="navigate('categoria', 'promocoes')" class="btn-outline">Ver Todas as Ofertas</button>
-                </div>
-            </section>
-
-            <section class="newsletter">
-                <div class="container">
-                    <h3>Ganhe 10% OFF na Primeira Compra</h3>
-                    <p>Cadastre-se e receba cupons exclusivos e novidades</p>
-                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Cupom ES7TE10 enviado para seu e-mail!');">
-                        <input type="email" placeholder="Seu melhor e-mail" required>
-                        <button type="submit">Quero Meu Cupom</button>
-                    </form>
-                </div>
-            </section>
-        </div>
-
-        <!-- VIEW: CATEGORIA -->
-        <div id="view-categoria" class="view">
-            <div class="page-header">
-                <div class="container">
-                    <h1 id="category-title">Produtos</h1>
-                    <p id="category-desc">Encontre os melhores produtos para o seu laboratório</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="breadcrumb">
-                    <a onclick="navigate('home')">Home</a> / <span id="breadcrumb-cat">Categoria</span>
-                </div>
-            </div>
-            <div class="container" style="padding-bottom: 80px;">
-                <div id="categoria-grid" class="products-grid"></div>
-            </div>
-        </div>
-
-        <!-- VIEW: CONTATO -->
-        <div id="view-contato" class="view">
-            <div class="page-header">
-                <div class="container">
-                    <h1>Fale Conosco</h1>
-                    <p>Estamos prontos para atender você</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <h3>Informações de Contato</h3>
-                        <div class="contact-item">
-                            <strong>📍 Endereço</strong>
-                            <p>Av. Paulista, 1500<br>Bela Vista, São Paulo, SP<br>CEP 01310-100</p>
-                        </div>
-                        <div class="contact-item">
-                            <strong>📧 E-mail</strong>
-                            <p>contato@es7te.com.br</p>
-                        </div>
-                        <div class="contact-item">
-                            <strong>📞 Telefone</strong>
-                            <p>0800 123 4567<br>(11) 4002-8922</p>
-                        </div>
-                        <div class="contact-item">
-                            <strong>🕒 Horário</strong>
-                            <p>Seg a Sex: 08h às 18h<br>Sáb: 09h às 13h</p>
-                        </div>
-                    </div>
-                    <div class="contact-form">
-                        <h3>Envie uma Mensagem</h3>
-                        <form onsubmit="event.preventDefault(); alert('Mensagem enviada! Retornaremos em até 24h.');">
-                            <div class="form-group">
-                                <label>Nome Completo</label>
-                                <input type="text" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>E-mail</label>
-                                <input type="email" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Telefone</label>
-                                <input type="text" class="form-input" placeholder="(11) 99999-9999">
-                            </div>
-                            <div class="form-group">
-                                <label>Assunto</label>
-                                <input type="text" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mensagem</label>
-                                <textarea class="form-input" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-primary" style="width: 100%;">Enviar Mensagem</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW: POLÍTICAS -->
-        <div id="view-politicas" class="view">
-            <div class="page-header">
-                <div class="container">
-                    <h1>Políticas da Loja</h1>
-                    <p>Transparência total com nossos clientes</p>
-                </div>
-            </div>
-            <div class="container politicas-container">
-                <div class="politicas-nav">
-                    <button onclick="showPolitica('reembolso')" class="active" id="btn-reembolso">Reembolso</button>
-                    <button onclick="showPolitica('frete')" id="btn-frete">Frete</button>
-                    <button onclick="showPolitica('termos')" id="btn-termos">Termos</button>
-                    <button onclick="showPolitica('privacidade')" id="btn-privacidade">Privacidade</button>
-                </div>
-
-                <div id="politica-reembolso" class="politica-content">
-                    <h2>Política de Reembolso</h2>
-                    <p>Na ES7TE, sua satisfação é nossa prioridade. Oferecemos reembolso integral em até 30 dias após a compra.</p>
-                    <h3>Condições para Reembolso</h3>
-                    <ul>
-                        <li>Produtos devem estar em embalagem original e selada</li>
-                        <li>Itens estéreis não podem ser devolvidos após a abertura</li>
-                        <li>Produtos personalizados ou sob encomenda não são reembolsáveis</li>
-                        <li>Reembolso processado em até 7 dias úteis</li>
-                    </ul>
-                    <h3>Como Solicitar</h3>
-                    <p>Entre em contato pelo e-mail contato@es7te.com.br ou telefone 0800 123 4567.</p>
-                </div>
-
-                <div id="politica-frete" class="politica-content hidden">
-                    <h2>Política de Frete</h2>
-                    <p>Frete grátis para compras acima de R$ 500,00 em todo o território nacional.</p>
-                    <h3>Prazos de Entrega</h3>
-                    <ul>
-                        <li>Capitais: 2 a 5 dias úteis</li>
-                        <li>Interior: 5 a 10 dias úteis</li>
-                        <li>Regiões remotas: até 15 dias úteis</li>
-                        <li>São Paulo Capital: 24h (entrega expressa)</li>
-                    </ul>
-                </div>
-
-                <div id="politica-termos" class="politica-content hidden">
-                    <h2>Termos e Condições</h2>
-                    <p>Ao utilizar nossos serviços, você concorda com os seguintes termos:</p>
-                    <h3>Responsabilidades</h3>
-                    <ul>
-                        <li>Produtos destinados exclusivamente a profissionais da área odontológica</li>
-                        <li>Uso indevido é de total responsabilidade do comprador</li>
-                        <li>ES7TE não se responsabiliza por danos causados por uso incorreto</li>
-                    </ul>
-                    <h3>Garantia</h3>
-                    <p>Todos os produtos possuem garantia de 90 dias contra defeitos de fabricação.</p>
-                </div>
-
-                <div id="politica-privacidade" class="politica-content hidden">
-                    <h2>Política de Privacidade</h2>
-                    <p>Na ES7TE, seus dados estão seguros.</p>
-                    <h3>Coleta de Dados</h3>
-                    <p>Coletamos apenas informações necessárias: nome, e-mail, endereço e dados de pagamento.</p>
-                    <h3>Uso das Informações</h3>
-                    <ul>
-                        <li>Processamento e entrega de pedidos</li>
-                        <li>Comunicação sobre status</li>
-                        <li>Envio de promoções (com consentimento)</li>
-                    </ul>
-                    <h3>Segurança</h3>
-                    <p>Criptografia SSL de ponta a ponta. Seus dados nunca são compartilhados.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW: CHECKOUT -->
-        <div id="view-checkout" class="view">
-            <div class="container" style="padding-top: 40px; padding-bottom: 80px;">
-                <button onclick="navigate('home')" class="btn-outline" style="margin-bottom: 24px; padding: 8px 16px; font-size: 0.8rem;">← Voltar à loja</button>
-                <h2 style="font-size: 2rem; font-weight: 800; color: var(--cobalt-deep); margin-bottom: 32px;">Finalizar Compra</h2>
-                
-                <div class="checkout-container">
-                    <div class="checkout-forms">
-                        <div class="checkout-section">
-                            <h3>1. Identificação</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Nome Completo</label>
-                                    <input type="text" class="form-input" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>CPF</label>
-                                    <input type="text" class="form-input" placeholder="000.000.000-00" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>E-mail</label>
-                                <input type="email" class="form-input" placeholder="seu@email.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Telefone</label>
-                                <input type="text" class="form-input" placeholder="(11) 99999-9999">
-                            </div>
-                        </div>
-
-                        <div class="checkout-section">
-                            <h3>2. Endereço de Entrega</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>CEP</label>
-                                    <input type="text" class="form-input" id="cep" placeholder="00000-000" maxlength="9" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Cidade</label>
-                                    <input type="text" class="form-input" id="cidade" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group" style="flex: 2;">
-                                    <label>Rua</label>
-                                    <input type="text" class="form-input" id="rua" required>
-                                </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label>Número</label>
-                                    <input type="text" class="form-input" id="numero" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Complemento (opcional)</label>
-                                <input type="text" class="form-input" placeholder="Apto, bloco, etc.">
-                            </div>
-                        </div>
-
-                        <div class="checkout-section" style="border-bottom: none;">
-                            <h3>3. Pagamento</h3>
-                            <div class="payment-methods">
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="pix" checked onchange="togglePaymentFields()">
-                                    <div class="payment-option-text">
-                                        <span>💰 PIX</span>
-                                        <small>5% de desconto + aprovação imediata</small>
-                                    </div>
-                                </label>
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="credit_card" onchange="togglePaymentFields()">
-                                    <div class="payment-option-text">
-                                        <span>💳 Cartão de Crédito</span>
-                                        <small>Até 6x sem juros</small>
-                                    </div>
-                                </label>
-                            </div>
-                            
-                            <div id="credit-card-fields" class="hidden" style="margin-top: 20px;">
-                                <div class="form-group">
-                                    <label>Número do Cartão</label>
-                                    <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Validade</label>
-                                        <input type="text" class="form-input" placeholder="MM/AA">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>CVV</label>
-                                        <input type="text" class="form-input" placeholder="123">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Nome no Cartão</label>
-                                    <input type="text" class="form-input" placeholder="Como impresso no cartão">
-                                </div>
-                                <div class="form-group">
-                                    <label>Parcelas</label>
-                                    <select class="form-input" id="installments"></select>
-                                </div>
-                            </div>
-                            
-                            <div id="pix-fields" style="margin-top: 20px; padding: 20px; background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: var(--radius);">
-                                <p style="font-size: 0.95rem; color: var(--success); margin: 0; font-weight: 600;">
-                                    ✓ 5% de desconto aplicado! Ao finalizar, um QR Code será gerado para pagamento imediato.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="hero-content">
+                    <span class="hero-badge" id="hero-badge">⚡ Estoque Limitado</span>
+                    <h1 id="hero-titulo">Tecnologia de Ponta para Odontologia Digital</h1>
+                    <p id="hero-subtitulo">Insumos profissionais, zircônia premium e equipamentos CAD/CAM com entrega rápida e preços imbatíveis.</p>
+                    <a href="produtos.html" class="btn-primary" id="hero-botao">Ver Produtos em Oferta →</a>
                     
-                    <div class="checkout-summary">
-                        <div class="summary-box">
-                            <h3>Resumo do Pedido</h3>
-                            <div id="checkout-items" style="margin-bottom: 20px;"></div>
-                            <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">R$ 0,00</span></div>
-                            <div class="summary-row"><span>Frete</span><span id="summary-shipping">A calcular</span></div>
-                            <div class="summary-row" id="summary-discount-row" style="display:none; color: var(--success); font-weight: 700;">
-                                <span>Desconto PIX</span><span id="summary-discount">- R$ 0,00</span>
-                            </div>
-                            <div class="summary-total"><span>Total</span><span id="summary-total">R$ 0,00</span></div>
-                            <button class="btn-checkout" onclick="processOrder()" id="btn-process-order" style="margin-top: 24px;">Finalizar Compra Segura 🔒</button>
-                            <p style="text-align: center; font-size: 0.75rem; color: var(--text-gray); margin-top: 12px;">
-                                🔒 Pagamento 100% seguro e criptografado
-                            </p>
-                        </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat"><strong id="stat1-valor">+15mil</strong><span id="stat1-label">Clientes ativos</span></div>
+                        <div class="hero-stat"><strong id="stat2-valor">4.9★</strong><span id="stat2-label">Avaliação média</span></div>
+                        <div class="hero-stat"><strong id="stat3-valor">24h</strong><span id="stat3-label">Entrega expressa</span></div>
+                        <div class="hero-stat"><strong id="stat4-valor">5%</strong><span id="stat4-label">Off no PIX</span></div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="benefits">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🚚</div>
+                    <div class="benefit-text"><strong>Frete Grátis</strong><span id="benefit-frete-texto">Acima de R$ 500</span></div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💳</div>
+                    <div class="benefit-text"><strong>Até 6x Sem Juros</strong><span>Em todos os cartões</span></div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div class="benefit-text"><strong>Produtos Originais</strong><span>Garantia de autenticidade</span></div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-text"><strong>Entrega 24h</strong><span>Para São Paulo capital</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW: SUCESSO -->
-        <div id="view-success" class="view">
-            <div class="container success-container">
-                <div class="success-icon">✓</div>
-                <h2>Pedido Confirmado!</h2>
-                <p style="color: var(--text-gray); margin-bottom: 12px; font-size: 1.1rem;">Obrigado por comprar na ES7TE!</p>
-                
-                <div class="order-number-box">
-                    <span>Número do Pedido</span>
-                    <strong id="order-number">#000000</strong>
-                </div>
-                
-                <p style="color: var(--text-gray); margin-bottom: 40px; font-size: 0.95rem;">
-                    Enviamos os detalhes, código de rastreamento e nota fiscal para o seu e-mail.
-                </p>
-                <button class="btn-primary" onclick="navigate('home')">Continuar Comprando</button>
-            </div>
+        <div class="dynamic-banner" id="dynamic-banner" onclick="window.location.href='produtos.html?cat=promocoes'">
+            <img id="dynamic-banner-img" src="" alt="Banner Promocional">
         </div>
+
+        <section class="products-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="produtos-titulo">🔥 Mais Vendidos da Semana</h2>
+                    <p id="produtos-subtitulo">Os produtos favoritos dos nossos clientes odontólogos</p>
+                </div>
+                <div id="products-grid" class="products-grid">
+                    <div class="loading-spinner"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <div class="container">
+                <h3 id="newsletter-titulo">Ganhe 10% OFF na Primeira Compra</h3>
+                <p id="newsletter-subtitulo">Cadastre-se e receba cupons exclusivos e novidades</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Cupom enviado para seu e-mail!');">
+                    <input type="email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" id="newsletter-botao">Quero Meu Cupom</button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4 style="color: var(--gold);">ES7TE</h4>
-                    <p>Tecnologia de ponta para odontologia digital. Insumos profissionais com entrega rápida e preços imbatíveis.</p>
-                    <div class="social-links">
-                        <a>f</a>
-                        <a>ig</a>
-                        <a>in</a>
-                        <a>yt</a>
-                    </div>
+                    <h4 id="footer-nome-loja">S7TE</h4>
+                    <p id="footer-sobre">Tecnologia de ponta para odontologia digital. Insumos profissionais com entrega rápida e preços imbatíveis.</p>
                 </div>
-                
                 <div class="footer-col">
                     <h4>Categorias</h4>
-                    <a onclick="navigate('categoria', 'zirconia')">Zircônia</a>
-                    <a onclick="navigate('categoria', 'insumos')">Insumos</a>
-                    <a onclick="navigate('categoria', 'instrumental')">Instrumental</a>
-                    <a onclick="navigate('categoria', 'cadcam')">CAD/CAM</a>
-                    <a onclick="navigate('categoria', 'promocoes')">🔥 Promoções</a>
+                    <div id="footer-categorias"></div>
+                    <a href="produtos.html?cat=promocoes">🔥 Promoções</a>
                 </div>
-
                 <div class="footer-col">
                     <h4>Contato</h4>
-                    <p>Av. Paulista, 1500<br>Bela Vista, São Paulo, SP<br>01310-100</p>
-                    <p>contato@es7te.com.br</p>
-                    <p>0800 123 4567</p>
+                    <p id="footer-endereco">Av. Paulista, 1500<br>São Paulo, SP</p>
+                    <p id="footer-email">contato@s7te.com.br</p>
+                    <p id="footer-telefone">0800 123 4567</p>
                 </div>
-
                 <div class="footer-col">
                     <h4>Políticas</h4>
-                    <a onclick="navigate('politicas', 'reembolso')">Reembolso</a>
-                    <a onclick="navigate('politicas', 'frete')">Frete</a>
-                    <a onclick="navigate('politicas', 'termos')">Termos</a>
-                    <a onclick="navigate('politicas', 'privacidade')">Privacidade</a>
+                    <a href="politicas.html?tipo=reembolso">Reembolso</a>
+                    <a href="politicas.html?tipo=frete">Frete</a>
+                    <a href="politicas.html?tipo=termos">Termos</a>
                 </div>
             </div>
-
             <div class="footer-bottom">
-                <p>© 2026 ES7TE Tecnologia em Odontologia. CNPJ: 00.000.000/0001-00</p>
-                <div class="footer-bottom-links">
-                    <a onclick="navigate('politicas', 'termos')">Termos</a>
-                    <a onclick="navigate('politicas', 'privacidade')">Privacidade</a>
-                </div>
+                <p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p>
+                <p><a href="admin/login.html" style="opacity:0.5; font-size:0.7rem;">Área Admin</a></p>
             </div>
         </div>
     </footer>
@@ -1520,151 +802,285 @@
         </div>
         <div class="cart-items" id="cart-items"></div>
         <div class="cart-footer">
-            <div class="cart-subtotal">
-                <span>Subtotal:</span>
-                <span id="cart-subtotal-value">R$ 0,00</span>
-            </div>
-            <div class="cart-subtotal" style="color: var(--success);">
-                <span>Frete:</span>
-                <span id="cart-shipping-value">Grátis</span>
-            </div>
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-value">R$ 0,00</span>
-            </div>
-            <div class="cart-shipping-note" id="cart-shipping-note" style="display: none;">
-                🎉 Parabéns! Você ganhou frete grátis!
-            </div>
+            <div class="cart-subtotal"><span>Subtotal:</span><span id="cart-subtotal-value">R$ 0,00</span></div>
+            <div class="cart-subtotal" style="color: var(--success);"><span>Frete:</span><span id="cart-shipping-value">Grátis</span></div>
+            <div class="cart-total"><span>Total:</span><span id="cart-total-value">R$ 0,00</span></div>
+            <div class="cart-shipping-note" id="cart-shipping-note" style="display: none;"></div>
             <button class="btn-checkout" onclick="goToCheckout()">Finalizar Compra</button>
         </div>
     </aside>
 
+    <div class="toast" id="toast"></div>
+
     <script>
-        const produtosDB = [
-            { id: 1, nomePt: "Bloco de Zircônia Premium HT", desc: "Alta translucidez, 98mm", cat: "zirconia", precoRegular: 350.00, precoSale: 249.00, badge: "sale", estoque: 8, img: "https://i.ibb.co/Nd1xCL77/z1.jpg" },
-            { id: 2, nomePt: "Alginato Hydrogum 5 Zhermack", desc: "Pote com 900g", cat: "insumos", precoRegular: null, precoSale: 145.00, badge: null, estoque: 25, img: "https://i.ibb.co/bgrmjcD1/alginato-hydrogum-5-zhermack-118440-dental-cremer-04.jpg" },
-            { id: 3, nomePt: "Sugador Descartável Allprime", desc: "Pacote com 100 unidades", cat: "insumos", precoRegular: 60.00, precoSale: 42.00, badge: "sale", estoque: 150, img: "https://i.ibb.co/9kgB2pTs/sugador-descartavel-colorido-allprime-dc25705.jpg" },
-            { id: 4, nomePt: "Kit Acadêmico Alegra 3 Peças", desc: "Contra-ângulo, peça de mão e turbina", cat: "instrumental", precoRegular: 1250.00, precoSale: 875.00, badge: "sale", estoque: 12, img: "https://i.ibb.co/zWF2GqWM/kit-academico-alegra-3-pecas-ls-exco-bc-125064.jpg" },
-            { id: 5, nomePt: "Grampo Isolamento GGR3825A", desc: "Caixa com 12 un.", cat: "instrumental", precoRegular: null, precoSale: 115.00, badge: null, estoque: 40, img: "https://i.ibb.co/Zztz8d74/grampo-isolamento-GGR3825-A.jpg" },
-            { id: 6, nomePt: "Descolador Molt 9 Millennium", desc: "Instrumental de alta resistência", cat: "instrumental", precoRegular: null, precoSale: 165.00, badge: "bestseller", estoque: 18, img: "https://i.ibb.co/pjBhRpHW/descolador-molt-9-millennium-ds-3721-01.jpg" },
-            { id: 7, nomePt: "Kit Optibond FL Primer + Adesivo", desc: "Sistema de 3 passos, 8ml", cat: "insumos", precoRegular: 410.00, precoSale: 287.00, badge: "sale", estoque: 22, img: "https://i.ibb.co/0RrNVZPg/apresentacao-kit-optibond-fl-primer-adesivo-kerr.jpg" },
-            { id: 8, nomePt: "Disco Zircônia Multicamadas ST", desc: "Gradiente de cor em 5 camadas", cat: "zirconia", precoRegular: null, precoSale: 310.00, badge: "new", estoque: 15, img: "https://i.ibb.co/DH3ZmJKN/z3.jpg" },
-            { id: 9, nomePt: "Scanner Intraoral Apex Scan", desc: "Alta precisão 3D", cat: "cadcam", precoRegular: 25000.00, precoSale: 22500.00, badge: "sale", estoque: 3, img: "https://i.ibb.co/DH3ZmJKN/z3.jpg" },
-            { id: 10, nomePt: "Fresadora CAD/CAM Desktop", desc: "5 eixos, tecnologia alemã", cat: "cadcam", precoRegular: null, precoSale: 45000.00, badge: "bestseller", estoque: 2, img: "https://i.ibb.co/DH3ZmJKN/z3.jpg" }
-        ];
+        // ============================================
+        // CONFIGURAÇÃO SUPABASE
+        // ============================================
+        const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let cart = JSON.parse(localStorage.getItem('apex_cart')) || [];
-        let currentView = 'home';
-        let currentCategoria = 'todos';
+        let produtosCache = [];
+        let configSite = {};
+        let categoriasCache = [];
+        let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
 
-        const titulos = {
-            'todos': 'Todos os Produtos',
-            'zirconia': 'Zircônia Premium',
-            'insumos': 'Insumos de Moldagem',
-            'instrumental': 'Instrumental Odontológico',
-            'cadcam': 'Tecnologia CAD/CAM',
-            'promocoes': '🔥 Promoções Imperdíveis'
-        };
+        // ============================================
+        // HELPERS COM VERIFICAÇÃO DE SEGURANÇA
+        // ============================================
+        function formatarPreco(valor) {
+            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+        }
 
-        const descricoes = {
-            'todos': 'Confira nossa seleção completa de produtos',
-            'zirconia': 'Blocos e discos de zircônia para próteses de alta qualidade',
-            'insumos': 'Alginatos, adesivos e materiais de moldagem profissionais',
-            'instrumental': 'Ferramentas de precisão para procedimentos odontológicos',
-            'cadcam': 'Scanners, fresadoras e tecnologia de ponta',
-            'promocoes': 'Ofertas exclusivas com até 40% OFF por tempo limitado'
-        };
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = 'toast show' + (type === 'error' ? ' error' : '');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
 
-        function navigate(view, param = null) {
-            document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-            document.getElementById(`view-${view}`).classList.add('active');
-            currentView = view;
+        // Função auxiliar para definir texto com segurança
+        function setTextoSeguro(id, texto) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = texto;
+        }
 
-            if (view === 'categoria') {
-                currentCategoria = param || 'todos';
-                renderCategoria();
-            } else if (view === 'checkout') {
-                renderCheckoutSummary();
-            } else if (view === 'politicas' && param) {
-                showPolitica(param);
+        // Função auxiliar para definir HTML com segurança
+        function setHtmlSeguro(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
+        // ============================================
+        // CARREGAR CONFIGURAÇÕES DO SITE (COM VERIFICAÇÕES)
+        // ============================================
+        async function carregarConfigSite() {
+            const padroes = {
+                urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500 | ⚡ Entrega Expressa em 24h para SP',
+                hero_badge: '⚡ Estoque Limitado',
+                hero_titulo: 'Tecnologia de Ponta para Odontologia Digital',
+                hero_subtitulo: 'Insumos profissionais, zircônia premium e equipamentos CAD/CAM com entrega rápida e preços imbatíveis.',
+                hero_botao_texto: 'Ver Produtos em Oferta →',
+                stat1_valor: '+15mil', stat1_label: 'Clientes ativos',
+                stat2_valor: '4.9★', stat2_label: 'Avaliação média',
+                stat3_valor: '24h', stat3_label: 'Entrega expressa',
+                stat4_valor: '5%', stat4_label: 'Off no PIX',
+                produtos_titulo: '🔥 Mais Vendidos da Semana',
+                produtos_subtitulo: 'Os produtos favoritos dos nossos clientes odontólogos',
+                newsletter_titulo: 'Ganhe 10% OFF na Primeira Compra',
+                newsletter_subtitulo: 'Cadastre-se e receba cupons exclusivos e novidades',
+                newsletter_botao: 'Quero Meu Cupom',
+                footer_sobre: 'Tecnologia de ponta para odontologia digital. Insumos profissionais com entrega rápida e preços imbatíveis.',
+                footer_endereco: 'Av. Paulista, 1500<br>São Paulo, SP',
+                footer_email: 'contato@s7te.com.br',
+                footer_telefone: '0800 123 4567',
+                footer_copyright: '© 2026 S7TE Tecnologia em Odontologia.',
+                logo_texto: 'S7TE',
+                frete_gratis_acima: '500',
+                valor_frete: '35.90',
+                desconto_pix_percent: '5'
+            };
+
+            try {
+                const { data, error } = await supabaseClient.from('configuracoes').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(c => padroes[c.chave] = c.valor);
+                }
+            } catch (e) {
+                console.warn('Usando valores padrão:', e);
             }
 
-            window.scrollTo(0, 0);
+            configSite = padroes;
+
+            const getText = (key) => configSite[key] || '';
+            
+            // Usando funções seguras para evitar erros de null
+            setHtmlSeguro('urgency-bar', getText('urgencia_texto'));
+            setTextoSeguro('hero-badge', getText('hero_badge'));
+            setTextoSeguro('hero-titulo', getText('hero_titulo'));
+            setTextoSeguro('hero-subtitulo', getText('hero_subtitulo'));
+            setTextoSeguro('hero-botao', getText('hero_botao_texto'));
+
+            for (let i = 1; i <= 4; i++) {
+                setTextoSeguro(`stat${i}-valor`, getText(`stat${i}_valor`));
+                setTextoSeguro(`stat${i}-label`, getText(`stat${i}_label`));
+            }
+
+            setTextoSeguro('produtos-titulo', getText('produtos_titulo'));
+            setTextoSeguro('produtos-subtitulo', getText('produtos_subtitulo'));
+            setTextoSeguro('newsletter-titulo', getText('newsletter_titulo'));
+            setTextoSeguro('newsletter-subtitulo', getText('newsletter_subtitulo'));
+            setTextoSeguro('newsletter-botao', getText('newsletter_botao'));
+
+            setTextoSeguro('footer-sobre', getText('footer_sobre'));
+            setHtmlSeguro('footer-endereco', getText('footer_endereco'));
+            setTextoSeguro('footer-email', getText('footer_email'));
+            setTextoSeguro('footer-telefone', getText('footer_telefone'));
+            setTextoSeguro('footer-copyright', getText('footer_copyright'));
+            
+            const logoTexto = getText('logo_texto');
+            setHtmlSeguro('logo-text', logoTexto.replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', logoTexto);
+
+            const freteGratis = configSite.frete_gratis_acima || '500';
+            setTextoSeguro('benefit-frete-texto', `Acima de R$ ${freteGratis}`);
+        }
+
+        async function carregarCategorias() {
+            try {
+                const { data, error } = await supabaseClient.from('categorias').select('*').order('ordem');
+                if (error || !data) return;
+                categoriasCache = data;
+
+                const nav = document.getElementById('nav-categorias');
+                if (nav) {
+                    const navLinks = data.map(c => 
+                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                    ).join('');
+                    nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
+                }
+
+                const footer = document.getElementById('footer-categorias');
+                if (footer) {
+                    footer.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                    ).join('');
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar categorias:', e);
+            }
+        }
+
+        // ============================================
+        // PRODUTOS
+        // ============================================
+        async function carregarProdutos() {
+            const grid = document.getElementById('products-grid');
+            if (!grid) return;
+
+            const { data, error } = await supabaseClient
+                .from('produtos')
+                .select('*')
+                .order('criado_em', { ascending: false })
+                .limit(8);
+
+            if (error) {
+                grid.innerHTML = '<p style="text-align:center; color: var(--text-gray); grid-column:1/-1; padding:40px;">Carregue os produtos no painel admin.</p>';
+                return;
+            }
+
+            produtosCache = data || [];
+            renderizarProdutos(produtosCache);
+        }
+
+        function getCategoriaNome(slug) {
+            const c = categoriasCache.find(cat => cat.slug === slug);
+            return c ? c.nome : slug;
         }
 
         function renderProductCard(p) {
-            const hasDiscount = p.precoRegular !== null;
-            const badgeLabel = { sale: `${Math.round((1 - p.precoSale/p.precoRegular) * 100)}% OFF`, bestseller: 'TOP', new: 'NOVO' };
-            const badgeHtml = p.badge ? `<span class="badge ${p.badge}">${badgeLabel[p.badge] || ''}</span>` : '';
-            const stockHtml = p.estoque <= 10 ? `<span class="stock-badge">⚡ Apenas ${p.estoque} em estoque</span>` : '';
-            const precoPix = (p.precoSale * 0.95).toFixed(2).replace('.', ',');
-            
+            const hasDiscount = p.preco_original && p.preco_original > p.preco_venda;
+            let badgeHtml = '';
+            if (p.badge === 'sale' && hasDiscount) {
+                const desconto = Math.round((1 - p.preco_venda / p.preco_original) * 100);
+                badgeHtml = `<span class="badge sale">${desconto}% OFF</span>`;
+            } else if (p.badge === 'bestseller') badgeHtml = `<span class="badge bestseller">TOP</span>`;
+            else if (p.badge === 'new') badgeHtml = `<span class="badge new">NOVO</span>`;
+
+            const descontoPix = parseFloat(configSite.desconto_pix_percent || 5);
+            const stockHtml = p.estoque <= 10 && p.estoque > 0 
+                ? `<span class="stock-badge">⚡ Apenas ${p.estoque} em estoque</span>` 
+                : '';
+
             return `
             <div class="product-card">
                 <div class="product-image">
                     ${badgeHtml}
                     ${stockHtml}
-                    <img src="${p.img}" alt="${p.nomePt}">
+                    <img src="${p.imagem_url}" alt="${p.nome}" loading="lazy"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'300\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'300\\' height=\\'300\\'/%3E%3Ctext fill=\\'%2364748b\\' font-family=\\'sans-serif\\' font-size=\\'14\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dy=\\'.3em\\'%3ESem imagem%3C/text%3E%3C/svg%3E'">
                 </div>
                 <div class="product-info">
-                    <span class="product-category">${titulos[p.cat] || 'Produto'}</span>
-                    <h3 class="product-name">${p.nomePt}</h3>
+                    <span class="product-category">${getCategoriaNome(p.categoria)}</span>
+                    <h3 class="product-name">${p.nome}</h3>
                     <div class="price-container">
-                        ${hasDiscount ? `<span class="price-regular">R$ ${p.precoRegular.toFixed(2).replace('.', ',')}</span>` : ''}
-                        <span class="${hasDiscount ? 'price-sale' : 'price-single'}">R$ ${p.precoSale.toFixed(2).replace('.', ',')}</span>
+                        ${hasDiscount ? `<span class="price-regular">R$ ${formatarPreco(p.preco_original)}</span>` : ''}
+                        <span class="${hasDiscount ? 'price-sale' : 'price-single'}">R$ ${formatarPreco(p.preco_venda)}</span>
                     </div>
-                    <div class="price-pix">💰 R$ ${precoPix} no PIX</div>
-                    <button class="btn-add-quick" onclick="addToCart(${p.id})">+ Adicionar</button>
+                    <div class="price-pix">💰 R$ ${formatarPreco(p.preco_venda * (1 - descontoPix/100))} no PIX</div>
+                    <button class="btn-add-quick" onclick="addToCart('${p.id}')">+ Adicionar</button>
                 </div>
-            </div>
-            `;
+            </div>`;
         }
 
-        function renderProducts() {
+        function renderizarProdutos(produtos) {
             const grid = document.getElementById('products-grid');
-            grid.innerHTML = produtosDB.slice(0, 8).map(renderProductCard).join('');
+            if (!grid) return;
+            
+            if (!produtos || produtos.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; color: var(--text-gray); grid-column:1/-1; padding:40px;">Nenhum produto cadastrado ainda.</p>';
+                return;
+            }
+            grid.innerHTML = produtos.map(renderProductCard).join('');
         }
 
-        function renderCategoria() {
-            const grid = document.getElementById('categoria-grid');
-            const title = document.getElementById('category-title');
-            const desc = document.getElementById('category-desc');
-            const breadcrumb = document.getElementById('breadcrumb-cat');
+        // ============================================
+        // BANNER
+        // ============================================
+        async function carregarBanner() {
+            const bannerEl = document.getElementById('dynamic-banner');
+            const bannerImg = document.getElementById('dynamic-banner-img');
             
-            title.textContent = titulos[currentCategoria] || 'Produtos';
-            desc.textContent = descricoes[currentCategoria] || 'Encontre os melhores produtos';
-            breadcrumb.textContent = titulos[currentCategoria] || 'Categoria';
+            if (!bannerEl || !bannerImg) return;
 
-            let produtosFiltrados = produtosDB;
-            if (currentCategoria === 'promocoes') {
-                produtosFiltrados = produtosDB.filter(p => p.badge === 'sale');
-            } else if (currentCategoria !== 'todos') {
-                produtosFiltrados = produtosDB.filter(p => p.cat === currentCategoria);
+            const { data, error } = await supabaseClient
+                .from('banners')
+                .select('*')
+                .eq('ativo', true)
+                .order('criado_em', { ascending: false })
+                .limit(1);
+
+            if (error || !data || data.length === 0) {
+                bannerEl.style.display = 'none';
+                return;
             }
 
-            grid.innerHTML = produtosFiltrados.map(renderProductCard).join('');
+            const temPromocao = produtosCache.some(p => p.badge === 'sale');
+            if (temPromocao) {
+                bannerImg.src = data[0].imagem_url;
+                bannerEl.style.display = 'block';
+            } else {
+                bannerEl.style.display = 'none';
+            }
         }
 
-        function showPolitica(tipo) {
-            document.querySelectorAll('.politica-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.politicas-nav button').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(`politica-${tipo}`).classList.remove('hidden');
-            document.getElementById(`btn-${tipo}`).classList.add('active');
-        }
-
+        // ============================================
+        // CARRINHO
+        // ============================================
         function addToCart(id) {
-            const product = produtosDB.find(p => p.id === id);
+            const product = produtosCache.find(p => p.id === id);
+            if (!product) {
+                showToast('Produto não encontrado', 'error');
+                return;
+            }
+
             const existing = cart.find(item => item.id === id);
             if (existing) {
+                if (existing.qty >= product.estoque) {
+                    showToast('Estoque máximo atingido', 'error');
+                    return;
+                }
                 existing.qty++;
             } else {
                 cart.push({ ...product, qty: 1 });
             }
-            
-            localStorage.setItem('apex_cart', JSON.stringify(cart));
+
+            localStorage.setItem('s7te_cart', JSON.stringify(cart));
             updateCartUI();
             toggleCart(true);
+            showToast(`✓ ${product.nome} adicionado!`);
         }
 
         function updateQty(id, change) {
@@ -1672,56 +1088,64 @@
             if (item) {
                 item.qty += change;
                 if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
-                localStorage.setItem('apex_cart', JSON.stringify(cart));
+                localStorage.setItem('s7te_cart', JSON.stringify(cart));
                 updateCartUI();
-                
-                if (currentView === 'checkout') renderCheckoutSummary();
             }
         }
 
         function updateCartUI() {
+            const freteGratis = parseFloat(configSite.frete_gratis_acima || 500);
+            const valorFrete = parseFloat(configSite.valor_frete || 35.90);
+
             const container = document.getElementById('cart-items');
             const countEl = document.getElementById('cart-count');
             const totalEl = document.getElementById('cart-total-value');
             const subtotalEl = document.getElementById('cart-subtotal-value');
             const shippingEl = document.getElementById('cart-shipping-value');
             const shippingNote = document.getElementById('cart-shipping-note');
-            
+
+            if (!container || !countEl) return;
+
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             countEl.textContent = totalQty;
 
             if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color: var(--text-gray); margin-top: 60px; font-size: 0.95rem;">Seu carrinho está vazio.<br><br><button onclick="toggleCart(); navigate(\'categoria\', \'todos\')" style="color: var(--cobalt-main); font-weight: 700; text-decoration: underline; cursor: pointer;">Ver produtos →</button></p>';
-                shippingNote.style.display = 'none';
-            } else {
-                container.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.img}" class="cart-item-img" alt="${item.nomePt}">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.nomePt}</div>
-                            <div class="cart-item-price">R$ ${item.precoSale.toFixed(2).replace('.', ',')}</div>
-                            <div class="cart-controls">
-                                <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
-                                <span style="min-width: 24px; text-align: center; font-weight: 700;">${item.qty}</span>
-                                <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
-                                <button class="remove-btn" onclick="updateQty(${item.id}, -999)">Remover</button>
-                            </div>
+                container.innerHTML = '<p style="text-align:center; color: var(--text-gray); margin-top: 60px;">Seu carrinho está vazio.</p>';
+                if (shippingNote) shippingNote.style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.imagem_url}" class="cart-item-img" alt="${item.nome}"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
+                        <div class="cart-controls">
+                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <span style="min-width: 24px; text-align: center; font-weight: 700;">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${item.id}', -999)">Remover</button>
                         </div>
                     </div>
-                `).join('');
-                
-                const subtotal = cart.reduce((sum, item) => sum + (item.precoSale * item.qty), 0);
-                const shipping = subtotal >= 500 ? 0 : 35.90;
-                
-                subtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-                shippingEl.textContent = shipping === 0 ? 'Grátis' : `R$ ${shipping.toFixed(2).replace('.', ',')}`;
-                totalEl.textContent = `R$ ${(subtotal + shipping).toFixed(2).replace('.', ',')}`;
-                
-                if (subtotal >= 500) {
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const shipping = subtotal >= freteGratis ? 0 : valorFrete;
+
+            if (subtotalEl) subtotalEl.textContent = `R$ ${formatarPreco(subtotal)}`;
+            if (shippingEl) shippingEl.textContent = shipping === 0 ? 'Grátis' : `R$ ${formatarPreco(shipping)}`;
+            if (totalEl) totalEl.textContent = `R$ ${formatarPreco(subtotal + shipping)}`;
+
+            if (shippingNote) {
+                if (subtotal >= freteGratis) {
                     shippingNote.style.display = 'block';
+                    shippingNote.innerHTML = '🎉 Parabéns! Você ganhou frete grátis!';
                 } else {
                     shippingNote.style.display = 'block';
-                    shippingNote.innerHTML = `💡 Faltam <strong>R$ ${(500 - subtotal).toFixed(2).replace('.', ',')}</strong> para frete grátis!`;
+                    shippingNote.innerHTML = `💡 Faltam <strong>R$ ${formatarPreco(freteGratis - subtotal)}</strong> para frete grátis!`;
                 }
             }
         }
@@ -1729,6 +1153,8 @@
         function toggleCart(forceOpen = false) {
             const sidebar = document.getElementById('cart-sidebar');
             const overlay = document.getElementById('cart-overlay');
+            if (!sidebar || !overlay) return;
+            
             if (forceOpen || !sidebar.classList.contains('active')) {
                 sidebar.classList.add('active');
                 overlay.classList.add('active');
@@ -1740,122 +1166,27 @@
 
         function goToCheckout() {
             if (cart.length === 0) {
-                alert('Adicione produtos ao carrinho primeiro!');
+                showToast('Adicione produtos ao carrinho primeiro!', 'error');
                 return;
             }
             toggleCart();
-            navigate('checkout');
+            window.location.href = 'checkout.html';
         }
 
-        function renderCheckoutSummary() {
-            const container = document.getElementById('checkout-items');
-            const subtotalEl = document.getElementById('summary-subtotal');
-            
-            let subtotal = 0;
-            container.innerHTML = cart.map(item => {
-                subtotal += item.precoSale * item.qty;
-                return `
-                    <div class="checkout-item">
-                        <img src="${item.img}" alt="${item.nomePt}">
-                        <div class="checkout-item-info">
-                            <div class="checkout-item-name">${item.nomePt}</div>
-                            <div class="checkout-item-qty">Qtd: ${item.qty}</div>
-                        </div>
-                        <div class="checkout-item-price">R$ ${(item.precoSale * item.qty).toFixed(2).replace('.', ',')}</div>
-                    </div>
-                `;
-            }).join('');
-
-            subtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            
-            const shipping = subtotal >= 500 ? 0 : 35.90;
-            document.getElementById('summary-shipping').textContent = shipping === 0 ? 'Grátis' : `R$ ${shipping.toFixed(2).replace('.', ',')}`;
-            
-            updateTotal(subtotal, shipping);
-        }
-
-        function updateTotal(subtotal, shipping) {
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-            const discount = paymentMethod === 'pix' ? subtotal * 0.05 : 0;
-            
-            if (paymentMethod === 'pix') {
-                document.getElementById('summary-discount-row').style.display = 'flex';
-                document.getElementById('summary-discount').textContent = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
-            } else {
-                document.getElementById('summary-discount-row').style.display = 'none';
-            }
-            
-            const total = subtotal + shipping - discount;
-            document.getElementById('summary-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            
-            if (paymentMethod === 'credit_card') {
-                const select = document.getElementById('installments');
-                select.innerHTML = '';
-                for (let i = 1; i <= 6; i++) {
-                    const val = (total / i).toFixed(2).replace('.', ',');
-                    select.innerHTML += `<option value="${i}">${i}x de R$ ${val} sem juros</option>`;
-                }
-            }
-        }
-
-        function togglePaymentFields() {
-            const method = document.querySelector('input[name="payment"]:checked').value;
-            const ccFields = document.getElementById('credit-card-fields');
-            const pixFields = document.getElementById('pix-fields');
-            
-            if (method === 'credit_card') {
-                ccFields.classList.remove('hidden');
-                pixFields.classList.add('hidden');
-            } else {
-                ccFields.classList.add('hidden');
-                pixFields.classList.remove('hidden');
-            }
-            
-            const subtotal = cart.reduce((sum, item) => sum + (item.precoSale * item.qty), 0);
-            const shipping = subtotal >= 500 ? 0 : 35.90;
-            updateTotal(subtotal, shipping);
-        }
-
-        document.getElementById('cep')?.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 5) value = value.substring(0, 5) + '-' + value.substring(5, 8);
-            e.target.value = value;
-            
-            if (value.replace(/\D/g, '').length === 8) {
-                document.getElementById('rua').value = 'Av. Paulista';
-                document.getElementById('cidade').value = 'São Paulo';
-                document.getElementById('numero').focus();
-            }
-        });
-
-        function processOrder() {
-            const btn = document.getElementById('btn-process-order');
-            const originalText = btn.textContent;
-            
-            btn.textContent = 'Processando...';
-            btn.disabled = true;
-            btn.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                const orderNumber = 'ES7-' + Math.floor(100000 + Math.random() * 900000);
-                document.getElementById('order-number').textContent = orderNumber;
-                
-                cart = [];
-                localStorage.setItem('apex_cart', JSON.stringify(cart));
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await carregarConfigSite();
+                await carregarCategorias();
+                await carregarProdutos();
+                await carregarBanner();
                 updateCartUI();
-                
-                navigate('success');
-                
-                btn.textContent = originalText;
-                btn.disabled = false;
-                btn.style.opacity = '1';
-            }, 2000);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartUI();
+            } catch (error) {
+                console.error('Erro ao inicializar:', error);
+            }
         });
     </script>
 </body>
-</html
+</html>

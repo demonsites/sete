@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Políticas | S7TE</title>
+    <meta name="description" content="Políticas de reembolso, frete, termos e privacidade da S7TE.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --cobalt-deep: #0a2a6e;
+            --cobalt-main: #1a4fb8;
+            --cobalt-bright: #2563eb;
+            --gold: #fbbf24;
+            --gold-dark: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+            --radius: 8px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px -3px rgba(26, 79, 184, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased; 
+        }
+        a { text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; }
+        img { max-width: 100%; display: block; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        .urgency-bar {
+            background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            text-align: center;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .urgency-bar strong { color: var(--gold); }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            color: var(--cobalt-deep);
+        }
+        .logo span { 
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-desktop { display: flex; gap: 24px; }
+        .nav-desktop a { 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: var(--text-dark);
+        }
+        .nav-desktop a:hover { color: var(--cobalt-main); }
+        .nav-desktop a.promo-link { color: var(--danger); }
+
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        
+        .cart-btn { 
+            position: relative; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            color: var(--text-dark);
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+        .cart-btn:hover { background: var(--cobalt-main); color: white; }
+        .cart-btn svg { width: 20px; height: 20px; }
+        
+        .cart-count { 
+            background: var(--gold); 
+            color: var(--cobalt-deep); 
+            font-size: 0.75rem; 
+            font-weight: 800;
+            min-width: 22px; 
+            height: 22px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        /* Page Header */
+        .page-header { 
+            padding: 60px 0; 
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            text-align: center; 
+            color: white;
+        }
+        .page-header h1 { 
+            font-size: 2.5rem; 
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .page-header p { 
+            opacity: 0.9; 
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 16px 0;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb a { color: var(--cobalt-main); font-weight: 600; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 73px;
+            z-index: 100;
+        }
+        .tabs {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 4px;
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            padding: 16px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            color: var(--cobalt-main);
+            background: var(--bg-light);
+        }
+        .tab-btn.active {
+            color: var(--cobalt-main);
+            border-bottom-color: var(--cobalt-main);
+        }
+        .tab-btn .icon { font-size: 1.1rem; }
+
+        /* Content */
+        .content-wrapper {
+            padding: 40px 0 80px;
+        }
+        .policy-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .policy-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .policy-section.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .policy-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+        }
+        .policy-header .icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        .policy-header h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--cobalt-deep);
+            margin-bottom: 8px;
+        }
+        .policy-header .updated {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .policy-body h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--cobalt-deep);
+            margin: 28px 0 12px;
+            padding-left: 16px;
+            border-left: 4px solid var(--gold);
+        }
+        .policy-body h3:first-child { margin-top: 0; }
+
+        .policy-body p {
+            color: var(--text-gray);
+            margin-bottom: 16px;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .policy-body ul, .policy-body ol {
+            margin: 12px 0 20px 20px;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+        .policy-body ul li, .policy-body ol li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        .policy-body ul li::marker { color: var(--cobalt-main); }
+        .policy-body ol li::marker { color: var(--cobalt-main); font-weight: 700; }
+        .policy-body strong { color: var(--cobalt-deep); }
+
+        /* Info boxes */
+        .info-box {
+            background: rgba(26, 79, 184, 0.06);
+            border-left: 4px solid var(--cobalt-main);
+            padding: 16px 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        .info-box p { margin: 0; color: var(--text-dark); }
+
+        .warning-box {
+            background: rgba(251, 191, 36, 0.12);
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        .warning-box p { margin: 0; color: var(--text-dark); }
+
+        /* Table com scroll */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            -webkit-overflow-scrolling: touch;
+        }
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+        .policy-table th {
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .policy-table td {
+            padding: 14px 16px;
+            border-top: 1px solid var(--border);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        .policy-table tr:nth-child(even) { background: var(--bg-light); }
+
+        /* CTA */
+        .contact-cta {
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            border-radius: 16px;
+            padding: 40px 24px;
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-cta h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .contact-cta p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .btn-contact {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--gold);
+            color: var(--cobalt-deep);
+            border-radius: var(--radius);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Footer */
+        footer { 
+            background: var(--cobalt-deep); 
+            color: white; 
+            padding: 50px 0 24px; 
+            margin-top: 40px;
+        }
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: 1.5fr 1fr 1fr 1fr; 
+            gap: 32px; 
+            margin-bottom: 32px; 
+        }
+        .footer-col h4 { 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.1em; 
+            margin-bottom: 16px; 
+            color: var(--gold);
+        }
+        .footer-col p, .footer-col a { 
+            font-size: 0.85rem; 
+            color: #cbd5e1; 
+            line-height: 1.9; 
+            display: block;
+        }
+        .footer-col a:hover { color: var(--gold); }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px;
+            text-align: center;
+        }
+        .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--radius);
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 4000;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
+        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.error { background: var(--danger); }
+
+        /* Cart */
+        .cart-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 42, 110, 0.6); z-index: 1999;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+        .cart-overlay.active { opacity: 1; visibility: visible; }
+        
+        #cart-sidebar {
+            position: fixed; top: 0; right: -450px; width: 420px; max-width: 100%;
+            height: 100vh; background: white; z-index: 2000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+        }
+        #cart-sidebar.active { right: 0; }
+        
+        .cart-header { 
+            padding: 20px; 
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .cart-header h3 { font-size: 1.1rem; font-weight: 800; }
+        .cart-header button { color: white; font-size: 1.8rem; line-height: 1; }
+        
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-item { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 16px; 
+            padding-bottom: 16px; 
+            border-bottom: 1px solid var(--border); 
+        }
+        .cart-item-img { 
+            width: 70px; 
+            height: 70px; 
+            background: var(--bg-light); 
+            object-fit: cover; 
+            border-radius: var(--radius); 
+        }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; }
+        .cart-item-price { font-size: 0.9rem; color: var(--cobalt-main); font-weight: 700; margin-bottom: 10px; }
+        .cart-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { 
+            width: 28px; 
+            height: 28px; 
+            border: 1px solid var(--border); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 6px; 
+            font-size: 1rem; 
+            font-weight: 700;
+            color: var(--cobalt-main);
+            background: white;
+        }
+        .qty-btn:hover { background: var(--cobalt-main); color: white; }
+        .remove-btn { 
+            margin-left: auto; 
+            color: var(--danger); 
+            font-size: 0.75rem; 
+            text-decoration: underline; 
+            font-weight: 600;
+        }
+        
+        .cart-footer { 
+            padding: 20px; 
+            border-top: 2px solid var(--border); 
+            background: var(--bg-light); 
+        }
+        .cart-subtotal {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+        .cart-total { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 1.2rem; 
+            font-weight: 800; 
+            margin-bottom: 16px;
+            color: var(--cobalt-deep);
+        }
+        .cart-shipping-note {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .btn-checkout { 
+            width: 100%; 
+            padding: 16px; 
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark)); 
+            color: var(--cobalt-deep); 
+            font-weight: 800; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: var(--radius); 
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .btn-checkout:hover { transform: translateY(-2px); }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .nav-desktop { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            
+            .page-header { padding: 40px 0; }
+            .page-header h1 { font-size: 1.8rem; }
+            .page-header p { font-size: 0.95rem; }
+            
+            .tabs-container { top: 65px; }
+            .tab-btn { 
+                padding: 14px 16px; 
+                font-size: 0.85rem;
+            }
+            .tab-btn .icon { font-size: 1rem; }
+            
+            .content-wrapper { padding: 24px 0 60px; }
+            .policy-card { padding: 24px 20px; }
+            .policy-header h2 { font-size: 1.4rem; }
+            .policy-header .icon { font-size: 2.5rem; }
+            .policy-body h3 { font-size: 1.05rem; }
+            
+            .contact-cta { padding: 32px 20px; }
+            .contact-cta h3 { font-size: 1.2rem; }
+            
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            #cart-sidebar { width: 100%; }
+            .logo { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 400px) {
+            .tab-btn { 
+                padding: 12px 14px; 
+                font-size: 0.8rem;
+                gap: 6px;
+            }
+            .tab-btn .icon { font-size: 0.9rem; }
+            .policy-card { padding: 20px 16px; }
+            .cart-btn { padding: 8px 12px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="urgency-bar" id="urgency-bar"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
+            
+            <nav class="nav-desktop" id="nav-categorias">
+                <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Carrinho
+                    <span id="cart-count" class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="container">
+                <h1>📋 Políticas da Loja</h1>
+                <p>Transparência total com nossos clientes</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <strong>Políticas</strong>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-policy="reembolso" onclick="mostrarPolitica('reembolso', this)">
+                        <span class="icon">💰</span>
+                        <span>Reembolso</span>
+                    </button>
+                    <button class="tab-btn" data-policy="frete" onclick="mostrarPolitica('frete', this)">
+                        <span class="icon">🚚</span>
+                        <span>Frete</span>
+                    </button>
+                    <button class="tab-btn" data-policy="trocas" onclick="mostrarPolitica('trocas', this)">
+                        <span class="icon">🔄</span>
+                        <span>Trocas</span>
+                    </button>
+                    <button class="tab-btn" data-policy="termos" onclick="mostrarPolitica('termos', this)">
+                        <span class="icon">📜</span>
+                        <span>Termos</span>
+                    </button>
+                    <button class="tab-btn" data-policy="privacidade" onclick="mostrarPolitica('privacidade', this)">
+                        <span class="icon">🔒</span>
+                        <span>Privacidade</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="policy-card">
+                    
+                    <!-- REEMBOLSO -->
+                    <div class="policy-section active" id="policy-reembolso">
+                        <div class="policy-header">
+                            <div class="icon">💰</div>
+                            <h2>Política de Reembolso</h2>
+                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
+                        </div>
+                        <div class="policy-body">
+                            <p>Na <strong>S7TE</strong>, sua satisfação é nossa prioridade. Oferecemos reembolso integral em até <strong>30 dias</strong> após a compra, seguindo as condições abaixo.</p>
+
+                            <h3>Condições para Reembolso</h3>
+                            <ul>
+                                <li>Produtos devem estar em <strong>embalagem original e selada</strong></li>
+                                <li>Itens estéreis <strong>não podem ser devolvidos após a abertura</strong></li>
+                                <li>Produtos personalizados ou sob encomenda <strong>não são reembolsáveis</strong></li>
+                                <li>Equipamentos devem estar sem sinais de uso</li>
+                                <li>Apresentação da nota fiscal é obrigatória</li>
+                            </ul>
+
+                            <h3>Como Solicitar</h3>
+                            <ol>
+                                <li><strong>Entre em contato</strong> pelo e-mail ou telefone em até 30 dias</li>
+                                <li><strong>Informe o número do pedido</strong> e o motivo da solicitação</li>
+                                <li><strong>Aguarde a aprovação</strong> (análise em até 3 dias úteis)</li>
+                                <li><strong>Envie o produto</strong> conforme instruções recebidas</li>
+                                <li><strong>Receba o reembolso</strong> em até 7 dias úteis</li>
+                            </ol>
+
+                            <div class="info-box">
+                                <p>💡 <strong>Dica:</strong> Para agilizar o processo, envie fotos do produto e da embalagem ao solicitar o reembolso.</p>
+                            </div>
+
+                            <h3>Formas de Reembolso</h3>
+                            <div class="table-wrapper">
+                                <table class="policy-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Pagamento</th>
+                                            <th>Prazo</th>
+                                            <th>Método</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>PIX</td>
+                                            <td>Até 3 dias úteis</td>
+                                            <td>Transferência bancária</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cartão de Crédito</td>
+                                            <td>1 a 2 faturas</td>
+                                            <td>Estorno na fatura</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="warning-box">
+                                <p>⚠️ <strong>Importante:</strong> O frete de devolução é por conta do cliente, exceto em casos de produto com defeito ou erro no envio.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FRETE -->
+                    <div class="policy-section" id="policy-frete">
+                        <div class="policy-header">
+                            <div class="icon">🚚</div>
+                            <h2>Política de Frete</h2>
+                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
+                        </div>
+                        <div class="policy-body">
+                            <p>Oferecemos <strong>frete grátis</strong> para compras acima de <strong>R$ 500,00</strong> em todo o território nacional.</p>
+
+                            <h3>Prazos de Entrega</h3>
+                            <div class="table-wrapper">
+                                <table class="policy-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Região</th>
+                                            <th>Prazo</th>
+                                            <th>Observação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>São Paulo Capital</td>
+                                            <td>24 horas</td>
+                                            <td>Entrega expressa</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Capitais</td>
+                                            <td>2 a 5 dias úteis</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interior</td>
+                                            <td>5 a 10 dias úteis</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regiões remotas</td>
+                                            <td>Até 15 dias úteis</td>
+                                            <td>Norte e Nordeste</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h3>Valores de Frete</h3>
+                            <ul>
+                                <li><strong>Frete grátis:</strong> Compras acima de R$ 500,00</li>
+                                <li><strong>Frete padrão:</strong> R$ 35,90 para compras abaixo de R$ 500,00</li>
+                                <li><strong>Entrega expressa (SP Capital):</strong> Consultar valor no checkout</li>
+                            </ul>
+
+                            <h3>Rastreamento</h3>
+                            <p>Após a confirmação do pagamento, você receberá o <strong>código de rastreamento por e-mail</strong> em até 24 horas úteis.</p>
+
+                            <div class="info-box">
+                                <p>📦 <strong>Nota:</strong> Os prazos de entrega são contados a partir da confirmação do pagamento e podem variar em períodos de alta demanda.</p>
+                            </div>
+
+                            <h3>Problemas com a Entrega</h3>
+                            <ul>
+                                <li><strong>Atraso:</strong> Entre em contato conosco para verificar o status</li>
+                                <li><strong>Produto danificado:</strong> Recuse a entrega e nos comunique imediatamente</li>
+                                <li><strong>Endereço incorreto:</strong> Será cobrado novo frete para reenvio</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- TROCAS -->
+                    <div class="policy-section" id="policy-trocas">
+                        <div class="policy-header">
+                            <div class="icon">🔄</div>
+                            <h2>Trocas e Devoluções</h2>
+                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
+                        </div>
+                        <div class="policy-body">
+                            <p>Facilitamos o processo de troca e devolução para garantir sua total satisfação.</p>
+
+                            <h3>Quando Posso Trocar ou Devolver?</h3>
+                            <ul>
+                                <li><strong>Arrependimento:</strong> Até 7 dias após o recebimento</li>
+                                <li><strong>Defeito de fabricação:</strong> Até 90 dias de garantia</li>
+                                <li><strong>Produto errado:</strong> Até 30 dias após o recebimento</li>
+                            </ul>
+
+                            <h3>Condições para Troca</h3>
+                            <ul>
+                                <li>Produto na <strong>embalagem original</strong></li>
+                                <li>Sem sinais de uso ou avarias</li>
+                                <li>Com todos os acessórios e manuais</li>
+                                <li>Nota fiscal ou comprovante de compra</li>
+                            </ul>
+
+                            <h3>Passo a Passo</h3>
+                            <ol>
+                                <li><strong>Solicite a troca</strong> pelo nosso canal de atendimento</li>
+                                <li><strong>Receba as instruções</strong> de envio em até 24 horas</li>
+                                <li><strong>Poste o produto</strong> nos Correios ou transportadora</li>
+                                <li><strong>Aguarde a análise</strong> (até 5 dias úteis)</li>
+                                <li><strong>Receba o novo produto</strong> ou reembolso</li>
+                            </ol>
+
+                            <div class="warning-box">
+                                <p>⚠️ <strong>Produtos estéreis:</strong> Por questões de segurança, itens estéreis abertos não podem ser trocados ou devolvidos.</p>
+                            </div>
+
+                            <h3>Custos de Envio</h3>
+                            <div class="table-wrapper">
+                                <table class="policy-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Motivo</th>
+                                            <th>Frete de Ida</th>
+                                            <th>Frete de Volta</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Defeito de fabricação</td>
+                                            <td>S7TE</td>
+                                            <td>S7TE</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Produto errado</td>
+                                            <td>S7TE</td>
+                                            <td>S7TE</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Arrependimento</td>
+                                            <td>Cliente</td>
+                                            <td>Cliente</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TERMOS -->
+                    <div class="policy-section" id="policy-termos">
+                        <div class="policy-header">
+                            <div class="icon">📜</div>
+                            <h2>Termos e Condições</h2>
+                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
+                        </div>
+                        <div class="policy-body">
+                            <p>Ao utilizar o site da <strong>S7TE</strong>, você concorda com os seguintes termos e condições.</p>
+
+                            <h3>1. Sobre a Empresa</h3>
+                            <p>A S7TE é uma empresa especializada em tecnologia e insumos para odontologia digital, comprometida com a qualidade e segurança de seus produtos.</p>
+
+                            <h3>2. Elegibilidade</h3>
+                            <ul>
+                                <li>Produtos destinados <strong>exclusivamente a profissionais</strong> da área odontológica</li>
+                                <li>Compra por pessoa física exige declaração de uso profissional</li>
+                                <li>Menores de 18 anos não podem realizar compras</li>
+                            </ul>
+
+                            <h3>3. Responsabilidades do Cliente</h3>
+                            <ul>
+                                <li>Fornecer informações verdadeiras e atualizadas</li>
+                                <li>Utilizar os produtos conforme instruções do fabricante</li>
+                                <li>Armazenar produtos adequadamente</li>
+                                <li>Verificar especificações antes da compra</li>
+                            </ul>
+
+                            <h3>4. Responsabilidades da S7TE</h3>
+                            <ul>
+                                <li>Entregar produtos conforme descrição</li>
+                                <li>Garantir a autenticidade dos itens</li>
+                                <li>Proteger os dados dos clientes</li>
+                                <li>Oferecer suporte pós-venda</li>
+                            </ul>
+
+                            <h3>5. Garantia</h3>
+                            <p>Todos os produtos possuem <strong>garantia de 90 dias</strong> contra defeitos de fabricação, conforme Código de Defesa do Consumidor.</p>
+
+                            <h3>6. Limitação de Responsabilidade</h3>
+                            <div class="warning-box">
+                                <p>⚠️ A S7TE <strong>não se responsabiliza</strong> por danos causados por uso incorreto dos produtos. O uso indevido é de total responsabilidade do comprador.</p>
+                            </div>
+
+                            <h3>7. Propriedade Intelectual</h3>
+                            <p>Todo o conteúdo deste site (textos, imagens, logotipos) é propriedade da S7TE e não pode ser reproduzido sem autorização.</p>
+
+                            <h3>8. Alterações nos Termos</h3>
+                            <p>Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações entrarão em vigor imediatamente após publicação no site.</p>
+                        </div>
+                    </div>
+
+                    <!-- PRIVACIDADE -->
+                    <div class="policy-section" id="policy-privacidade">
+                        <div class="policy-header">
+                            <div class="icon">🔒</div>
+                            <h2>Política de Privacidade</h2>
+                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
+                        </div>
+                        <div class="policy-body">
+                            <p>Na <strong>S7TE</strong>, seus dados estão seguros. Esta política explica como coletamos, usamos e protegemos suas informações, em conformidade com a <strong>LGPD</strong>.</p>
+
+                            <h3>1. Dados que Coletamos</h3>
+                            <ul>
+                                <li><strong>Dados de identificação:</strong> Nome, CPF, e-mail, telefone</li>
+                                <li><strong>Dados de entrega:</strong> Endereço completo</li>
+                                <li><strong>Dados de pagamento:</strong> Processados por gateway seguro</li>
+                                <li><strong>Dados de navegação:</strong> Cookies e preferências</li>
+                            </ul>
+
+                            <h3>2. Como Usamos Seus Dados</h3>
+                            <ul>
+                                <li>Processamento e entrega de pedidos</li>
+                                <li>Comunicação sobre status do pedido</li>
+                                <li>Envio de promoções (com seu consentimento)</li>
+                                <li>Melhoria da experiência de compra</li>
+                                <li>Cumprimento de obrigações legais</li>
+                            </ul>
+
+                            <h3>3. Compartilhamento de Dados</h3>
+                            <p>Seus dados <strong>nunca são vendidos</strong>. Compartilhamos apenas com:</p>
+                            <ul>
+                                <li>Transportadoras (para entrega)</li>
+                                <li>Gateways de pagamento (para processar transações)</li>
+                                <li>Autoridades legais (quando obrigatório por lei)</li>
+                            </ul>
+
+                            <h3>4. Segurança</h3>
+                            <div class="info-box">
+                                <p>🔐 Utilizamos <strong>criptografia SSL de ponta a ponta</strong> em todas as transações. Seus dados são armazenados em servidores seguros.</p>
+                            </div>
+
+                            <h3>5. Seus Direitos (LGPD)</h3>
+                            <ul>
+                                <li><strong>Acesso:</strong> Solicitar cópia dos seus dados</li>
+                                <li><strong>Correção:</strong> Atualizar dados incorretos</li>
+                                <li><strong>Exclusão:</strong> Solicitar remoção dos dados</li>
+                                <li><strong>Portabilidade:</strong> Transferir dados para outro serviço</li>
+                                <li><strong>Revogação:</strong> Cancelar consentimento a qualquer momento</li>
+                            </ul>
+
+                            <h3>6. Cookies</h3>
+                            <p>Utilizamos cookies para melhorar sua experiência. Você pode desativá-los nas configurações do navegador.</p>
+
+                            <h3>7. Contato sobre Privacidade</h3>
+                            <p>Para exercer seus direitos ou tirar dúvidas, entre em contato através do e-mail <strong>privacidade@s7te.com.br</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-cta">
+                    <h3>Ainda tem dúvidas?</h3>
+                    <p>Nossa equipe está pronta para ajudar você com qualquer questão.</p>
+                    <a href="contato.html" class="btn-contact">📩 Entrar em Contato</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4 id="footer-nome-loja">S7TE</h4>
+                    <p id="footer-sobre">Tecnologia de ponta para odontologia digital.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorias</h4>
+                    <div id="footer-categorias"></div>
+                    <a href="produtos.html?cat=promocoes">🔥 Promoções</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p id="footer-endereco">Av. Paulista, 1500<br>São Paulo, SP</p>
+                    <p id="footer-email">contato@s7te.com.br</p>
+                    <p id="footer-telefone">0800 123 4567</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Políticas</h4>
+                    <a href="politicas.html?tipo=reembolso">Reembolso</a>
+                    <a href="politicas.html?tipo=frete">Frete</a>
+                    <a href="politicas.html?tipo=termos">Termos</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Seu Carrinho</h3>
+            <button onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-subtotal"><span>Subtotal:</span><span id="cart-subtotal-value">R$ 0,00</span></div>
+            <div class="cart-subtotal" style="color: var(--success);"><span>Frete:</span><span id="cart-shipping-value">Grátis</span></div>
+            <div class="cart-total"><span>Total:</span><span id="cart-total-value">R$ 0,00</span></div>
+            <div class="cart-shipping-note" id="cart-shipping-note" style="display: none;"></div>
+            <button class="btn-checkout" onclick="goToCheckout()">Finalizar Compra</button>
+        </div>
+    </aside>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO SUPABASE
+        // ============================================
+        const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let configSite = {};
+        let categoriasCache = [];
+        let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
+
+        // ============================================
+        // HELPERS
+        // ============================================
+        function formatarPreco(valor) {
+            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = 'toast show' + (type === 'error' ? ' error' : '');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function setTextoSeguro(id, texto) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = texto;
+        }
+
+        function setHtmlSeguro(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
+        // ============================================
+        // CARREGAR CONFIGURAÇÕES
+        // ============================================
+        async function carregarConfigSite() {
+            const padroes = {
+                urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500',
+                logo_texto: 'S7TE',
+                footer_sobre: 'Tecnologia de ponta para odontologia digital.',
+                footer_endereco: 'Av. Paulista, 1500<br>São Paulo, SP',
+                footer_email: 'contato@s7te.com.br',
+                footer_telefone: '0800 123 4567',
+                footer_copyright: '© 2026 S7TE Tecnologia em Odontologia.'
+            };
+
+            try {
+                const { data, error } = await supabaseClient.from('configuracoes').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(c => padroes[c.chave] = c.valor);
+                }
+            } catch (e) {
+                console.warn('Usando valores padrão:', e);
+            }
+
+            configSite = padroes;
+
+            setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
+            setHtmlSeguro('logo-text', configSite.logo_texto.replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', configSite.logo_texto);
+            setTextoSeguro('footer-sobre', configSite.footer_sobre);
+            setHtmlSeguro('footer-endereco', configSite.footer_endereco);
+            setTextoSeguro('footer-email', configSite.footer_email);
+            setTextoSeguro('footer-telefone', configSite.footer_telefone);
+            setTextoSeguro('footer-copyright', configSite.footer_copyright);
+        }
+
+        async function carregarCategorias() {
+            try {
+                const { data, error } = await supabaseClient.from('categorias').select('*').order('ordem');
+                if (error || !data) return;
+                categoriasCache = data;
+
+                const nav = document.getElementById('nav-categorias');
+                if (nav) {
+                    const navLinks = data.map(c => 
+                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                    ).join('');
+                    nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
+                }
+
+                const footer = document.getElementById('footer-categorias');
+                if (footer) {
+                    footer.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                    ).join('');
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar categorias:', e);
+            }
+        }
+
+        // ============================================
+        // NAVEGAÇÃO ENTRE POLÍTICAS
+        // ============================================
+        function mostrarPolitica(tipo, btn) {
+            document.querySelectorAll('.policy-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const section = document.getElementById('policy-' + tipo);
+            if (section) section.classList.add('active');
+
+            if (btn) btn.classList.add('active');
+
+            const novaUrl = window.location.pathname + '?tipo=' + tipo;
+            window.history.pushState({}, '', novaUrl);
+
+            // Scroll suave para o topo do conteúdo
+            const contentWrapper = document.querySelector('.content-wrapper');
+            if (contentWrapper) {
+                contentWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function verificarUrlPolitica() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tipo = urlParams.get('tipo');
+            
+            if (tipo) {
+                const section = document.getElementById('policy-' + tipo);
+                if (section) {
+                    document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
+                    section.classList.add('active');
+
+                    document.querySelectorAll('.tab-btn').forEach(tab => {
+                        tab.classList.remove('active');
+                        if (tab.dataset.policy === tipo) {
+                            tab.classList.add('active');
+                        }
+                    });
+                }
+            }
+        }
+
+        // ============================================
+        // CARRINHO
+        // ============================================
+        function updateQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+                localStorage.setItem('s7te_cart', JSON.stringify(cart));
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const freteGratis = 500;
+            const valorFrete = 35.90;
+
+            const container = document.getElementById('cart-items');
+            const countEl = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total-value');
+            const subtotalEl = document.getElementById('cart-subtotal-value');
+            const shippingEl = document.getElementById('cart-shipping-value');
+            const shippingNote = document.getElementById('cart-shipping-note');
+
+            if (!container || !countEl) return;
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            countEl.textContent = totalQty;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: var(--text-gray); margin-top: 60px;">Seu carrinho está vazio.</p>';
+                if (shippingNote) shippingNote.style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.imagem_url}" class="cart-item-img" alt="${item.nome}"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'70\\' height=\\'70\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'70\\' height=\\'70\\'/%3E%3C/svg%3E'">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
+                        <div class="cart-controls">
+                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <span style="min-width: 20px; text-align: center; font-weight: 700; font-size: 0.9rem;">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${item.id}', -999)">Remover</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const shipping = subtotal >= freteGratis ? 0 : valorFrete;
+
+            if (subtotalEl) subtotalEl.textContent = `R$ ${formatarPreco(subtotal)}`;
+            if (shippingEl) shippingEl.textContent = shipping === 0 ? 'Grátis' : `R$ ${formatarPreco(shipping)}`;
+            if (totalEl) totalEl.textContent = `R$ ${formatarPreco(subtotal + shipping)}`;
+
+            if (shippingNote) {
+                if (subtotal >= freteGratis) {
+                    shippingNote.style.display = 'block';
+                    shippingNote.innerHTML = '🎉 Parabéns! Você ganhou frete grátis!';
+                } else {
+                    shippingNote.style.display = 'block';
+                    shippingNote.innerHTML = `💡 Faltam <strong>R$ ${formatarPreco(freteGratis - subtotal)}</strong> para frete grátis!`;
+                }
+            }
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            if (!sidebar || !overlay) return;
+            
+            if (forceOpen || !sidebar.classList.contains('active')) {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }
+
+        function goToCheckout() {
+            if (cart.length === 0) {
+                showToast('Adicione produtos ao carrinho primeiro!', 'error');
+                return;
+            }
+            toggleCart();
+            window.location.href = 'checkout.html';
+        }
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await carregarConfigSite();
+                await carregarCategorias();
+                verificarUrlPolitica();
+                updateCartUI();
+            } catch (error) {
+                console.error('Erro ao inicializar:', error);
+            }
+        });
+    </script>
+</body>
+</html>

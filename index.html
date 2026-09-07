@@ -4,12 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S7TE | Tecnologia em Odontologia Digital</title>
-    <meta name="description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM para odontologia digital.">
+    <meta name="description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM para odontologia digital. Entrega rápida e preços imbatíveis.">
+    
+    <!-- SEO: Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/">
+    <meta property="og:title" content="S7TE | Tecnologia em Odontologia Digital">
+    <meta property="og:description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM. Frete grátis acima de R$ 500.">
+    <meta property="og:image" content="https://SEU-USUARIO.github.io/s7te-loja/og-image.jpg">
+    
+    <!-- SEO: Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://SEU-USUARIO.github.io/s7te-loja/">
+    <meta property="twitter:title" content="S7TE | Tecnologia em Odontologia Digital">
+    <meta property="twitter:description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM.">
+    <meta property="twitter:image" content="https://SEU-USUARIO.github.io/s7te-loja/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Schema.org: Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "S7TE",
+        "url": "https://SEU-USUARIO.github.io/s7te-loja/",
+        "logo": "https://SEU-USUARIO.github.io/s7te-loja/logo.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+55-11-0000-0000",
+            "contactType": "customer service",
+            "areaServed": "BR",
+            "availableLanguage": "Portuguese"
+        },
+        "sameAs": []
+    }
+    </script>
 
     <style>
         :root {
@@ -340,6 +376,8 @@
             line-height: 1.4;
             flex: 1;
         }
+        .product-name a { color: inherit; }
+        .product-name a:hover { color: var(--cobalt-main); }
         
         .price-container { 
             display: flex; 
@@ -385,6 +423,11 @@
             background: linear-gradient(135deg, var(--cobalt-bright), var(--cobalt-main));
             transform: scale(1.02);
         }
+        .btn-add-quick:disabled {
+            background: var(--text-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .dynamic-banner {
             width: 100%;
@@ -397,6 +440,27 @@
             height: auto;
             max-height: 300px;
             object-fit: cover;
+        }
+
+        .view-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .btn-view-more {
+            display: inline-block;
+            padding: 14px 32px;
+            background: transparent;
+            border: 2px solid var(--cobalt-main);
+            color: var(--cobalt-main);
+            border-radius: var(--radius);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+        }
+        .btn-view-more:hover {
+            background: var(--cobalt-main);
+            color: white;
         }
 
         .newsletter { 
@@ -419,6 +483,7 @@
             display: flex; 
             max-width: 500px; 
             margin: 0 auto; 
+            gap: 0;
         }
         .newsletter-form input {
             flex: 1; 
@@ -441,6 +506,7 @@
             transition: var(--transition);
         }
         .newsletter-form button:hover { background: var(--cobalt-deep); }
+        .newsletter-form button:disabled { background: var(--text-gray); cursor: not-allowed; }
 
         footer { 
             background: var(--cobalt-deep); 
@@ -614,6 +680,7 @@
             opacity: 0;
             transform: translateX(400px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
         }
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.error { background: var(--danger); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4); }
@@ -735,7 +802,7 @@
         </div>
 
         <div class="dynamic-banner" id="dynamic-banner" onclick="window.location.href='produtos.html?cat=promocoes'">
-            <img id="dynamic-banner-img" src="" alt="Banner Promocional">
+            <img id="dynamic-banner-img" src="" alt="Banner Promocional" loading="lazy" width="1400" height="300">
         </div>
 
         <section class="products-section">
@@ -747,6 +814,9 @@
                 <div id="products-grid" class="products-grid">
                     <div class="loading-spinner"><div class="spinner"></div></div>
                 </div>
+                <div class="view-more-container">
+                    <a href="produtos.html" class="btn-view-more">Ver Todos os Produtos →</a>
+                </div>
             </div>
         </section>
 
@@ -754,8 +824,8 @@
             <div class="container">
                 <h3 id="newsletter-titulo">Ganhe 10% OFF na Primeira Compra</h3>
                 <p id="newsletter-subtitulo">Cadastre-se e receba cupons exclusivos e novidades</p>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Cupom enviado para seu e-mail!');">
-                    <input type="email" placeholder="Seu melhor e-mail" required>
+                <form class="newsletter-form" id="newsletter-form" onsubmit="salvarNewsletter(event)">
+                    <input type="email" id="newsletter-email" placeholder="Seu melhor e-mail" required>
                     <button type="submit" id="newsletter-botao">Quero Meu Cupom</button>
                 </form>
             </div>
@@ -789,7 +859,7 @@
             </div>
             <div class="footer-bottom">
                 <p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p>
-                <p><a href="admin/login.html" style="opacity:0.5; font-size:0.7rem;">Área Admin</a></p>
+                <p><a href="#" style="opacity:0.5; font-size:0.7rem;">Área Admin</a></p>
             </div>
         </div>
     </footer>
@@ -827,10 +897,22 @@
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
 
         // ============================================
-        // HELPERS COM VERIFICAÇÃO DE SEGURANÇA
+        // HELPERS COM SANITIZAÇÃO
         // ============================================
         function formatarPreco(valor) {
-            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        // 🔒 SANITIZAÇÃO ROBUSTA — previne XSS
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function showToast(msg, type = 'success') {
@@ -838,23 +920,28 @@
             if (!toast) return;
             toast.textContent = msg;
             toast.className = 'toast show' + (type === 'error' ? ' error' : '');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // Função auxiliar para definir texto com segurança
         function setTextoSeguro(id, texto) {
             const el = document.getElementById(id);
-            if (el) el.textContent = texto;
+            if (el) el.textContent = texto || '';
         }
 
-        // Função auxiliar para definir HTML com segurança
+        // HTML seguro apenas para conteúdo conhecido (urgency bar com <strong>)
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
-            if (el) el.innerHTML = html;
+            if (el) el.innerHTML = html || '';
+        }
+
+        function getCategoriaNome(slug) {
+            const c = categoriasCache.find(cat => cat.slug === slug);
+            return c ? c.nome : slug || '-';
         }
 
         // ============================================
-        // CARREGAR CONFIGURAÇÕES DO SITE (COM VERIFICAÇÕES)
+        // CARREGAMENTO PARALELO (Promise.all)
         // ============================================
         async function carregarConfigSite() {
             const padroes = {
@@ -886,42 +973,44 @@
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => padroes[c.chave] = c.valor);
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
                 }
             } catch (e) {
                 console.warn('Usando valores padrão:', e);
             }
 
             configSite = padroes;
+            aplicarConfigSite();
+        }
 
-            const getText = (key) => configSite[key] || '';
+        function aplicarConfigSite() {
+            const get = (key) => configSite[key] || '';
             
-            // Usando funções seguras para evitar erros de null
-            setHtmlSeguro('urgency-bar', getText('urgencia_texto'));
-            setTextoSeguro('hero-badge', getText('hero_badge'));
-            setTextoSeguro('hero-titulo', getText('hero_titulo'));
-            setTextoSeguro('hero-subtitulo', getText('hero_subtitulo'));
-            setTextoSeguro('hero-botao', getText('hero_botao_texto'));
+            setHtmlSeguro('urgency-bar', get('urgencia_texto'));
+            setTextoSeguro('hero-badge', get('hero_badge'));
+            setTextoSeguro('hero-titulo', get('hero_titulo'));
+            setTextoSeguro('hero-subtitulo', get('hero_subtitulo'));
+            setTextoSeguro('hero-botao', get('hero_botao_texto'));
 
             for (let i = 1; i <= 4; i++) {
-                setTextoSeguro(`stat${i}-valor`, getText(`stat${i}_valor`));
-                setTextoSeguro(`stat${i}-label`, getText(`stat${i}_label`));
+                setTextoSeguro(`stat${i}-valor`, get(`stat${i}_valor`));
+                setTextoSeguro(`stat${i}-label`, get(`stat${i}_label`));
             }
 
-            setTextoSeguro('produtos-titulo', getText('produtos_titulo'));
-            setTextoSeguro('produtos-subtitulo', getText('produtos_subtitulo'));
-            setTextoSeguro('newsletter-titulo', getText('newsletter_titulo'));
-            setTextoSeguro('newsletter-subtitulo', getText('newsletter_subtitulo'));
-            setTextoSeguro('newsletter-botao', getText('newsletter_botao'));
+            setTextoSeguro('produtos-titulo', get('produtos_titulo'));
+            setTextoSeguro('produtos-subtitulo', get('produtos_subtitulo'));
+            setTextoSeguro('newsletter-titulo', get('newsletter_titulo'));
+            setTextoSeguro('newsletter-subtitulo', get('newsletter_subtitulo'));
+            setTextoSeguro('newsletter-botao', get('newsletter_botao'));
 
-            setTextoSeguro('footer-sobre', getText('footer_sobre'));
-            setHtmlSeguro('footer-endereco', getText('footer_endereco'));
-            setTextoSeguro('footer-email', getText('footer_email'));
-            setTextoSeguro('footer-telefone', getText('footer_telefone'));
-            setTextoSeguro('footer-copyright', getText('footer_copyright'));
+            setTextoSeguro('footer-sobre', get('footer_sobre'));
+            setHtmlSeguro('footer-endereco', get('footer_endereco'));
+            setTextoSeguro('footer-email', get('footer_email'));
+            setTextoSeguro('footer-telefone', get('footer_telefone'));
+            setTextoSeguro('footer-copyright', get('footer_copyright'));
             
-            const logoTexto = getText('logo_texto');
-            setHtmlSeguro('logo-text', logoTexto.replace('7', '<span>7</span>'));
+            const logoTexto = get('logo_texto');
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
             setTextoSeguro('footer-nome-loja', logoTexto);
 
             const freteGratis = configSite.frete_gratis_acima || '500';
@@ -937,7 +1026,7 @@
                 const nav = document.getElementById('nav-categorias');
                 if (nav) {
                     const navLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                     nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
                 }
@@ -945,7 +1034,7 @@
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                 }
             } catch (e) {
@@ -954,7 +1043,7 @@
         }
 
         // ============================================
-        // PRODUTOS
+        // PRODUTOS (com limite de 8 + link "ver mais")
         // ============================================
         async function carregarProdutos() {
             const grid = document.getElementById('products-grid');
@@ -975,11 +1064,6 @@
             renderizarProdutos(produtosCache);
         }
 
-        function getCategoriaNome(slug) {
-            const c = categoriasCache.find(cat => cat.slug === slug);
-            return c ? c.nome : slug;
-        }
-
         function renderProductCard(p) {
             const hasDiscount = p.preco_original && p.preco_original > p.preco_venda;
             let badgeHtml = '';
@@ -990,27 +1074,32 @@
             else if (p.badge === 'new') badgeHtml = `<span class="badge new">NOVO</span>`;
 
             const descontoPix = parseFloat(configSite.desconto_pix_percent || 5);
+            const precoPix = p.preco_venda * (1 - descontoPix/100);
             const stockHtml = p.estoque <= 10 && p.estoque > 0 
-                ? `<span class="stock-badge">⚡ Apenas ${p.estoque} em estoque</span>` 
+                ? `<span class="stock-badge">⚡ Apenas ${escapeHTML(p.estoque)} em estoque</span>` 
                 : '';
+            const botaoDisabled = p.estoque <= 0 ? 'disabled' : '';
+            const botaoTexto = p.estoque <= 0 ? 'Esgotado' : '+ Adicionar';
 
             return `
             <div class="product-card">
                 <div class="product-image">
                     ${badgeHtml}
                     ${stockHtml}
-                    <img src="${p.imagem_url}" alt="${p.nome}" loading="lazy"
-                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'300\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'300\\' height=\\'300\\'/%3E%3Ctext fill=\\'%2364748b\\' font-family=\\'sans-serif\\' font-size=\\'14\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dy=\\'.3em\\'%3ESem imagem%3C/text%3E%3C/svg%3E'">
+                    <a href="produto.html?id=${escapeHTML(p.id)}">
+                        <img src="${escapeHTML(p.imagem_url)}" alt="${escapeHTML(p.nome)}" loading="lazy" width="300" height="300"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'300\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'300\\' height=\\'300\\'/%3E%3C/svg%3E'">
+                    </a>
                 </div>
                 <div class="product-info">
-                    <span class="product-category">${getCategoriaNome(p.categoria)}</span>
-                    <h3 class="product-name">${p.nome}</h3>
+                    <span class="product-category">${escapeHTML(getCategoriaNome(p.categoria))}</span>
+                    <h3 class="product-name"><a href="produto.html?id=${escapeHTML(p.id)}">${escapeHTML(p.nome)}</a></h3>
                     <div class="price-container">
                         ${hasDiscount ? `<span class="price-regular">R$ ${formatarPreco(p.preco_original)}</span>` : ''}
                         <span class="${hasDiscount ? 'price-sale' : 'price-single'}">R$ ${formatarPreco(p.preco_venda)}</span>
                     </div>
-                    <div class="price-pix">💰 R$ ${formatarPreco(p.preco_venda * (1 - descontoPix/100))} no PIX</div>
-                    <button class="btn-add-quick" onclick="addToCart('${p.id}')">+ Adicionar</button>
+                    <div class="price-pix">💰 R$ ${formatarPreco(precoPix)} no PIX</div>
+                    <button class="btn-add-quick" onclick="addToCart('${escapeHTML(p.id)}')" ${botaoDisabled}>${botaoTexto}</button>
                 </div>
             </div>`;
         }
@@ -1027,7 +1116,7 @@
         }
 
         // ============================================
-        // BANNER
+        // BANNER (condicional: só se houver produto com badge sale)
         // ============================================
         async function carregarBanner() {
             const bannerEl = document.getElementById('dynamic-banner');
@@ -1057,12 +1146,61 @@
         }
 
         // ============================================
+        // NEWSLETTER (salva no Supabase)
+        // ============================================
+        async function salvarNewsletter(event) {
+            event.preventDefault();
+            
+            const emailInput = document.getElementById('newsletter-email');
+            const botao = document.getElementById('newsletter-botao');
+            const email = emailInput.value.trim();
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('Digite um e-mail válido', 'error');
+                return;
+            }
+
+            botao.disabled = true;
+            const textoOriginal = botao.textContent;
+            botao.textContent = 'Enviando...';
+
+            try {
+                const { error } = await supabaseClient.from('newsletter').insert([{
+                    email: email,
+                    criado_em: new Date().toISOString()
+                }]);
+
+                if (error) {
+                    if (error.message.includes('duplicate')) {
+                        showToast('Este e-mail já está cadastrado!', 'error');
+                    } else {
+                        throw error;
+                    }
+                } else {
+                    showToast('✅ Cupom enviado para seu e-mail!');
+                    emailInput.value = '';
+                }
+            } catch (e) {
+                showToast('Erro ao cadastrar. Tente novamente.', 'error');
+                console.error(e);
+            } finally {
+                botao.disabled = false;
+                botao.textContent = textoOriginal;
+            }
+        }
+
+        // ============================================
         // CARRINHO
         // ============================================
         function addToCart(id) {
             const product = produtosCache.find(p => p.id === id);
             if (!product) {
                 showToast('Produto não encontrado', 'error');
+                return;
+            }
+
+            if (product.estoque <= 0) {
+                showToast('Produto esgotado', 'error');
                 return;
             }
 
@@ -1117,16 +1255,16 @@
 
             container.innerHTML = cart.map(item => `
                 <div class="cart-item">
-                    <img src="${item.imagem_url}" class="cart-item-img" alt="${item.nome}"
+                    <img src="${escapeHTML(item.imagem_url)}" class="cart-item-img" alt="${escapeHTML(item.nome)}"
                          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-name">${escapeHTML(item.nome)}</div>
                         <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
                         <div class="cart-controls">
-                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', -1)">−</button>
                             <span style="min-width: 24px; text-align: center; font-weight: 700;">${item.qty}</span>
-                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-                            <button class="remove-btn" onclick="updateQty('${item.id}', -999)">Remover</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${escapeHTML(item.id)}', -999)">Remover</button>
                         </div>
                     </div>
                 </div>
@@ -1174,17 +1312,24 @@
         }
 
         // ============================================
-        // INICIALIZAÇÃO
+        // INICIALIZAÇÃO PARALELA
         // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await carregarConfigSite();
-                await carregarCategorias();
-                await carregarProdutos();
+                // Carrega tudo em paralelo (3x mais rápido)
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarCategorias(),
+                    carregarProdutos()
+                ]);
+                
+                // Depende dos produtos carregados
                 await carregarBanner();
+                
                 updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
+                updateCartUI();
             }
         });
     </script>

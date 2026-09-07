@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos | S7TE</title>
-    <meta name="description" content="Catálogo completo de produtos para odontologia digital.">
+    <meta name="description" content="Catálogo completo de produtos para odontologia digital. Filtre por categoria, preço e ordenação.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Produtos | S7TE">
+    <meta property="og:description" content="Catálogo completo de produtos para odontologia digital.">
+    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +55,6 @@
         button { font-family: inherit; cursor: pointer; border: none; background: none; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-        /* Barra de urgência */
         .urgency-bar {
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
@@ -58,7 +66,6 @@
         }
         .urgency-bar strong { color: var(--gold); }
 
-        /* Header */
         header {
             position: sticky;
             top: 0;
@@ -125,7 +132,6 @@
             justify-content: center;
         }
 
-        /* Page Header */
         .page-header { 
             padding: 60px 0; 
             background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
@@ -139,7 +145,6 @@
         }
         .page-header p { opacity: 0.9; font-size: 1.1rem; }
         
-        /* Breadcrumb */
         .breadcrumb {
             padding: 20px 0;
             font-size: 0.9rem;
@@ -148,6 +153,97 @@
         .breadcrumb a { color: var(--cobalt-main); font-weight: 600; }
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { margin: 0 8px; }
+
+        /* Barra de busca e filtros */
+        .filters-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 44px 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+            box-shadow: 0 0 0 3px rgba(26, 79, 184, 0.1);
+        }
+        .search-box .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+        
+        .filter-select {
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+        }
+
+        .price-filters {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .price-filters input {
+            width: 90px;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .price-filters input:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+        }
+
+        .btn-filter {
+            padding: 12px 24px;
+            background: var(--cobalt-main);
+            color: white;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .btn-filter:hover { background: var(--cobalt-deep); }
+        .btn-clear {
+            padding: 12px 16px;
+            background: transparent;
+            color: var(--text-gray);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .btn-clear:hover { border-color: var(--danger); color: var(--danger); }
 
         /* Filtros de categoria */
         .category-filters {
@@ -181,7 +277,6 @@
             border-color: transparent;
         }
 
-        /* Info de resultados */
         .results-info {
             display: flex;
             justify-content: space-between;
@@ -199,7 +294,6 @@
             font-weight: 700;
         }
 
-        /* Grid de produtos */
         .products-section { padding: 40px 0 80px; }
         .products-grid {
             display: grid;
@@ -297,6 +391,8 @@
             line-height: 1.4;
             flex: 1;
         }
+        .product-name a { color: inherit; }
+        .product-name a:hover { color: var(--cobalt-main); }
         
         .price-container { 
             display: flex; 
@@ -342,6 +438,54 @@
             background: linear-gradient(135deg, var(--cobalt-bright), var(--cobalt-main));
             transform: scale(1.02);
         }
+        .btn-add-quick:disabled {
+            background: var(--text-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Paginação */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            min-width: 44px;
+            height: 44px;
+            padding: 0 12px;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--cobalt-main);
+            color: var(--cobalt-main);
+        }
+        .page-btn.active {
+            background: var(--cobalt-main);
+            color: white;
+            border-color: var(--cobalt-main);
+        }
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .page-info {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin: 0 12px;
+        }
 
         /* Estado vazio */
         .empty-state {
@@ -360,6 +504,15 @@
         }
         .empty-state p {
             color: var(--text-gray);
+            margin-bottom: 24px;
+        }
+        .btn-reset {
+            display: inline-block;
+            padding: 12px 32px;
+            background: var(--cobalt-main);
+            color: white;
+            border-radius: var(--radius);
+            font-weight: 700;
         }
 
         /* Loading */
@@ -379,7 +532,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Footer */
         footer { 
             background: var(--cobalt-deep); 
             color: white; 
@@ -419,7 +571,6 @@
         }
         .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
 
-        /* Carrinho lateral */
         .cart-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 42, 110, 0.6); z-index: 1999;
@@ -537,7 +688,6 @@
             box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -552,11 +702,11 @@
             opacity: 0;
             transform: translateX(400px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
         }
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.error { background: var(--danger); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4); }
 
-        /* Responsivo */
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -572,6 +722,8 @@
             
             .category-filters { gap: 8px; }
             .filter-btn { padding: 8px 16px; font-size: 0.8rem; }
+            .filters-bar { flex-direction: column; align-items: stretch; }
+            .price-filters { justify-content: space-between; }
 
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; text-align: center; }
@@ -624,6 +776,31 @@
 
         <section class="products-section">
             <div class="container">
+                <!-- Barra de busca e filtros -->
+                <div class="filters-bar">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Buscar produtos..." onkeyup="if(event.key==='Enter') aplicarFiltros()">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    
+                    <select class="filter-select" id="sort-select" onchange="aplicarFiltros()">
+                        <option value="recentes">Mais recentes</option>
+                        <option value="preco-asc">Menor preço</option>
+                        <option value="preco-desc">Maior preço</option>
+                        <option value="nome">Nome (A-Z)</option>
+                    </select>
+
+                    <div class="price-filters">
+                        <input type="number" id="price-min" placeholder="R$ mín" min="0" step="0.01">
+                        <span>—</span>
+                        <input type="number" id="price-max" placeholder="R$ máx" min="0" step="0.01">
+                    </div>
+
+                    <button class="btn-filter" onclick="aplicarFiltros()">Filtrar</button>
+                    <button class="btn-clear" onclick="limparFiltros()">Limpar</button>
+                </div>
+
+                <!-- Filtros de categoria -->
                 <div class="category-filters" id="category-filters">
                     <button class="filter-btn active" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>
                 </div>
@@ -637,6 +814,9 @@
                 <div id="products-grid" class="products-grid">
                     <div class="loading-spinner"><div class="spinner"></div></div>
                 </div>
+
+                <!-- Paginação -->
+                <div id="pagination" class="pagination" style="display: none;"></div>
             </div>
         </section>
     </main>
@@ -703,13 +883,35 @@
         let configSite = {};
         let categoriasCache = [];
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
-        let categoriaAtual = 'todos';
+        
+        // Estado dos filtros
+        let filtros = {
+            categoria: 'todos',
+            busca: '',
+            ordenacao: 'recentes',
+            precoMin: null,
+            precoMax: null,
+            pagina: 1,
+            porPagina: 12
+        };
+        let totalProdutos = 0;
 
         // ============================================
-        // HELPERS
+        // HELPERS COM SANITIZAÇÃO
         // ============================================
         function formatarPreco(valor) {
-            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function showToast(msg, type = 'success') {
@@ -717,21 +919,27 @@
             if (!toast) return;
             toast.textContent = msg;
             toast.className = 'toast show' + (type === 'error' ? ' error' : '');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
         function setTextoSeguro(id, texto) {
             const el = document.getElementById(id);
-            if (el) el.textContent = texto;
+            if (el) el.textContent = texto || '';
         }
 
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
-            if (el) el.innerHTML = html;
+            if (el) el.innerHTML = html || '';
+        }
+
+        function getCategoriaNome(slug) {
+            const c = categoriasCache.find(cat => cat.slug === slug);
+            return c ? c.nome : slug || '-';
         }
 
         // ============================================
-        // CARREGAR CONFIGURAÇÕES
+        // CARREGAMENTO PARALELO
         // ============================================
         async function carregarConfigSite() {
             const padroes = {
@@ -750,17 +958,21 @@
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => padroes[c.chave] = c.valor);
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
                 }
             } catch (e) {
                 console.warn('Usando valores padrão:', e);
             }
 
             configSite = padroes;
+            aplicarConfigSite();
+        }
 
+        function aplicarConfigSite() {
             setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            setHtmlSeguro('logo-text', configSite.logo_texto.replace('7', '<span>7</span>'));
-            setTextoSeguro('footer-nome-loja', configSite.logo_texto);
+            const logoTexto = configSite.logo_texto || 'S7TE';
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', logoTexto);
             setTextoSeguro('footer-sobre', configSite.footer_sobre);
             setHtmlSeguro('footer-endereco', configSite.footer_endereco);
             setTextoSeguro('footer-email', configSite.footer_email);
@@ -777,7 +989,7 @@
                 const nav = document.getElementById('nav-categorias');
                 if (nav) {
                     const navLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                     nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
                 }
@@ -785,39 +997,34 @@
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                 }
 
-                renderizarFiltros();
+                renderizarFiltrosCategoria();
             } catch (e) {
                 console.warn('Erro ao carregar categorias:', e);
             }
         }
 
-        function renderizarFiltros() {
+        function renderizarFiltrosCategoria() {
             const container = document.getElementById('category-filters');
             if (!container) return;
 
-            let html = `<button class="filter-btn ${categoriaAtual === 'todos' ? 'active' : ''}" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>`;
+            let html = `<button class="filter-btn ${filtros.categoria === 'todos' ? 'active' : ''}" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>`;
             
             categoriasCache.forEach(c => {
-                const isActive = categoriaAtual === c.slug;
-                html += `<button class="filter-btn ${isActive ? 'active' : ''}" data-cat="${c.slug}" onclick="filtrarCategoria('${c.slug}', this)">${c.nome}</button>`;
+                const isActive = filtros.categoria === c.slug;
+                html += `<button class="filter-btn ${isActive ? 'active' : ''}" data-cat="${escapeHTML(c.slug)}" onclick="filtrarCategoria('${escapeHTML(c.slug)}', this)">${escapeHTML(c.nome)}</button>`;
             });
 
-            html += `<button class="filter-btn ${categoriaAtual === 'promocoes' ? 'promo-active' : ''}" data-cat="promocoes" onclick="filtrarCategoria('promocoes', this)">🔥 Promoções</button>`;
+            html += `<button class="filter-btn ${filtros.categoria === 'promocoes' ? 'promo-active' : ''}" data-cat="promocoes" onclick="filtrarCategoria('promocoes', this)">🔥 Promoções</button>`;
 
             container.innerHTML = html;
         }
 
-        function getCategoriaNome(slug) {
-            const c = categoriasCache.find(cat => cat.slug === slug);
-            return c ? c.nome : slug;
-        }
-
         // ============================================
-        // PRODUTOS
+        // PRODUTOS COM PAGINAÇÃO SERVER-SIDE
         // ============================================
         async function carregarProdutos() {
             const grid = document.getElementById('products-grid');
@@ -825,15 +1032,54 @@
 
             grid.innerHTML = '<div class="loading-spinner"><div class="spinner"></div></div>';
 
-            let query = supabaseClient.from('produtos').select('*').order('criado_em', { ascending: false });
+            const from = (filtros.pagina - 1) * filtros.porPagina;
+            const to = from + filtros.porPagina - 1;
 
-            if (categoriaAtual === 'promocoes') {
+            let query = supabaseClient
+                .from('produtos')
+                .select('*', { count: 'exact' });
+
+            // Filtro de categoria
+            if (filtros.categoria === 'promocoes') {
                 query = query.eq('badge', 'sale');
-            } else if (categoriaAtual !== 'todos') {
-                query = query.eq('categoria', categoriaAtual);
+            } else if (filtros.categoria !== 'todos') {
+                query = query.eq('categoria', filtros.categoria);
             }
 
-            const { data, error } = await query;
+            // Filtro de busca
+            if (filtros.busca) {
+                query = query.ilike('nome', `%${filtros.busca}%`);
+            }
+
+            // Filtro de preço
+            if (filtros.precoMin !== null && filtros.precoMin > 0) {
+                query = query.gte('preco_venda', filtros.precoMin);
+            }
+            if (filtros.precoMax !== null && filtros.precoMax > 0) {
+                query = query.lte('preco_venda', filtros.precoMax);
+            }
+
+            // Ordenação
+            switch (filtros.ordenacao) {
+                case 'preco-asc':
+                    query = query.order('preco_venda', { ascending: true });
+                    break;
+                case 'preco-desc':
+                    query = query.order('preco_venda', { ascending: false });
+                    break;
+                case 'nome':
+                    query = query.order('nome', { ascending: true });
+                    break;
+                case 'recentes':
+                default:
+                    query = query.order('criado_em', { ascending: false });
+                    break;
+            }
+
+            // Paginação
+            query = query.range(from, to);
+
+            const { data, error, count } = await query;
 
             if (error) {
                 grid.innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><h3>Erro ao carregar produtos</h3><p>Tente novamente mais tarde.</p></div>';
@@ -841,8 +1087,12 @@
             }
 
             produtosCache = data || [];
+            totalProdutos = count || 0;
+            
             renderizarProdutos(produtosCache);
+            renderizarPaginacao();
             atualizarTitulo();
+            atualizarURL();
         }
 
         function atualizarTitulo() {
@@ -851,32 +1101,31 @@
                 'promocoes': { titulo: '🔥 Promoções Imperdíveis', sub: 'Ofertas exclusivas com até 40% OFF por tempo limitado' }
             };
 
-            if (titulos[categoriaAtual]) {
-                setTextoSeguro('page-title', titulos[categoriaAtual].titulo);
-                setTextoSeguro('page-subtitle', titulos[categoriaAtual].sub);
-                setTextoSeguro('breadcrumb-current', titulos[categoriaAtual].titulo);
+            if (titulos[filtros.categoria]) {
+                setTextoSeguro('page-title', titulos[filtros.categoria].titulo);
+                setTextoSeguro('page-subtitle', titulos[filtros.categoria].sub);
+                setTextoSeguro('breadcrumb-current', titulos[filtros.categoria].titulo);
             } else {
-                const nomeCat = getCategoriaNome(categoriaAtual);
+                const nomeCat = getCategoriaNome(filtros.categoria);
                 setTextoSeguro('page-title', nomeCat);
                 setTextoSeguro('page-subtitle', `Confira nossa seleção de ${nomeCat.toLowerCase()}`);
                 setTextoSeguro('breadcrumb-current', nomeCat);
             }
 
-            setTextoSeguro('results-count', produtosCache.length.toString());
+            setTextoSeguro('results-count', totalProdutos.toString());
         }
 
-        function filtrarCategoria(cat, btn) {
-            categoriaAtual = cat;
+        function atualizarURL() {
+            const params = new URLSearchParams();
+            if (filtros.categoria !== 'todos') params.set('cat', filtros.categoria);
+            if (filtros.pagina > 1) params.set('page', filtros.pagina);
+            if (filtros.busca) params.set('q', filtros.busca);
+            if (filtros.ordenacao !== 'recentes') params.set('ord', filtros.ordenacao);
+            if (filtros.precoMin) params.set('min', filtros.precoMin);
+            if (filtros.precoMax) params.set('max', filtros.precoMax);
             
-            document.querySelectorAll('.filter-btn').forEach(b => {
-                b.classList.remove('active', 'promo-active');
-            });
-            
-            if (btn) {
-                btn.classList.add(cat === 'promocoes' ? 'promo-active' : 'active');
-            }
-            
-            carregarProdutos();
+            const novaUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+            window.history.replaceState({}, '', novaUrl);
         }
 
         function renderProductCard(p) {
@@ -889,27 +1138,32 @@
             else if (p.badge === 'new') badgeHtml = `<span class="badge new">NOVO</span>`;
 
             const descontoPix = parseFloat(configSite.desconto_pix_percent || 5);
+            const precoPix = p.preco_venda * (1 - descontoPix/100);
             const stockHtml = p.estoque <= 10 && p.estoque > 0 
-                ? `<span class="stock-badge">⚡ Apenas ${p.estoque} em estoque</span>` 
+                ? `<span class="stock-badge">⚡ Apenas ${escapeHTML(p.estoque)} em estoque</span>` 
                 : '';
+            const botaoDisabled = p.estoque <= 0 ? 'disabled' : '';
+            const botaoTexto = p.estoque <= 0 ? 'Esgotado' : '+ Adicionar';
 
             return `
             <div class="product-card">
                 <div class="product-image">
                     ${badgeHtml}
                     ${stockHtml}
-                    <img src="${p.imagem_url}" alt="${p.nome}" loading="lazy"
-                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'300\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'300\\' height=\\'300\\'/%3E%3Ctext fill=\\'%2364748b\\' font-family=\\'sans-serif\\' font-size=\\'14\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dy=\\'.3em\\'%3ESem imagem%3C/text%3E%3C/svg%3E'">
+                    <a href="produto.html?id=${escapeHTML(p.id)}">
+                        <img src="${escapeHTML(p.imagem_url)}" alt="${escapeHTML(p.nome)}" loading="lazy" width="300" height="300"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'300\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'300\\' height=\\'300\\'/%3E%3C/svg%3E'">
+                    </a>
                 </div>
                 <div class="product-info">
-                    <span class="product-category">${getCategoriaNome(p.categoria)}</span>
-                    <h3 class="product-name">${p.nome}</h3>
+                    <span class="product-category">${escapeHTML(getCategoriaNome(p.categoria))}</span>
+                    <h3 class="product-name"><a href="produto.html?id=${escapeHTML(p.id)}">${escapeHTML(p.nome)}</a></h3>
                     <div class="price-container">
                         ${hasDiscount ? `<span class="price-regular">R$ ${formatarPreco(p.preco_original)}</span>` : ''}
                         <span class="${hasDiscount ? 'price-sale' : 'price-single'}">R$ ${formatarPreco(p.preco_venda)}</span>
                     </div>
-                    <div class="price-pix">💰 R$ ${formatarPreco(p.preco_venda * (1 - descontoPix/100))} no PIX</div>
-                    <button class="btn-add-quick" onclick="addToCart('${p.id}')">+ Adicionar</button>
+                    <div class="price-pix">💰 R$ ${formatarPreco(precoPix)} no PIX</div>
+                    <button class="btn-add-quick" onclick="addToCart('${escapeHTML(p.id)}')" ${botaoDisabled}>${botaoTexto}</button>
                 </div>
             </div>`;
         }
@@ -923,11 +1177,123 @@
                     <div class="empty-state">
                         <div class="icon">📦</div>
                         <h3>Nenhum produto encontrado</h3>
-                        <p>Tente outra categoria ou volte em breve.</p>
+                        <p>Tente ajustar os filtros ou a busca.</p>
+                        <button class="btn-reset" onclick="limparFiltros()">Limpar Filtros</button>
                     </div>`;
                 return;
             }
             grid.innerHTML = produtos.map(renderProductCard).join('');
+        }
+
+        // ============================================
+        // PAGINAÇÃO
+        // ============================================
+        function renderizarPaginacao() {
+            const container = document.getElementById('pagination');
+            if (!container) return;
+
+            const totalPages = Math.ceil(totalProdutos / filtros.porPagina);
+            
+            if (totalPages <= 1) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'flex';
+            let html = '';
+
+            // Botão anterior
+            html += `<button class="page-btn" onclick="irParaPagina(${filtros.pagina - 1})" ${filtros.pagina === 1 ? 'disabled' : ''}>← Anterior</button>`;
+
+            // Números de página
+            const maxButtons = 5;
+            let startPage = Math.max(1, filtros.pagina - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            
+            if (endPage - startPage + 1 < maxButtons) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<button class="page-btn" onclick="irParaPagina(1)">1</button>`;
+                if (startPage > 2) html += `<span class="page-info">...</span>`;
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="page-btn ${i === filtros.pagina ? 'active' : ''}" onclick="irParaPagina(${i})">${i}</button>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span class="page-info">...</span>`;
+                html += `<button class="page-btn" onclick="irParaPagina(${totalPages})">${totalPages}</button>`;
+            }
+
+            // Botão próxima
+            html += `<button class="page-btn" onclick="irParaPagina(${filtros.pagina + 1})" ${filtros.pagina === totalPages ? 'disabled' : ''}>Próxima →</button>`;
+
+            container.innerHTML = html;
+        }
+
+        function irParaPagina(pagina) {
+            const totalPages = Math.ceil(totalProdutos / filtros.porPagina);
+            if (pagina < 1 || pagina > totalPages) return;
+            
+            filtros.pagina = pagina;
+            carregarProdutos();
+            
+            // Scroll suave para o topo dos produtos
+            document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ============================================
+        // FILTROS
+        // ============================================
+        function filtrarCategoria(cat, btn) {
+            filtros.categoria = cat;
+            filtros.pagina = 1;
+            
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active', 'promo-active');
+            });
+            
+            if (btn) {
+                btn.classList.add(cat === 'promocoes' ? 'promo-active' : 'active');
+            }
+            
+            carregarProdutos();
+        }
+
+        function aplicarFiltros() {
+            filtros.busca = document.getElementById('search-input').value.trim();
+            filtros.ordenacao = document.getElementById('sort-select').value;
+            
+            const minVal = parseFloat(document.getElementById('price-min').value);
+            const maxVal = parseFloat(document.getElementById('price-max').value);
+            filtros.precoMin = isNaN(minVal) ? null : minVal;
+            filtros.precoMax = isNaN(maxVal) ? null : maxVal;
+            
+            filtros.pagina = 1;
+            carregarProdutos();
+        }
+
+        function limparFiltros() {
+            filtros = {
+                categoria: 'todos',
+                busca: '',
+                ordenacao: 'recentes',
+                precoMin: null,
+                precoMax: null,
+                pagina: 1,
+                porPagina: 12
+            };
+            
+            document.getElementById('search-input').value = '';
+            document.getElementById('sort-select').value = 'recentes';
+            document.getElementById('price-min').value = '';
+            document.getElementById('price-max').value = '';
+            
+            renderizarFiltrosCategoria();
+            carregarProdutos();
         }
 
         // ============================================
@@ -937,6 +1303,11 @@
             const product = produtosCache.find(p => p.id === id);
             if (!product) {
                 showToast('Produto não encontrado', 'error');
+                return;
+            }
+
+            if (product.estoque <= 0) {
+                showToast('Produto esgotado', 'error');
                 return;
             }
 
@@ -991,16 +1362,16 @@
 
             container.innerHTML = cart.map(item => `
                 <div class="cart-item">
-                    <img src="${item.imagem_url}" class="cart-item-img" alt="${item.nome}"
+                    <img src="${escapeHTML(item.imagem_url)}" class="cart-item-img" alt="${escapeHTML(item.nome)}"
                          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-name">${escapeHTML(item.nome)}</div>
                         <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
                         <div class="cart-controls">
-                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', -1)">−</button>
                             <span style="min-width: 24px; text-align: center; font-weight: 700;">${item.qty}</span>
-                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-                            <button class="remove-btn" onclick="updateQty('${item.id}', -999)">Remover</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${escapeHTML(item.id)}', -999)">Remover</button>
                         </div>
                     </div>
                 </div>
@@ -1050,19 +1421,54 @@
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
+        function lerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const cat = urlParams.get('cat');
+            if (cat) filtros.categoria = cat;
+            
+            const page = parseInt(urlParams.get('page'));
+            if (page && page > 0) filtros.pagina = page;
+            
+            const q = urlParams.get('q');
+            if (q) {
+                filtros.busca = q;
+                document.getElementById('search-input').value = q;
+            }
+            
+            const ord = urlParams.get('ord');
+            if (ord && ['recentes', 'preco-asc', 'preco-desc', 'nome'].includes(ord)) {
+                filtros.ordenacao = ord;
+                document.getElementById('sort-select').value = ord;
+            }
+            
+            const min = parseFloat(urlParams.get('min'));
+            if (!isNaN(min)) {
+                filtros.precoMin = min;
+                document.getElementById('price-min').value = min;
+            }
+            
+            const max = parseFloat(urlParams.get('max'));
+            if (!isNaN(max)) {
+                filtros.precoMax = max;
+                document.getElementById('price-max').value = max;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Ler categoria da URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const catUrl = urlParams.get('cat');
-                if (catUrl) categoriaAtual = catUrl;
-
-                await carregarConfigSite();
-                await carregarCategorias();
+                lerParametrosURL();
+                
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarCategorias()
+                ]);
+                
                 await carregarProdutos();
                 updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
+                updateCartUI();
             }
         });
     </script>

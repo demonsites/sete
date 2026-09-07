@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produto | S7TE</title>
     <meta name="description" content="Detalhes do produto.">
+    <meta id="canonical-url" rel="canonical" href="">
+    
+    <!-- Open Graph / Facebook (atualizado dinamicamente) -->
+    <meta property="og:type" content="product">
+    <meta property="og:url" id="og-url" content="">
+    <meta property="og:title" id="og-title" content="S7TE | Tecnologia em Odontologia">
+    <meta property="og:description" id="og-description" content="">
+    <meta property="og:image" id="og-image" content="">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" id="twitter-title" content="">
+    <meta property="twitter:description" id="twitter-description" content="">
+    <meta property="twitter:image" id="twitter-image" content="">
+    
+    <!-- Schema.org Product (injetado dinamicamente) -->
+    <script type="application/ld+json" id="schema-product"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,7 +143,6 @@
             justify-content: center;
         }
 
-        /* Breadcrumb */
         .breadcrumb {
             padding: 24px 0;
             font-size: 0.9rem;
@@ -133,7 +152,6 @@
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { margin: 0 8px; }
 
-        /* Produto - Layout principal */
         .product-detail {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -141,7 +159,6 @@
             padding: 20px 0 60px;
         }
 
-        /* Galeria de imagem */
         .product-gallery {
             position: sticky;
             top: 100px;
@@ -184,7 +201,6 @@
             color: white;
         }
 
-        /* Informações do produto */
         .product-info-detail {
             padding: 20px 0;
         }
@@ -200,6 +216,10 @@
             border-radius: 20px;
             margin-bottom: 16px;
         }
+        .product-category-tag:hover {
+            background: var(--cobalt-main);
+            color: white;
+        }
         .product-title {
             font-size: 2.2rem;
             font-weight: 900;
@@ -212,9 +232,9 @@
             font-size: 1.05rem;
             line-height: 1.7;
             margin-bottom: 32px;
+            white-space: pre-wrap;
         }
 
-        /* Preços */
         .price-section {
             background: var(--bg-light);
             padding: 24px;
@@ -226,6 +246,7 @@
             align-items: baseline;
             gap: 16px;
             margin-bottom: 8px;
+            flex-wrap: wrap;
         }
         .price-original {
             font-size: 1.2rem;
@@ -259,7 +280,6 @@
             margin-top: 8px;
         }
 
-        /* Estoque */
         .stock-info {
             display: flex;
             align-items: center;
@@ -277,7 +297,6 @@
             background: currentColor;
         }
 
-        /* Quantidade e botão */
         .quantity-section {
             display: flex;
             gap: 16px;
@@ -303,7 +322,8 @@
             background: white;
             transition: var(--transition);
         }
-        .qty-btn-detail:hover { background: var(--bg-light); }
+        .qty-btn-detail:hover:not(:disabled) { background: var(--bg-light); }
+        .qty-btn-detail:disabled { opacity: 0.4; cursor: not-allowed; }
         .qty-value {
             width: 60px;
             text-align: center;
@@ -338,7 +358,6 @@
             transform: none;
         }
 
-        /* Benefícios do produto */
         .product-benefits {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -358,7 +377,6 @@
             font-size: 1.2rem;
         }
 
-        /* Produtos relacionados */
         .related-section {
             padding: 60px 0 80px;
             background: var(--bg-light);
@@ -426,6 +444,8 @@
             line-height: 1.4;
             flex: 1;
         }
+        .product-name a { color: inherit; }
+        .product-name a:hover { color: var(--cobalt-main); }
         
         .price-container { 
             display: flex; 
@@ -460,8 +480,11 @@
         .btn-add-quick:hover { 
             background: linear-gradient(135deg, var(--cobalt-bright), var(--cobalt-main));
         }
+        .btn-add-quick:disabled {
+            background: var(--text-gray);
+            cursor: not-allowed;
+        }
 
-        /* Loading e estados */
         .loading-spinner {
             display: flex;
             justify-content: center;
@@ -493,7 +516,6 @@
             font-weight: 700;
         }
 
-        /* Footer */
         footer { 
             background: var(--cobalt-deep); 
             color: white; 
@@ -529,7 +551,6 @@
         }
         .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
 
-        /* Carrinho lateral */
         .cart-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 42, 110, 0.6); z-index: 1999;
@@ -659,11 +680,11 @@
             opacity: 0;
             transform: translateX(400px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
         }
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.error { background: var(--danger); }
 
-        /* Responsivo */
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -809,10 +830,21 @@
         let quantidadeSelecionada = 1;
 
         // ============================================
-        // HELPERS
+        // HELPERS COM SANITIZAÇÃO
         // ============================================
         function formatarPreco(valor) {
-            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function showToast(msg, type = 'success') {
@@ -820,26 +852,31 @@
             if (!toast) return;
             toast.textContent = msg;
             toast.className = 'toast show' + (type === 'error' ? ' error' : '');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
         function setTextoSeguro(id, texto) {
             const el = document.getElementById(id);
-            if (el) el.textContent = texto;
+            if (el) el.textContent = texto || '';
         }
 
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
-            if (el) el.innerHTML = html;
+            if (el) el.innerHTML = html || '';
         }
 
         function getCategoriaNome(slug) {
             const c = categoriasCache.find(cat => cat.slug === slug);
-            return c ? c.nome : slug;
+            return c ? c.nome : slug || '-';
+        }
+
+        function getCategoriaSlug(slug) {
+            return slug || 'todos';
         }
 
         // ============================================
-        // CARREGAR CONFIGURAÇÕES
+        // CARREGAMENTO PARALELO
         // ============================================
         async function carregarConfigSite() {
             const padroes = {
@@ -858,17 +895,21 @@
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => padroes[c.chave] = c.valor);
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
                 }
             } catch (e) {
                 console.warn('Usando valores padrão:', e);
             }
 
             configSite = padroes;
+            aplicarConfigSite();
+        }
 
+        function aplicarConfigSite() {
             setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            setHtmlSeguro('logo-text', configSite.logo_texto.replace('7', '<span>7</span>'));
-            setTextoSeguro('footer-nome-loja', configSite.logo_texto);
+            const logoTexto = configSite.logo_texto || 'S7TE';
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', logoTexto);
             setTextoSeguro('footer-sobre', configSite.footer_sobre);
             setHtmlSeguro('footer-endereco', configSite.footer_endereco);
             setTextoSeguro('footer-email', configSite.footer_email);
@@ -885,7 +926,7 @@
                 const nav = document.getElementById('nav-categorias');
                 if (nav) {
                     const navLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                     nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
                 }
@@ -893,7 +934,7 @@
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                 }
             } catch (e) {
@@ -926,10 +967,73 @@
 
             produtoAtual = data;
             renderizarProduto(data);
-            document.title = `${data.nome} | S7TE`;
-            setTextoSeguro('breadcrumb-product', data.nome);
+            atualizarSEODinamico(data);
+            atualizarBreadcrumb(data);
             
             carregarRelacionados(data.categoria, data.id);
+        }
+
+        // 🔍 SEO DINÂMICO — atualiza metatags por produto
+        function atualizarSEODinamico(p) {
+            const titulo = `${p.nome} | S7TE`;
+            const descricao = (p.descricao || `Confira ${p.nome} com o melhor preço na S7TE. Entrega rápida e garantia de autenticidade.`).substring(0, 160);
+            const urlAtual = window.location.href;
+
+            document.title = titulo;
+
+            const metaDescription = document.querySelector('meta[name="description"]');
+            if (metaDescription) metaDescription.setAttribute('content', descricao);
+
+            // Open Graph
+            setTextoSeguro('og-title', titulo);
+            setTextoSeguro('og-description', descricao);
+            document.getElementById('og-url')?.setAttribute('content', urlAtual);
+            document.getElementById('og-image')?.setAttribute('content', p.imagem_url || '');
+
+            // Twitter
+            setTextoSeguro('twitter-title', titulo);
+            setTextoSeguro('twitter-description', descricao);
+            document.getElementById('twitter-image')?.setAttribute('content', p.imagem_url || '');
+
+            // Canonical
+            document.getElementById('canonical-url')?.setAttribute('href', urlAtual);
+
+            // Schema.org Product
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": p.nome,
+                "image": p.imagem_url || '',
+                "description": descricao,
+                "brand": {
+                    "@type": "Brand",
+                    "name": "S7TE"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "BRL",
+                    "price": p.preco_venda,
+                    "availability": p.estoque > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+                    "url": urlAtual
+                }
+            };
+            document.getElementById('schema-product').textContent = JSON.stringify(schema);
+        }
+
+        function atualizarBreadcrumb(p) {
+            const breadcrumb = document.getElementById('breadcrumb');
+            if (!breadcrumb) return;
+            
+            const catSlug = getCategoriaSlug(p.categoria);
+            const catNome = getCategoriaNome(p.categoria);
+            
+            breadcrumb.innerHTML = `
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="produtos.html?cat=${escapeHTML(catSlug)}">${escapeHTML(catNome)}</a>
+                <span>/</span>
+                <strong>${escapeHTML(p.nome)}</strong>
+            `;
         }
 
         function renderizarProduto(p) {
@@ -951,7 +1055,6 @@
                 badgeHtml = `<span class="badge new">NOVO</span>`;
             }
 
-            let stockHtml = '';
             let stockClass = 'in-stock';
             let stockText = '✓ Em estoque';
             
@@ -960,8 +1063,11 @@
                 stockText = '✗ Fora de estoque';
             } else if (p.estoque <= 10) {
                 stockClass = 'low-stock';
-                stockText = `⚡ Apenas ${p.estoque} unidades restantes!`;
+                stockText = `⚡ Apenas ${escapeHTML(p.estoque)} unidades restantes!`;
             }
+
+            const catSlug = getCategoriaSlug(p.categoria);
+            const catNome = getCategoriaNome(p.categoria);
 
             container.innerHTML = `
                 <div class="container">
@@ -969,16 +1075,16 @@
                         <div class="product-gallery">
                             <div class="main-image">
                                 ${badgeHtml}
-                                <img src="${p.imagem_url}" alt="${p.nome}"
-                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'600\\' height=\\'600\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'600\\' height=\\'600\\'/%3E%3Ctext fill=\\'%2364748b\\' font-family=\\'sans-serif\\' font-size=\\'20\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dy=\\'.3em\\'%3ESem imagem%3C/text%3E%3C/svg%3E'">
+                                <img src="${escapeHTML(p.imagem_url)}" alt="${escapeHTML(p.nome)}" width="600" height="600"
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'600\\' height=\\'600\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'600\\' height=\\'600\\'/%3E%3C/svg%3E'">
                             </div>
                         </div>
 
                         <div class="product-info-detail">
-                            <span class="product-category-tag">${getCategoriaNome(p.categoria)}</span>
-                            <h1 class="product-title">${p.nome}</h1>
+                            <a href="produtos.html?cat=${escapeHTML(catSlug)}" class="product-category-tag">${escapeHTML(catNome)}</a>
+                            <h1 class="product-title">${escapeHTML(p.nome)}</h1>
                             
-                            ${p.descricao ? `<p class="product-description">${p.descricao}</p>` : ''}
+                            ${p.descricao ? `<p class="product-description">${escapeHTML(p.descricao)}</p>` : ''}
 
                             <div class="price-section">
                                 <div class="price-row">
@@ -986,7 +1092,7 @@
                                     <span class="price-current">R$ ${formatarPreco(p.preco_venda)}</span>
                                     ${hasDiscount ? `<span class="price-discount-tag">-${Math.round((1 - p.preco_venda / p.preco_original) * 100)}%</span>` : ''}
                                 </div>
-                                <div class="price-pix-detail">💰 R$ ${formatarPreco(precoPix)} no PIX (${descontoPix}% off)</div>
+                                <div class="price-pix-detail">💰 R$ ${formatarPreco(precoPix)} no PIX (${escapeHTML(descontoPix)}% off)</div>
                                 <div class="price-installments">ou 6x de R$ ${formatarPreco(precoParcela)} sem juros</div>
                             </div>
 
@@ -998,9 +1104,9 @@
                             ${p.estoque > 0 ? `
                             <div class="quantity-section">
                                 <div class="quantity-control">
-                                    <button class="qty-btn-detail" onclick="alterarQuantidade(-1)">−</button>
+                                    <button class="qty-btn-detail" onclick="alterarQuantidade(-1)" id="qty-minus" disabled>−</button>
                                     <span class="qty-value" id="qty-value">1</span>
-                                    <button class="qty-btn-detail" onclick="alterarQuantidade(1)">+</button>
+                                    <button class="qty-btn-detail" onclick="alterarQuantidade(1)" id="qty-plus">+</button>
                                 </div>
                                 <button class="btn-add-cart" onclick="adicionarAoCarrinho()">
                                     🛒 Adicionar ao Carrinho
@@ -1015,7 +1121,7 @@
                             <div class="product-benefits">
                                 <div class="benefit-item-detail">
                                     <span class="icon">🚚</span>
-                                    <span>Frete grátis acima de R$ ${configSite.frete_gratis_acima || '500'}</span>
+                                    <span>Frete grátis acima de R$ ${escapeHTML(configSite.frete_gratis_acima || '500')}</span>
                                 </div>
                                 <div class="benefit-item-detail">
                                     <span class="icon">💳</span>
@@ -1044,8 +1150,8 @@
                 <div class="container">
                     <div class="error-state">
                         <div class="icon">😕</div>
-                        <h2>${titulo}</h2>
-                        <p>${mensagem}</p>
+                        <h2>${escapeHTML(titulo)}</h2>
+                        <p>${escapeHTML(mensagem)}</p>
                         <a href="produtos.html" class="btn-back">← Voltar aos produtos</a>
                     </div>
                 </div>
@@ -1061,6 +1167,12 @@
             if (quantidadeSelecionada > produtoAtual.estoque) quantidadeSelecionada = produtoAtual.estoque;
             
             setTextoSeguro('qty-value', quantidadeSelecionada.toString());
+            
+            // Atualiza estado dos botões
+            const btnMinus = document.getElementById('qty-minus');
+            const btnPlus = document.getElementById('qty-plus');
+            if (btnMinus) btnMinus.disabled = quantidadeSelecionada <= 1;
+            if (btnPlus) btnPlus.disabled = quantidadeSelecionada >= produtoAtual.estoque;
         }
 
         function adicionarAoCarrinho() {
@@ -1075,6 +1187,10 @@
                 }
                 existing.qty += quantidadeSelecionada;
             } else {
+                if (quantidadeSelecionada > produtoAtual.estoque) {
+                    showToast('Quantidade maior que o estoque disponível', 'error');
+                    return;
+                }
                 cart.push({ ...produtoAtual, qty: quantidadeSelecionada });
             }
 
@@ -1085,6 +1201,10 @@
             
             quantidadeSelecionada = 1;
             setTextoSeguro('qty-value', '1');
+            const btnMinus = document.getElementById('qty-minus');
+            const btnPlus = document.getElementById('qty-plus');
+            if (btnMinus) btnMinus.disabled = true;
+            if (btnPlus) btnPlus.disabled = produtoAtual.estoque <= 1;
         }
 
         // ============================================
@@ -1113,22 +1233,24 @@
 
         function renderRelatedCard(p) {
             const hasDiscount = p.preco_original && p.preco_original > p.preco_venda;
+            const botaoDisabled = p.estoque <= 0 ? 'disabled' : '';
+            const botaoTexto = p.estoque <= 0 ? 'Esgotado' : '+ Adicionar';
 
             return `
             <div class="product-card">
-                <a href="produto.html?id=${p.id}">
+                <a href="produto.html?id=${escapeHTML(p.id)}">
                     <div class="product-image">
-                        <img src="${p.imagem_url}" alt="${p.nome}" loading="lazy"
+                        <img src="${escapeHTML(p.imagem_url)}" alt="${escapeHTML(p.nome)}" loading="lazy" width="300" height="300"
                              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'300\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'300\\' height=\\'300\\'/%3E%3C/svg%3E'">
                     </div>
                 </a>
                 <div class="product-info">
-                    <h3 class="product-name">${p.nome}</h3>
+                    <h3 class="product-name"><a href="produto.html?id=${escapeHTML(p.id)}">${escapeHTML(p.nome)}</a></h3>
                     <div class="price-container">
                         ${hasDiscount ? `<span class="price-regular">R$ ${formatarPreco(p.preco_original)}</span>` : ''}
                         <span class="${hasDiscount ? 'price-sale' : 'price-single'}">R$ ${formatarPreco(p.preco_venda)}</span>
                     </div>
-                    <button class="btn-add-quick" onclick="addToCartRelated('${p.id}')">+ Adicionar</button>
+                    <button class="btn-add-quick" onclick="addToCartRelated('${escapeHTML(p.id)}')" ${botaoDisabled}>${botaoTexto}</button>
                 </div>
             </div>`;
         }
@@ -1136,6 +1258,11 @@
         function addToCartRelated(id) {
             const product = produtosRelacionados.find(p => p.id === id);
             if (!product) return;
+
+            if (product.estoque <= 0) {
+                showToast('Produto esgotado', 'error');
+                return;
+            }
 
             const existing = cart.find(item => item.id === id);
             if (existing) {
@@ -1191,16 +1318,16 @@
 
             container.innerHTML = cart.map(item => `
                 <div class="cart-item">
-                    <img src="${item.imagem_url}" class="cart-item-img" alt="${item.nome}"
+                    <img src="${escapeHTML(item.imagem_url)}" class="cart-item-img" alt="${escapeHTML(item.nome)}"
                          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'80\\' height=\\'80\\'/%3E%3C/svg%3E'">
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-name">${escapeHTML(item.nome)}</div>
                         <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
                         <div class="cart-controls">
-                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', -1)">−</button>
                             <span style="min-width: 24px; text-align: center; font-weight: 700;">${item.qty}</span>
-                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-                            <button class="remove-btn" onclick="updateQty('${item.id}', -999)">Remover</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${escapeHTML(item.id)}', -999)">Remover</button>
                         </div>
                     </div>
                 </div>
@@ -1248,16 +1375,20 @@
         }
 
         // ============================================
-        // INICIALIZAÇÃO
+        // INICIALIZAÇÃO PARALELA
         // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await carregarConfigSite();
-                await carregarCategorias();
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarCategorias()
+                ]);
+                
                 await carregarProduto();
                 updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
+                updateCartUI();
             }
         });
     </script>

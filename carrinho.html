@@ -6,6 +6,9 @@
     <title>Carrinho | S7TE</title>
     <meta name="description" content="Revise seu carrinho de compras.">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -92,7 +95,6 @@
         .nav-desktop a:hover { color: var(--cobalt-main); }
         .nav-desktop a.promo-link { color: var(--danger); }
 
-        /* Page Header */
         .page-header { 
             padding: 40px 0; 
             background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
@@ -114,7 +116,6 @@
             font-weight: 800;
         }
 
-        /* Breadcrumb */
         .breadcrumb {
             padding: 20px 0;
             font-size: 0.9rem;
@@ -124,7 +125,6 @@
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { margin: 0 8px; }
 
-        /* Layout do carrinho */
         .cart-layout {
             display: grid;
             grid-template-columns: 1fr 380px;
@@ -133,7 +133,6 @@
             align-items: start;
         }
 
-        /* Lista de itens */
         .cart-items-list {
             background: white;
             border-radius: 16px;
@@ -172,6 +171,8 @@
             color: var(--text-dark);
             margin-bottom: 4px;
         }
+        .cart-item-details h3 a { color: inherit; }
+        .cart-item-details h3 a:hover { color: var(--cobalt-main); }
         .cart-item-details .category {
             font-size: 0.8rem;
             color: var(--text-gray);
@@ -202,7 +203,8 @@
             background: white;
             transition: var(--transition);
         }
-        .qty-btn-page:hover { background: var(--bg-light); }
+        .qty-btn-page:hover:not(:disabled) { background: var(--bg-light); }
+        .qty-btn-page:disabled { opacity: 0.4; cursor: not-allowed; }
         .qty-display {
             width: 50px;
             text-align: center;
@@ -235,7 +237,6 @@
             color: white;
         }
 
-        /* Resumo do pedido */
         .cart-summary {
             background: white;
             border-radius: 16px;
@@ -366,7 +367,6 @@
             color: var(--text-gray);
         }
 
-        /* Estado vazio */
         .empty-cart {
             text-align: center;
             padding: 80px 20px;
@@ -400,7 +400,6 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Footer */
         footer { 
             background: var(--cobalt-deep); 
             color: white; 
@@ -449,11 +448,26 @@
             opacity: 0;
             transform: translateX(400px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
         }
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.error { background: var(--danger); }
 
-        /* Responsivo */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            padding: 60px 0;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--cobalt-main);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -510,7 +524,7 @@
 
         <div class="container">
             <div id="cart-content">
-                <!-- Conteúdo carregado via JavaScript -->
+                <div class="loading-spinner"><div class="spinner"></div></div>
             </div>
         </div>
     </main>
@@ -560,12 +574,26 @@
         let configSite = {};
         let categoriasCache = [];
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
+        let produtosValidados = [];
+        let itensRemovidos = [];
+        let itensAtualizados = [];
 
         // ============================================
-        // HELPERS
+        // HELPERS COM SANITIZAÇÃO
         // ============================================
         function formatarPreco(valor) {
-            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function showToast(msg, type = 'success') {
@@ -573,26 +601,27 @@
             if (!toast) return;
             toast.textContent = msg;
             toast.className = 'toast show' + (type === 'error' ? ' error' : '');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         function setTextoSeguro(id, texto) {
             const el = document.getElementById(id);
-            if (el) el.textContent = texto;
+            if (el) el.textContent = texto || '';
         }
 
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
-            if (el) el.innerHTML = html;
+            if (el) el.innerHTML = html || '';
         }
 
         function getCategoriaNome(slug) {
             const c = categoriasCache.find(cat => cat.slug === slug);
-            return c ? c.nome : slug;
+            return c ? c.nome : slug || '-';
         }
 
         // ============================================
-        // CARREGAR CONFIGURAÇÕES
+        // CARREGAMENTO PARALELO
         // ============================================
         async function carregarConfigSite() {
             const padroes = {
@@ -611,17 +640,21 @@
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => padroes[c.chave] = c.valor);
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
                 }
             } catch (e) {
                 console.warn('Usando valores padrão:', e);
             }
 
             configSite = padroes;
+            aplicarConfigSite();
+        }
 
+        function aplicarConfigSite() {
             setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            setHtmlSeguro('logo-text', configSite.logo_texto.replace('7', '<span>7</span>'));
-            setTextoSeguro('footer-nome-loja', configSite.logo_texto);
+            const logoTexto = configSite.logo_texto || 'S7TE';
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', logoTexto);
             setTextoSeguro('footer-sobre', configSite.footer_sobre);
             setHtmlSeguro('footer-endereco', configSite.footer_endereco);
             setTextoSeguro('footer-email', configSite.footer_email);
@@ -638,7 +671,7 @@
                 const nav = document.getElementById('nav-categorias');
                 if (nav) {
                     const navLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                     nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
                 }
@@ -646,11 +679,80 @@
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                 }
             } catch (e) {
                 console.warn('Erro ao carregar categorias:', e);
+            }
+        }
+
+        // ============================================
+        // VALIDAÇÃO DO CARRINHO (NOVO!)
+        // Recarrega produtos do Supabase para verificar:
+        // 1. Se ainda existem
+        // 2. Se o estoque está atualizado
+        // 3. Se os preços mudaram
+        // ============================================
+        async function validarCarrinho() {
+            if (cart.length === 0) {
+                produtosValidados = [];
+                return;
+            }
+
+            const ids = cart.map(item => item.id);
+            
+            const { data, error } = await supabaseClient
+                .from('produtos')
+                .select('*')
+                .in('id', ids);
+
+            if (error) {
+                console.error('Erro ao validar carrinho:', error);
+                produtosValidados = cart;
+                return;
+            }
+
+            const produtosMap = new Map(data.map(p => [p.id, p]));
+            const novoCarrinho = [];
+            itensRemovidos = [];
+            itensAtualizados = [];
+
+            for (const item of cart) {
+                const produtoAtual = produtosMap.get(item.id);
+                
+                if (!produtoAtual) {
+                    itensRemovidos.push(item.nome);
+                    continue;
+                }
+
+                if (produtoAtual.estoque <= 0) {
+                    itensRemovidos.push(`${item.nome} (esgotado)`);
+                    continue;
+                }
+
+                const novoItem = { ...produtoAtual };
+                novoItem.qty = Math.min(item.qty, produtoAtual.estoque);
+                
+                if (novoItem.qty !== item.qty) {
+                    itensAtualizados.push(`${produtoAtual.nome} (estoque: ${produtoAtual.estoque})`);
+                }
+                
+                novoCarrinho.push(novoItem);
+            }
+
+            produtosValidados = novoCarrinho;
+            
+            if (JSON.stringify(novoCarrinho) !== JSON.stringify(cart)) {
+                cart = novoCarrinho;
+                localStorage.setItem('s7te_cart', JSON.stringify(cart));
+            }
+
+            if (itensRemovidos.length > 0) {
+                showToast(`⚠️ Removidos: ${itensRemovidos.join(', ')}`, 'error');
+            }
+            if (itensAtualizados.length > 0) {
+                showToast(`ℹ️ Quantidades ajustadas: ${itensAtualizados.join(', ')}`);
             }
         }
 
@@ -663,12 +765,12 @@
             
             if (!container) return;
 
-            const totalItens = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalItens = produtosValidados.reduce((sum, item) => sum + item.qty, 0);
             if (countHeader) {
                 countHeader.textContent = `${totalItens} ${totalItens === 1 ? 'item' : 'itens'}`;
             }
 
-            if (cart.length === 0) {
+            if (produtosValidados.length === 0) {
                 container.innerHTML = `
                     <div class="empty-cart">
                         <div class="icon">🛒</div>
@@ -684,7 +786,7 @@
             const valorFrete = parseFloat(configSite.valor_frete || 35.90);
             const descontoPix = parseFloat(configSite.desconto_pix_percent || 5);
 
-            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const subtotal = produtosValidados.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
             const frete = subtotal >= freteGratis ? 0 : valorFrete;
             const total = subtotal + frete;
             const totalPix = total * (1 - descontoPix / 100);
@@ -694,7 +796,7 @@
             container.innerHTML = `
                 <div class="cart-layout">
                     <div class="cart-items-list">
-                        ${cart.map(item => renderizarItem(item)).join('')}
+                        ${produtosValidados.map(item => renderizarItem(item)).join('')}
                     </div>
 
                     <div class="cart-summary">
@@ -725,7 +827,7 @@
                         </div>
 
                         <div class="pix-info">
-                            <p>💰 No PIX (${descontoPix}% de desconto):</p>
+                            <p>💰 No PIX (${escapeHTML(descontoPix)}% de desconto):</p>
                             <p class="pix-total">R$ ${formatarPreco(totalPix)}</p>
                         </div>
 
@@ -748,25 +850,25 @@
             return `
                 <div class="cart-item-row">
                     <div class="cart-item-image">
-                        <a href="produto.html?id=${item.id}">
-                            <img src="${item.imagem_url}" alt="${item.nome}"
+                        <a href="produto.html?id=${escapeHTML(item.id)}">
+                            <img src="${escapeHTML(item.imagem_url)}" alt="${escapeHTML(item.nome)}"
                                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'100\\' height=\\'100\\'/%3E%3C/svg%3E'">
                         </a>
                     </div>
                     <div class="cart-item-details">
-                        <h3>${item.nome}</h3>
-                        <p class="category">${getCategoriaNome(item.categoria)}</p>
+                        <h3><a href="produto.html?id=${escapeHTML(item.id)}">${escapeHTML(item.nome)}</a></h3>
+                        <p class="category">${escapeHTML(getCategoriaNome(item.categoria))}</p>
                         <p class="unit-price">R$ ${formatarPreco(item.preco_venda)} cada</p>
                     </div>
                     <div class="cart-item-quantity">
-                        <button class="qty-btn-page" onclick="alterarQuantidade('${item.id}', -1)">−</button>
+                        <button class="qty-btn-page" onclick="alterarQuantidade('${escapeHTML(item.id)}', -1)" ${item.qty <= 1 ? 'disabled' : ''}>−</button>
                         <span class="qty-display">${item.qty}</span>
-                        <button class="qty-btn-page" onclick="alterarQuantidade('${item.id}', 1)">+</button>
+                        <button class="qty-btn-page" onclick="alterarQuantidade('${escapeHTML(item.id)}', 1)" ${item.qty >= item.estoque ? 'disabled' : ''}>+</button>
                     </div>
                     <div class="cart-item-total">
                         R$ ${formatarPreco(item.preco_venda * item.qty)}
                     </div>
-                    <button class="cart-item-remove" onclick="removerItem('${item.id}')" title="Remover item">×</button>
+                    <button class="cart-item-remove" onclick="removerItem('${escapeHTML(item.id)}')" title="Remover item">×</button>
                 </div>
             `;
         }
@@ -775,28 +877,30 @@
         // AÇÕES DO CARRINHO
         // ============================================
         function alterarQuantidade(id, delta) {
-            const item = cart.find(i => i.id === id);
+            const item = produtosValidados.find(i => i.id === id);
             if (!item) return;
 
-            item.qty += delta;
+            const novaQty = item.qty + delta;
 
-            if (item.qty <= 0) {
+            if (novaQty <= 0) {
                 removerItem(id);
                 return;
             }
 
-            if (item.qty > item.estoque) {
-                item.qty = item.estoque;
-                showToast('Estoque máximo atingido', 'error');
+            if (novaQty > item.estoque) {
+                showToast(`Estoque máximo: ${item.estoque} unidades`, 'error');
+                return;
             }
 
+            item.qty = novaQty;
             salvarCarrinho();
             renderizarCarrinho();
         }
 
         function removerItem(id) {
-            const item = cart.find(i => i.id === id);
-            cart = cart.filter(i => i.id !== id);
+            const item = produtosValidados.find(i => i.id === id);
+            produtosValidados = produtosValidados.filter(i => i.id !== id);
+            cart = produtosValidados;
             salvarCarrinho();
             renderizarCarrinho();
             if (item) showToast(`✓ ${item.nome} removido do carrinho`);
@@ -807,7 +911,7 @@
         }
 
         function irParaCheckout() {
-            if (cart.length === 0) {
+            if (produtosValidados.length === 0) {
                 showToast('Seu carrinho está vazio!', 'error');
                 return;
             }
@@ -815,15 +919,21 @@
         }
 
         // ============================================
-        // INICIALIZAÇÃO
+        // INICIALIZAÇÃO PARALELA
         // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await carregarConfigSite();
-                await carregarCategorias();
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarCategorias()
+                ]);
+                
+                await validarCarrinho();
                 renderizarCarrinho();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
+                produtosValidados = cart;
+                renderizarCarrinho();
             }
         });
     </script>

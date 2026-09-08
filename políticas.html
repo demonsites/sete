@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Políticas | S7TE</title>
-    <meta name="description" content="Políticas de reembolso, frete, termos e privacidade da S7TE.">
+    <meta name="description" content="Políticas de reembolso, frete, trocas, termos e privacidade da S7TE.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Políticas | S7TE">
+    <meta property="og:description" content="Transparência total com nossos clientes.">
+    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/politicas.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +25,7 @@
             --cobalt-deep: #0a2a6e;
             --cobalt-main: #1a4fb8;
             --cobalt-bright: #2563eb;
+            --cobalt-light: #60a5fa;
             --gold: #fbbf24;
             --gold-dark: #f59e0b;
             --success: #10b981;
@@ -45,7 +55,6 @@
         button { font-family: inherit; cursor: pointer; border: none; background: none; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* Header */
         .urgency-bar {
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
@@ -121,7 +130,6 @@
             justify-content: center;
         }
 
-        /* Page Header */
         .page-header { 
             padding: 60px 0; 
             background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
@@ -139,8 +147,12 @@
             max-width: 500px;
             margin: 0 auto;
         }
+        .page-header .last-update {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
 
-        /* Breadcrumb */
         .breadcrumb {
             padding: 16px 0;
             font-size: 0.85rem;
@@ -152,7 +164,6 @@
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { margin: 0 6px; }
 
-        /* Tabs */
         .tabs-container {
             background: white;
             border-bottom: 1px solid var(--border);
@@ -165,7 +176,6 @@
             gap: 4px;
             overflow-x: auto;
             scrollbar-width: none;
-            -ms-overflow-style: none;
             padding: 0 4px;
         }
         .tabs::-webkit-scrollbar { display: none; }
@@ -192,7 +202,6 @@
         }
         .tab-btn .icon { font-size: 1.1rem; }
 
-        /* Content */
         .content-wrapper {
             padding: 40px 0 80px;
         }
@@ -233,11 +242,12 @@
             color: var(--cobalt-deep);
             margin-bottom: 8px;
         }
-        .policy-header .updated {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
 
+        .policy-body {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
         .policy-body h3 {
             font-size: 1.2rem;
             font-weight: 800;
@@ -247,28 +257,40 @@
             border-left: 4px solid var(--gold);
         }
         .policy-body h3:first-child { margin-top: 0; }
-
-        .policy-body p {
-            color: var(--text-gray);
-            margin-bottom: 16px;
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        .policy-body ul, .policy-body ol {
-            margin: 12px 0 20px 20px;
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-        .policy-body ul li, .policy-body ol li {
-            margin-bottom: 10px;
-            line-height: 1.7;
-        }
+        .policy-body p { margin-bottom: 16px; }
+        .policy-body ul, .policy-body ol { margin: 12px 0 20px 20px; }
+        .policy-body ul li, .policy-body ol li { margin-bottom: 10px; line-height: 1.7; }
         .policy-body ul li::marker { color: var(--cobalt-main); }
         .policy-body ol li::marker { color: var(--cobalt-main); font-weight: 700; }
         .policy-body strong { color: var(--cobalt-deep); }
 
-        /* Info boxes */
+        /* Tabela com scroll */
+        .policy-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .policy-body table th {
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .policy-body table td {
+            padding: 14px 16px;
+            border-top: 1px solid var(--border);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        .policy-body table tr:nth-child(even) { background: var(--bg-light); }
+
         .info-box {
             background: rgba(26, 79, 184, 0.06);
             border-left: 4px solid var(--cobalt-main);
@@ -289,39 +311,6 @@
         }
         .warning-box p { margin: 0; color: var(--text-dark); }
 
-        /* Table com scroll */
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 20px 0;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            -webkit-overflow-scrolling: touch;
-        }
-        .policy-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 500px;
-        }
-        .policy-table th {
-            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
-            color: white;
-            padding: 14px 16px;
-            text-align: left;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            white-space: nowrap;
-        }
-        .policy-table td {
-            padding: 14px 16px;
-            border-top: 1px solid var(--border);
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-        .policy-table tr:nth-child(even) { background: var(--bg-light); }
-
-        /* CTA */
         .contact-cta {
             background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
             border-radius: 16px;
@@ -360,7 +349,6 @@
             box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
         }
 
-        /* Footer */
         footer { 
             background: var(--cobalt-deep); 
             color: white; 
@@ -396,27 +384,6 @@
         }
         .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
 
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            padding: 16px 24px;
-            background: var(--success);
-            color: white;
-            border-radius: var(--radius);
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
-            z-index: 4000;
-            opacity: 0;
-            transform: translateX(400px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-width: calc(100vw - 48px);
-        }
-        .toast.show { opacity: 1; transform: translateX(0); }
-        .toast.error { background: var(--danger); }
-
-        /* Cart */
         .cart-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 42, 110, 0.6); z-index: 1999;
@@ -530,7 +497,42 @@
         }
         .btn-checkout:hover { transform: translateY(-2px); }
 
-        /* Responsivo */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--radius);
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 4000;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
+        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.error { background: var(--danger); }
+
+        .loading-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-gray);
+        }
+        .spinner-inline {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--cobalt-main);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -607,6 +609,7 @@
             <div class="container">
                 <h1>📋 Políticas da Loja</h1>
                 <p>Transparência total com nossos clientes</p>
+                <div class="last-update" id="last-update"></div>
             </div>
         </div>
 
@@ -620,343 +623,18 @@
 
         <div class="tabs-container">
             <div class="container">
-                <div class="tabs">
-                    <button class="tab-btn active" data-policy="reembolso" onclick="mostrarPolitica('reembolso', this)">
-                        <span class="icon">💰</span>
-                        <span>Reembolso</span>
-                    </button>
-                    <button class="tab-btn" data-policy="frete" onclick="mostrarPolitica('frete', this)">
-                        <span class="icon">🚚</span>
-                        <span>Frete</span>
-                    </button>
-                    <button class="tab-btn" data-policy="trocas" onclick="mostrarPolitica('trocas', this)">
-                        <span class="icon">🔄</span>
-                        <span>Trocas</span>
-                    </button>
-                    <button class="tab-btn" data-policy="termos" onclick="mostrarPolitica('termos', this)">
-                        <span class="icon">📜</span>
-                        <span>Termos</span>
-                    </button>
-                    <button class="tab-btn" data-policy="privacidade" onclick="mostrarPolitica('privacidade', this)">
-                        <span class="icon">🔒</span>
-                        <span>Privacidade</span>
-                    </button>
+                <div class="tabs" id="tabs">
+                    <!-- Tabs serão geradas dinamicamente -->
                 </div>
             </div>
         </div>
 
         <div class="content-wrapper">
             <div class="container">
-                <div class="policy-card">
-                    
-                    <!-- REEMBOLSO -->
-                    <div class="policy-section active" id="policy-reembolso">
-                        <div class="policy-header">
-                            <div class="icon">💰</div>
-                            <h2>Política de Reembolso</h2>
-                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
-                        </div>
-                        <div class="policy-body">
-                            <p>Na <strong>S7TE</strong>, sua satisfação é nossa prioridade. Oferecemos reembolso integral em até <strong>30 dias</strong> após a compra, seguindo as condições abaixo.</p>
-
-                            <h3>Condições para Reembolso</h3>
-                            <ul>
-                                <li>Produtos devem estar em <strong>embalagem original e selada</strong></li>
-                                <li>Itens estéreis <strong>não podem ser devolvidos após a abertura</strong></li>
-                                <li>Produtos personalizados ou sob encomenda <strong>não são reembolsáveis</strong></li>
-                                <li>Equipamentos devem estar sem sinais de uso</li>
-                                <li>Apresentação da nota fiscal é obrigatória</li>
-                            </ul>
-
-                            <h3>Como Solicitar</h3>
-                            <ol>
-                                <li><strong>Entre em contato</strong> pelo e-mail ou telefone em até 30 dias</li>
-                                <li><strong>Informe o número do pedido</strong> e o motivo da solicitação</li>
-                                <li><strong>Aguarde a aprovação</strong> (análise em até 3 dias úteis)</li>
-                                <li><strong>Envie o produto</strong> conforme instruções recebidas</li>
-                                <li><strong>Receba o reembolso</strong> em até 7 dias úteis</li>
-                            </ol>
-
-                            <div class="info-box">
-                                <p>💡 <strong>Dica:</strong> Para agilizar o processo, envie fotos do produto e da embalagem ao solicitar o reembolso.</p>
-                            </div>
-
-                            <h3>Formas de Reembolso</h3>
-                            <div class="table-wrapper">
-                                <table class="policy-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Pagamento</th>
-                                            <th>Prazo</th>
-                                            <th>Método</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>PIX</td>
-                                            <td>Até 3 dias úteis</td>
-                                            <td>Transferência bancária</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cartão de Crédito</td>
-                                            <td>1 a 2 faturas</td>
-                                            <td>Estorno na fatura</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="warning-box">
-                                <p>⚠️ <strong>Importante:</strong> O frete de devolução é por conta do cliente, exceto em casos de produto com defeito ou erro no envio.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FRETE -->
-                    <div class="policy-section" id="policy-frete">
-                        <div class="policy-header">
-                            <div class="icon">🚚</div>
-                            <h2>Política de Frete</h2>
-                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
-                        </div>
-                        <div class="policy-body">
-                            <p>Oferecemos <strong>frete grátis</strong> para compras acima de <strong>R$ 500,00</strong> em todo o território nacional.</p>
-
-                            <h3>Prazos de Entrega</h3>
-                            <div class="table-wrapper">
-                                <table class="policy-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Região</th>
-                                            <th>Prazo</th>
-                                            <th>Observação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>São Paulo Capital</td>
-                                            <td>24 horas</td>
-                                            <td>Entrega expressa</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Capitais</td>
-                                            <td>2 a 5 dias úteis</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Interior</td>
-                                            <td>5 a 10 dias úteis</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Regiões remotas</td>
-                                            <td>Até 15 dias úteis</td>
-                                            <td>Norte e Nordeste</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <h3>Valores de Frete</h3>
-                            <ul>
-                                <li><strong>Frete grátis:</strong> Compras acima de R$ 500,00</li>
-                                <li><strong>Frete padrão:</strong> R$ 35,90 para compras abaixo de R$ 500,00</li>
-                                <li><strong>Entrega expressa (SP Capital):</strong> Consultar valor no checkout</li>
-                            </ul>
-
-                            <h3>Rastreamento</h3>
-                            <p>Após a confirmação do pagamento, você receberá o <strong>código de rastreamento por e-mail</strong> em até 24 horas úteis.</p>
-
-                            <div class="info-box">
-                                <p>📦 <strong>Nota:</strong> Os prazos de entrega são contados a partir da confirmação do pagamento e podem variar em períodos de alta demanda.</p>
-                            </div>
-
-                            <h3>Problemas com a Entrega</h3>
-                            <ul>
-                                <li><strong>Atraso:</strong> Entre em contato conosco para verificar o status</li>
-                                <li><strong>Produto danificado:</strong> Recuse a entrega e nos comunique imediatamente</li>
-                                <li><strong>Endereço incorreto:</strong> Será cobrado novo frete para reenvio</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- TROCAS -->
-                    <div class="policy-section" id="policy-trocas">
-                        <div class="policy-header">
-                            <div class="icon">🔄</div>
-                            <h2>Trocas e Devoluções</h2>
-                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
-                        </div>
-                        <div class="policy-body">
-                            <p>Facilitamos o processo de troca e devolução para garantir sua total satisfação.</p>
-
-                            <h3>Quando Posso Trocar ou Devolver?</h3>
-                            <ul>
-                                <li><strong>Arrependimento:</strong> Até 7 dias após o recebimento</li>
-                                <li><strong>Defeito de fabricação:</strong> Até 90 dias de garantia</li>
-                                <li><strong>Produto errado:</strong> Até 30 dias após o recebimento</li>
-                            </ul>
-
-                            <h3>Condições para Troca</h3>
-                            <ul>
-                                <li>Produto na <strong>embalagem original</strong></li>
-                                <li>Sem sinais de uso ou avarias</li>
-                                <li>Com todos os acessórios e manuais</li>
-                                <li>Nota fiscal ou comprovante de compra</li>
-                            </ul>
-
-                            <h3>Passo a Passo</h3>
-                            <ol>
-                                <li><strong>Solicite a troca</strong> pelo nosso canal de atendimento</li>
-                                <li><strong>Receba as instruções</strong> de envio em até 24 horas</li>
-                                <li><strong>Poste o produto</strong> nos Correios ou transportadora</li>
-                                <li><strong>Aguarde a análise</strong> (até 5 dias úteis)</li>
-                                <li><strong>Receba o novo produto</strong> ou reembolso</li>
-                            </ol>
-
-                            <div class="warning-box">
-                                <p>⚠️ <strong>Produtos estéreis:</strong> Por questões de segurança, itens estéreis abertos não podem ser trocados ou devolvidos.</p>
-                            </div>
-
-                            <h3>Custos de Envio</h3>
-                            <div class="table-wrapper">
-                                <table class="policy-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Motivo</th>
-                                            <th>Frete de Ida</th>
-                                            <th>Frete de Volta</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Defeito de fabricação</td>
-                                            <td>S7TE</td>
-                                            <td>S7TE</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Produto errado</td>
-                                            <td>S7TE</td>
-                                            <td>S7TE</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Arrependimento</td>
-                                            <td>Cliente</td>
-                                            <td>Cliente</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TERMOS -->
-                    <div class="policy-section" id="policy-termos">
-                        <div class="policy-header">
-                            <div class="icon">📜</div>
-                            <h2>Termos e Condições</h2>
-                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
-                        </div>
-                        <div class="policy-body">
-                            <p>Ao utilizar o site da <strong>S7TE</strong>, você concorda com os seguintes termos e condições.</p>
-
-                            <h3>1. Sobre a Empresa</h3>
-                            <p>A S7TE é uma empresa especializada em tecnologia e insumos para odontologia digital, comprometida com a qualidade e segurança de seus produtos.</p>
-
-                            <h3>2. Elegibilidade</h3>
-                            <ul>
-                                <li>Produtos destinados <strong>exclusivamente a profissionais</strong> da área odontológica</li>
-                                <li>Compra por pessoa física exige declaração de uso profissional</li>
-                                <li>Menores de 18 anos não podem realizar compras</li>
-                            </ul>
-
-                            <h3>3. Responsabilidades do Cliente</h3>
-                            <ul>
-                                <li>Fornecer informações verdadeiras e atualizadas</li>
-                                <li>Utilizar os produtos conforme instruções do fabricante</li>
-                                <li>Armazenar produtos adequadamente</li>
-                                <li>Verificar especificações antes da compra</li>
-                            </ul>
-
-                            <h3>4. Responsabilidades da S7TE</h3>
-                            <ul>
-                                <li>Entregar produtos conforme descrição</li>
-                                <li>Garantir a autenticidade dos itens</li>
-                                <li>Proteger os dados dos clientes</li>
-                                <li>Oferecer suporte pós-venda</li>
-                            </ul>
-
-                            <h3>5. Garantia</h3>
-                            <p>Todos os produtos possuem <strong>garantia de 90 dias</strong> contra defeitos de fabricação, conforme Código de Defesa do Consumidor.</p>
-
-                            <h3>6. Limitação de Responsabilidade</h3>
-                            <div class="warning-box">
-                                <p>⚠️ A S7TE <strong>não se responsabiliza</strong> por danos causados por uso incorreto dos produtos. O uso indevido é de total responsabilidade do comprador.</p>
-                            </div>
-
-                            <h3>7. Propriedade Intelectual</h3>
-                            <p>Todo o conteúdo deste site (textos, imagens, logotipos) é propriedade da S7TE e não pode ser reproduzido sem autorização.</p>
-
-                            <h3>8. Alterações nos Termos</h3>
-                            <p>Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações entrarão em vigor imediatamente após publicação no site.</p>
-                        </div>
-                    </div>
-
-                    <!-- PRIVACIDADE -->
-                    <div class="policy-section" id="policy-privacidade">
-                        <div class="policy-header">
-                            <div class="icon">🔒</div>
-                            <h2>Política de Privacidade</h2>
-                            <div class="updated">📅 Última atualização: Setembro de 2026</div>
-                        </div>
-                        <div class="policy-body">
-                            <p>Na <strong>S7TE</strong>, seus dados estão seguros. Esta política explica como coletamos, usamos e protegemos suas informações, em conformidade com a <strong>LGPD</strong>.</p>
-
-                            <h3>1. Dados que Coletamos</h3>
-                            <ul>
-                                <li><strong>Dados de identificação:</strong> Nome, CPF, e-mail, telefone</li>
-                                <li><strong>Dados de entrega:</strong> Endereço completo</li>
-                                <li><strong>Dados de pagamento:</strong> Processados por gateway seguro</li>
-                                <li><strong>Dados de navegação:</strong> Cookies e preferências</li>
-                            </ul>
-
-                            <h3>2. Como Usamos Seus Dados</h3>
-                            <ul>
-                                <li>Processamento e entrega de pedidos</li>
-                                <li>Comunicação sobre status do pedido</li>
-                                <li>Envio de promoções (com seu consentimento)</li>
-                                <li>Melhoria da experiência de compra</li>
-                                <li>Cumprimento de obrigações legais</li>
-                            </ul>
-
-                            <h3>3. Compartilhamento de Dados</h3>
-                            <p>Seus dados <strong>nunca são vendidos</strong>. Compartilhamos apenas com:</p>
-                            <ul>
-                                <li>Transportadoras (para entrega)</li>
-                                <li>Gateways de pagamento (para processar transações)</li>
-                                <li>Autoridades legais (quando obrigatório por lei)</li>
-                            </ul>
-
-                            <h3>4. Segurança</h3>
-                            <div class="info-box">
-                                <p>🔐 Utilizamos <strong>criptografia SSL de ponta a ponta</strong> em todas as transações. Seus dados são armazenados em servidores seguros.</p>
-                            </div>
-
-                            <h3>5. Seus Direitos (LGPD)</h3>
-                            <ul>
-                                <li><strong>Acesso:</strong> Solicitar cópia dos seus dados</li>
-                                <li><strong>Correção:</strong> Atualizar dados incorretos</li>
-                                <li><strong>Exclusão:</strong> Solicitar remoção dos dados</li>
-                                <li><strong>Portabilidade:</strong> Transferir dados para outro serviço</li>
-                                <li><strong>Revogação:</strong> Cancelar consentimento a qualquer momento</li>
-                            </ul>
-
-                            <h3>6. Cookies</h3>
-                            <p>Utilizamos cookies para melhorar sua experiência. Você pode desativá-los nas configurações do navegador.</p>
-
-                            <h3>7. Contato sobre Privacidade</h3>
-                            <p>Para exercer seus direitos ou tirar dúvidas, entre em contato através do e-mail <strong>privacidade@s7te.com.br</strong>.</p>
-                        </div>
+                <div class="policy-card" id="policy-card">
+                    <div class="loading-state">
+                        <div class="spinner-inline"></div>
+                        <p>Carregando políticas...</p>
                     </div>
                 </div>
 
@@ -1030,12 +708,74 @@
         let configSite = {};
         let categoriasCache = [];
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
+        let politicasCache = {};
+        let politicaAtual = 'reembolso';
+
+        // Ícones das políticas
+        const ICONES = {
+            'reembolso': '💰',
+            'frete': '🚚',
+            'trocas': '🔄',
+            'termos': '📜',
+            'privacidade': '🔒'
+        };
+
+        const TITULOS = {
+            'reembolso': 'Reembolso',
+            'frete': 'Frete',
+            'trocas': 'Trocas',
+            'termos': 'Termos',
+            'privacidade': 'Privacidade'
+        };
 
         // ============================================
-        // HELPERS
+        // HELPERS COM SANITIZAÇÃO
         // ============================================
         function formatarPreco(valor) {
-            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Sanitização específica para conteúdo de políticas
+        // Permite tags seguras: <strong>, <em>, <p>, <h3>, <ul>, <ol>, <li>, <table>, <tr>, <th>, <td>, <br>
+        function sanitizarPolitica(html) {
+            if (!html) return '';
+            
+            // Lista de tags permitidas
+            const tagsPermitidas = [
+                'strong', 'em', 'p', 'h3', 'ul', 'ol', 'li', 
+                'table', 'thead', 'tbody', 'tr', 'th', 'td', 'br', 'hr'
+            ];
+            
+            // Remove tags não permitidas (mantém o conteúdo)
+            let sanitized = html;
+            
+            // Remove scripts e eventos
+            sanitized = sanitized.replace(/<script[\s\S]*?<\/script>/gi, '');
+            sanitized = sanitized.replace(/<iframe[\s\S]*?<\/iframe>/gi, '');
+            sanitized = sanitized.replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '');
+            sanitized = sanitized.replace(/javascript:/gi, '');
+            
+            // Remove tags não permitidas
+            const regexTags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+            sanitized = sanitized.replace(regexTags, (match, tag) => {
+                if (tagsPermitidas.includes(tag.toLowerCase())) {
+                    return match;
+                }
+                return '';
+            });
+            
+            return sanitized;
         }
 
         function showToast(msg, type = 'success') {
@@ -1043,21 +783,35 @@
             if (!toast) return;
             toast.textContent = msg;
             toast.className = 'toast show' + (type === 'error' ? ' error' : '');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
         function setTextoSeguro(id, texto) {
             const el = document.getElementById(id);
-            if (el) el.textContent = texto;
+            if (el) el.textContent = texto || '';
         }
 
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
-            if (el) el.innerHTML = html;
+            if (el) el.innerHTML = html || '';
+        }
+
+        function formatarData(data) {
+            if (!data) return '';
+            try {
+                return new Date(data).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            } catch (e) {
+                return '';
+            }
         }
 
         // ============================================
-        // CARREGAR CONFIGURAÇÕES
+        // CARREGAMENTO PARALELO
         // ============================================
         async function carregarConfigSite() {
             const padroes = {
@@ -1073,17 +827,21 @@
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => padroes[c.chave] = c.valor);
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
                 }
             } catch (e) {
                 console.warn('Usando valores padrão:', e);
             }
 
             configSite = padroes;
+            aplicarConfigSite();
+        }
 
+        function aplicarConfigSite() {
             setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            setHtmlSeguro('logo-text', configSite.logo_texto.replace('7', '<span>7</span>'));
-            setTextoSeguro('footer-nome-loja', configSite.logo_texto);
+            const logoTexto = configSite.logo_texto || 'S7TE';
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', logoTexto);
             setTextoSeguro('footer-sobre', configSite.footer_sobre);
             setHtmlSeguro('footer-endereco', configSite.footer_endereco);
             setTextoSeguro('footer-email', configSite.footer_email);
@@ -1100,7 +858,7 @@
                 const nav = document.getElementById('nav-categorias');
                 if (nav) {
                     const navLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                     nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
                 }
@@ -1108,7 +866,7 @@
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
-                        `<a href="produtos.html?cat=${c.slug}">${c.nome}</a>`
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                 }
             } catch (e) {
@@ -1117,26 +875,142 @@
         }
 
         // ============================================
-        // NAVEGAÇÃO ENTRE POLÍTICAS
+        // CARREGAR POLÍTICAS DO BANCO
         // ============================================
-        function mostrarPolitica(tipo, btn) {
-            document.querySelectorAll('.policy-section').forEach(section => {
-                section.classList.remove('active');
-            });
+        async function carregarPoliticas() {
+            const container = document.getElementById('policy-card');
+            const tabsContainer = document.getElementById('tabs');
 
+            try {
+                const { data, error } = await supabaseClient
+                    .from('politicas')
+                    .select('*')
+                    .order('chave');
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = `
+                        <div class="policy-header">
+                            <div class="icon">📋</div>
+                            <h2>Políticas em construção</h2>
+                        </div>
+                        <div class="policy-body">
+                            <p>As políticas da loja ainda não foram configuradas pelo administrador.</p>
+                            <p>Entre em contato conosco para mais informações.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Monta cache
+                data.forEach(p => {
+                    politicasCache[p.chave] = {
+                        titulo: p.titulo,
+                        conteudo: p.conteudo,
+                        atualizado_em: p.atualizado_em
+                    };
+                });
+
+                // Renderiza tabs
+                const ordemTabs = ['reembolso', 'frete', 'trocas', 'termos', 'privacidade'];
+                let tabsHtml = '';
+                ordemTabs.forEach(chave => {
+                    if (politicasCache[chave]) {
+                        const isActive = politicaAtual === chave;
+                        const icone = ICONES[chave] || '📄';
+                        const titulo = TITULOS[chave] || politicasCache[chave].titulo;
+                        tabsHtml += `
+                            <button class="tab-btn ${isActive ? 'active' : ''}" 
+                                    data-policy="${escapeHTML(chave)}" 
+                                    onclick="mostrarPolitica('${escapeHTML(chave)}', this)">
+                                <span class="icon">${icone}</span>
+                                <span>${escapeHTML(titulo)}</span>
+                            </button>
+                        `;
+                    }
+                });
+                tabsContainer.innerHTML = tabsHtml;
+
+                // Renderiza conteúdo inicial
+                renderizarPolitica(politicaAtual);
+
+                // Atualiza data de última atualização
+                const ultimaAtt = data.reduce((maisRecente, p) => {
+                    if (!maisRecente || new Date(p.atualizado_em) > new Date(maisRecente)) {
+                        return p.atualizado_em;
+                    }
+                    return maisRecente;
+                }, null);
+
+                if (ultimaAtt) {
+                    setTextoSeguro('last-update', `📅 Última atualização: ${formatarData(ultimaAtt)}`);
+                }
+
+            } catch (error) {
+                console.error('Erro ao carregar políticas:', error);
+                container.innerHTML = `
+                    <div class="policy-header">
+                        <div class="icon">⚠️</div>
+                        <h2>Erro ao carregar</h2>
+                    </div>
+                    <div class="policy-body">
+                        <p>Não foi possível carregar as políticas. Tente novamente mais tarde.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderizarPolitica(chave) {
+            const container = document.getElementById('policy-card');
+            const politica = politicasCache[chave];
+
+            if (!politica) {
+                container.innerHTML = `
+                    <div class="policy-header">
+                        <div class="icon">❓</div>
+                        <h2>Política não encontrada</h2>
+                    </div>
+                    <div class="policy-body">
+                        <p>Esta política não está disponível no momento.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const icone = ICONES[chave] || '📄';
+            const dataAtt = formatarData(politica.atualizado_em);
+            const conteudoSanitizado = sanitizarPolitica(politica.conteudo);
+
+            container.innerHTML = `
+                <div class="policy-header">
+                    <div class="icon">${icone}</div>
+                    <h2>${escapeHTML(politica.titulo)}</h2>
+                    ${dataAtt ? `<div style="font-size: 0.85rem; color: var(--text-gray);">📅 ${dataAtt}</div>` : ''}
+                </div>
+                <div class="policy-body">
+                    ${conteudoSanitizado}
+                </div>
+            `;
+        }
+
+        function mostrarPolitica(chave, btn) {
+            politicaAtual = chave;
+
+            // Atualiza tabs
             document.querySelectorAll('.tab-btn').forEach(tab => {
                 tab.classList.remove('active');
             });
-
-            const section = document.getElementById('policy-' + tipo);
-            if (section) section.classList.add('active');
-
             if (btn) btn.classList.add('active');
 
-            const novaUrl = window.location.pathname + '?tipo=' + tipo;
+            // Atualiza URL (sem reload)
+            const novaUrl = window.location.pathname + '?tipo=' + encodeURIComponent(chave);
             window.history.pushState({}, '', novaUrl);
 
-            // Scroll suave para o topo do conteúdo
+            // Renderiza conteúdo
+            renderizarPolitica(chave);
+
+            // Scroll suave
             const contentWrapper = document.querySelector('.content-wrapper');
             if (contentWrapper) {
                 contentWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1147,19 +1021,17 @@
             const urlParams = new URLSearchParams(window.location.search);
             const tipo = urlParams.get('tipo');
             
-            if (tipo) {
-                const section = document.getElementById('policy-' + tipo);
-                if (section) {
-                    document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
-                    section.classList.add('active');
-
-                    document.querySelectorAll('.tab-btn').forEach(tab => {
-                        tab.classList.remove('active');
-                        if (tab.dataset.policy === tipo) {
-                            tab.classList.add('active');
-                        }
-                    });
+            if (tipo && politicasCache[tipo]) {
+                politicaAtual = tipo;
+                
+                // Atualiza tab ativa
+                const tabAtiva = document.querySelector(`.tab-btn[data-policy="${tipo}"]`);
+                if (tabAtiva) {
+                    document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+                    tabAtiva.classList.add('active');
                 }
+                
+                renderizarPolitica(tipo);
             }
         }
 
@@ -1177,8 +1049,8 @@
         }
 
         function updateCartUI() {
-            const freteGratis = 500;
-            const valorFrete = 35.90;
+            const freteGratis = parseFloat(configSite.frete_gratis_acima || 500);
+            const valorFrete = parseFloat(configSite.valor_frete || 35.90);
 
             const container = document.getElementById('cart-items');
             const countEl = document.getElementById('cart-count');
@@ -1200,16 +1072,16 @@
 
             container.innerHTML = cart.map(item => `
                 <div class="cart-item">
-                    <img src="${item.imagem_url}" class="cart-item-img" alt="${item.nome}"
+                    <img src="${escapeHTML(item.imagem_url)}" class="cart-item-img" alt="${escapeHTML(item.nome)}"
                          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'70\\' height=\\'70\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'70\\' height=\\'70\\'/%3E%3C/svg%3E'">
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-name">${escapeHTML(item.nome)}</div>
                         <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
                         <div class="cart-controls">
-                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', -1)">−</button>
                             <span style="min-width: 20px; text-align: center; font-weight: 700; font-size: 0.9rem;">${item.qty}</span>
-                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-                            <button class="remove-btn" onclick="updateQty('${item.id}', -999)">Remover</button>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${escapeHTML(item.id)}', -999)">Remover</button>
                         </div>
                     </div>
                 </div>
@@ -1257,17 +1129,27 @@
         }
 
         // ============================================
-        // INICIALIZAÇÃO
+        // INICIALIZAÇÃO PARALELA
         // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await carregarConfigSite();
-                await carregarCategorias();
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarCategorias(),
+                    carregarPoliticas()
+                ]);
+                
                 verificarUrlPolitica();
                 updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
+                updateCartUI();
             }
+        });
+
+        // Suporte ao botão voltar/avançar do navegador
+        window.addEventListener('popstate', () => {
+            verificarUrlPolitica();
         });
     </script>
 </body>

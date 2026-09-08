@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato | S7TE</title>
+    <meta name="description" content="Entre em contato com a S7TE. Tire dúvidas, solicite orçamentos ou fale com nosso suporte.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contato | S7TE">
+    <meta property="og:description" content="Entre em contato com a S7TE. Tire dúvidas, solicite orçamentos ou fale com nosso suporte.">
+    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/contato.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --cobalt-deep: #0a2a6e;
+            --cobalt-main: #1a4fb8;
+            --cobalt-bright: #2563eb;
+            --cobalt-light: #60a5fa;
+            --gold: #fbbf24;
+            --gold-dark: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+            --radius: 8px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px -3px rgba(26, 79, 184, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased; 
+        }
+        a { text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; }
+        img { max-width: 100%; display: block; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .urgency-bar {
+            background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            text-align: center;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .urgency-bar strong { color: var(--gold); }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
+            box-shadow: var(--shadow);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            color: var(--cobalt-deep);
+        }
+        .logo span { 
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-desktop { display: flex; gap: 24px; }
+        .nav-desktop a { 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: var(--text-dark);
+        }
+        .nav-desktop a:hover { color: var(--cobalt-main); }
+        .nav-desktop a.promo-link { color: var(--danger); }
+
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        
+        .cart-btn { 
+            position: relative; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            color: var(--text-dark);
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+        .cart-btn:hover { background: var(--cobalt-main); color: white; }
+        .cart-btn svg { width: 20px; height: 20px; }
+        
+        .cart-count { 
+            background: var(--gold); 
+            color: var(--cobalt-deep); 
+            font-size: 0.75rem; 
+            font-weight: 800;
+            min-width: 22px; 
+            height: 22px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .page-header { 
+            padding: 60px 0; 
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            text-align: center; 
+            color: white;
+        }
+        .page-header h1 { 
+            font-size: 2.5rem; 
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .page-header p { 
+            opacity: 0.9; 
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            padding: 16px 0;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb a { color: var(--cobalt-main); font-weight: 600; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .contact-wrapper {
+            padding: 60px 0 80px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Formulário */
+        .contact-form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .contact-form-card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--cobalt-deep);
+            margin-bottom: 8px;
+        }
+        .contact-form-card > p {
+            color: var(--text-gray);
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .form-group label .req { color: var(--danger); }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: white;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+            box-shadow: 0 0 0 3px rgba(26, 79, 184, 0.1);
+        }
+        .form-input.error, .form-select.error, .form-textarea.error {
+            border-color: var(--danger);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-submit:disabled {
+            background: var(--text-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            display: none;
+        }
+        .success-message.show { display: block; }
+        .success-message .icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        .success-message h3 {
+            color: var(--success);
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .success-message p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Informações de contato */
+        .contact-info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .contact-info-card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--cobalt-deep);
+            margin-bottom: 8px;
+        }
+        .contact-info-card > p {
+            color: var(--text-gray);
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+        .contact-item:hover {
+            background: rgba(26, 79, 184, 0.05);
+            transform: translateX(4px);
+        }
+        .contact-item .icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .contact-item-content {
+            flex: 1;
+        }
+        .contact-item-content h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--cobalt-deep);
+            margin-bottom: 4px;
+        }
+        .contact-item-content p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+        .contact-item-content a {
+            color: var(--cobalt-main);
+            font-weight: 600;
+        }
+        .contact-item-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* FAQ */
+        .faq-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .faq-section h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--cobalt-deep);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .faq-section > p {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-item:hover {
+            border-color: var(--cobalt-main);
+        }
+        .faq-question {
+            padding: 20px 24px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+        .faq-question:hover {
+            background: var(--bg-light);
+        }
+        .faq-question .arrow {
+            font-size: 1.2rem;
+            color: var(--cobalt-main);
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-question .arrow {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+        .faq-item.active .faq-answer {
+            padding: 20px 24px;
+            max-height: 500px;
+        }
+        .faq-answer p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Map placeholder */
+        .map-section {
+            margin-top: 60px;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .map-section h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--cobalt-deep);
+            margin-bottom: 12px;
+        }
+        .map-section > p {
+            color: var(--text-gray);
+            margin-bottom: 32px;
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 1rem;
+            border: 2px dashed var(--border);
+        }
+
+        footer { 
+            background: var(--cobalt-deep); 
+            color: white; 
+            padding: 50px 0 24px; 
+            margin-top: 40px;
+        }
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: 1.5fr 1fr 1fr 1fr; 
+            gap: 32px; 
+            margin-bottom: 32px; 
+        }
+        .footer-col h4 { 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.1em; 
+            margin-bottom: 16px; 
+            color: var(--gold);
+        }
+        .footer-col p, .footer-col a { 
+            font-size: 0.85rem; 
+            color: #cbd5e1; 
+            line-height: 1.9; 
+            display: block;
+        }
+        .footer-col a:hover { color: var(--gold); }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px;
+            text-align: center;
+        }
+        .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
+
+        .cart-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 42, 110, 0.6); z-index: 1999;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+            backdrop-filter: blur(4px);
+        }
+        .cart-overlay.active { opacity: 1; visibility: visible; }
+        
+        #cart-sidebar {
+            position: fixed; top: 0; right: -450px; width: 420px; max-width: 100%;
+            height: 100vh; background: white; z-index: 2000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+        }
+        #cart-sidebar.active { right: 0; }
+        
+        .cart-header { 
+            padding: 20px; 
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .cart-header h3 { font-size: 1.1rem; font-weight: 800; }
+        .cart-header button { color: white; font-size: 1.8rem; line-height: 1; }
+        
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-item { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 16px; 
+            padding-bottom: 16px; 
+            border-bottom: 1px solid var(--border); 
+        }
+        .cart-item-img { 
+            width: 70px; 
+            height: 70px; 
+            background: var(--bg-light); 
+            object-fit: cover; 
+            border-radius: var(--radius); 
+        }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; }
+        .cart-item-price { font-size: 0.9rem; color: var(--cobalt-main); font-weight: 700; margin-bottom: 10px; }
+        .cart-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { 
+            width: 28px; 
+            height: 28px; 
+            border: 1px solid var(--border); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 6px; 
+            font-size: 1rem; 
+            font-weight: 700;
+            color: var(--cobalt-main);
+            background: white;
+        }
+        .qty-btn:hover { background: var(--cobalt-main); color: white; }
+        .remove-btn { 
+            margin-left: auto; 
+            color: var(--danger); 
+            font-size: 0.75rem; 
+            text-decoration: underline; 
+            font-weight: 600;
+        }
+        
+        .cart-footer { 
+            padding: 20px; 
+            border-top: 2px solid var(--border); 
+            background: var(--bg-light); 
+        }
+        .cart-subtotal {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+        .cart-total { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 1.2rem; 
+            font-weight: 800; 
+            margin-bottom: 16px;
+            color: var(--cobalt-deep);
+        }
+        .cart-shipping-note {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .btn-checkout { 
+            width: 100%; 
+            padding: 16px; 
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark)); 
+            color: var(--cobalt-deep); 
+            font-weight: 800; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: var(--radius); 
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .btn-checkout:hover { transform: translateY(-2px); }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--radius);
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 4000;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
+        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.error { background: var(--danger); }
+
+        @media (max-width: 1024px) {
+            .nav-desktop { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            
+            .page-header { padding: 40px 0; }
+            .page-header h1 { font-size: 1.8rem; }
+            .page-header p { font-size: 0.95rem; }
+            
+            .contact-wrapper { padding: 40px 0 60px; }
+            .contact-form-card, .contact-info-card, .faq-section, .map-section { padding: 24px 20px; }
+            
+            .form-row { grid-template-columns: 1fr; }
+            
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            #cart-sidebar { width: 100%; }
+            .logo { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="urgency-bar" id="urgency-bar"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
+            
+            <nav class="nav-desktop" id="nav-categorias">
+                <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Carrinho
+                    <span id="cart-count" class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="container">
+                <h1>📞 Entre em Contato</h1>
+                <p>Estamos aqui para ajudar. Tire dúvidas, solicite orçamentos ou fale com nosso suporte.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <strong>Contato</strong>
+            </div>
+        </div>
+
+        <div class="contact-wrapper">
+            <div class="container">
+                <div class="contact-grid">
+                    <!-- Formulário -->
+                    <div class="contact-form-card">
+                        <h2>Envie sua Mensagem</h2>
+                        <p>Preencha o formulário abaixo e retornaremos em até 24 horas úteis.</p>
+
+                        <div class="success-message" id="success-message">
+                            <div class="icon">✅</div>
+                            <h3>Mensagem Enviada!</h3>
+                            <p>Obrigado por entrar em contato. Retornaremos em breve.</p>
+                        </div>
+
+                        <form id="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nome Completo <span class="req">*</span></label>
+                                    <input type="text" class="form-input" id="nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Telefone</label>
+                                    <input type="tel" class="form-input" id="telefone" placeholder="(11) 99999-9999" maxlength="15">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>E-mail <span class="req">*</span></label>
+                                <input type="email" class="form-input" id="email" placeholder="seu@email.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Assunto <span class="req">*</span></label>
+                                <select class="form-select" id="assunto" required>
+                                    <option value="">Selecione um assunto</option>
+                                    <option value="duvida">❓ Dúvida sobre produto</option>
+                                    <option value="orcamento">💰 Solicitar orçamento</option>
+                                    <option value="pedido">📦 Status do pedido</option>
+                                    <option value="parceria">🤝 Parceria comercial</option>
+                                    <option value="suporte">🛠️ Suporte técnico</option>
+                                    <option value="outro">📋 Outro assunto</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mensagem <span class="req">*</span></label>
+                                <textarea class="form-textarea" id="mensagem" placeholder="Descreva sua dúvida ou solicitação..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit" id="btn-submit">
+                                <span id="btn-text">📩 Enviar Mensagem</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Informações de contato -->
+                    <div class="contact-info-card">
+                        <h2>Informações de Contato</h2>
+                        <p>Escolha o canal que preferir para falar conosco.</p>
+
+                        <div class="contact-item">
+                            <div class="icon">📍</div>
+                            <div class="contact-item-content">
+                                <h4>Endereço</h4>
+                                <p id="contato-endereco">Av. Paulista, 1500<br>São Paulo, SP<br>CEP: 01310-100</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="icon">📧</div>
+                            <div class="contact-item-content">
+                                <h4>E-mail</h4>
+                                <p><a href="mailto:contato@s7te.com.br" id="contato-email-link">contato@s7te.com.br</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="icon">📞</div>
+                            <div class="contact-item-content">
+                                <h4>Telefone</h4>
+                                <p><a href="tel:08001234567" id="contato-telefone-link">0800 123 4567</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="icon">💬</div>
+                            <div class="contact-item-content">
+                                <h4>WhatsApp</h4>
+                                <p><a href="https://wa.me/5511999999999" target="_blank" id="contato-whatsapp-link">(11) 99999-9999</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="icon">🕐</div>
+                            <div class="contact-item-content">
+                                <h4>Horário de Atendimento</h4>
+                                <p id="contato-horario">Segunda a Sexta: 8h às 18h<br>Sábado: 9h às 13h</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="faq-section">
+                    <h2>Perguntas Frequentes</h2>
+                    <p>Encontre respostas rápidas para as dúvidas mais comuns</p>
+
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Qual o prazo de entrega?</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>O prazo varia de acordo com a região: São Paulo Capital (24h), Capitais (2-5 dias úteis), Interior (5-10 dias úteis), Regiões remotas (até 15 dias úteis). Você receberá o código de rastreamento por e-mail após a confirmação do pagamento.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Como funciona o frete grátis?</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Oferecemos frete grátis para compras acima de R$ 500,00 em todo o território nacional. O desconto é aplicado automaticamente no carrinho.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Posso trocar ou devolver um produto?</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Sim! Você tem até 7 dias para arrependimento e 90 dias para defeitos de fabricação. Produtos estéreis abertos não podem ser devolvidos por questões de segurança. Consulte nossa política completa de trocas e devoluções.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Quais formas de pagamento vocês aceitam?</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Aceitamos PIX (com 5% de desconto), cartão de crédito em até 6x sem juros e boleto bancário. Todos os pagamentos são processados por gateways seguros.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Os produtos têm garantia?</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Sim, todos os produtos possuem garantia de 90 dias contra defeitos de fabricação, conforme o Código de Defesa do Consumidor. Alguns equipamentos podem ter garantia estendida do fabricante.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Como rastrear meu pedido?</span>
+                                <span class="arrow">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Após a confirmação do pagamento, você receberá o código de rastreamento por e-mail em até 24 horas úteis. Basta acessar o site dos Correios ou da transportadora e inserir o código.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapa placeholder -->
+                <div class="map-section">
+                    <h2>📍 Nossa Localização</h2>
+                    <p>Visite nossa loja física ou entre em contato para agendar uma visita</p>
+                    <div class="map-placeholder">
+                        <div>
+                            <div style="font-size: 3rem; margin-bottom: 12px;">🗺️</div>
+                            <p>Mapa interativo<br><small style="color: var(--text-gray);">(Integre com Google Maps ou similar)</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4 id="footer-nome-loja">S7TE</h4>
+                    <p id="footer-sobre">Tecnologia de ponta para odontologia digital.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorias</h4>
+                    <div id="footer-categorias"></div>
+                    <a href="produtos.html?cat=promocoes">🔥 Promoções</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p id="footer-endereco">Av. Paulista, 1500<br>São Paulo, SP</p>
+                    <p id="footer-email">contato@s7te.com.br</p>
+                    <p id="footer-telefone">0800 123 4567</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Políticas</h4>
+                    <a href="politicas.html?tipo=reembolso">Reembolso</a>
+                    <a href="politicas.html?tipo=frete">Frete</a>
+                    <a href="politicas.html?tipo=termos">Termos</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Seu Carrinho</h3>
+            <button onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-subtotal"><span>Subtotal:</span><span id="cart-subtotal-value">R$ 0,00</span></div>
+            <div class="cart-subtotal" style="color: var(--success);"><span>Frete:</span><span id="cart-shipping-value">Grátis</span></div>
+            <div class="cart-total"><span>Total:</span><span id="cart-total-value">R$ 0,00</span></div>
+            <div class="cart-shipping-note" id="cart-shipping-note" style="display: none;"></div>
+            <button class="btn-checkout" onclick="goToCheckout()">Finalizar Compra</button>
+        </div>
+    </aside>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO SUPABASE
+        // ============================================
+        const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let configSite = {};
+        let categoriasCache = [];
+        let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
+
+        // ============================================
+        // HELPERS COM SANITIZAÇÃO
+        // ============================================
+        function formatarPreco(valor) {
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = 'toast show' + (type === 'error' ? ' error' : '');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function setTextoSeguro(id, texto) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = texto || '';
+        }
+
+        function setHtmlSeguro(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html || '';
+        }
+
+        // ============================================
+        // CARREGAMENTO PARALELO
+        // ============================================
+        async function carregarConfigSite() {
+            const padroes = {
+                urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500',
+                logo_texto: 'S7TE',
+                footer_sobre: 'Tecnologia de ponta para odontologia digital.',
+                footer_endereco: 'Av. Paulista, 1500<br>São Paulo, SP',
+                footer_email: 'contato@s7te.com.br',
+                footer_telefone: '0800 123 4567',
+                footer_copyright: '© 2026 S7TE Tecnologia em Odontologia.',
+                contato_endereco: 'Av. Paulista, 1500<br>São Paulo, SP<br>CEP: 01310-100',
+                contato_email: 'contato@s7te.com.br',
+                contato_telefone: '0800 123 4567',
+                contato_whatsapp: '(11) 99999-9999',
+                contato_horario: 'Segunda a Sexta: 8h às 18h<br>Sábado: 9h às 13h'
+            };
+
+            try {
+                const { data, error } = await supabaseClient.from('configuracoes').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
+                }
+            } catch (e) {
+                console.warn('Usando valores padrão:', e);
+            }
+
+            configSite = padroes;
+            aplicarConfigSite();
+        }
+
+        function aplicarConfigSite() {
+            setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
+            const logoTexto = configSite.logo_texto || 'S7TE';
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-nome-loja', logoTexto);
+            setTextoSeguro('footer-sobre', configSite.footer_sobre);
+            setHtmlSeguro('footer-endereco', configSite.footer_endereco);
+            setTextoSeguro('footer-email', configSite.footer_email);
+            setTextoSeguro('footer-telefone', configSite.footer_telefone);
+            setTextoSeguro('footer-copyright', configSite.footer_copyright);
+
+            // Informações de contato específicas
+            setHtmlSeguro('contato-endereco', configSite.contato_endereco);
+            
+            const emailLink = document.getElementById('contato-email-link');
+            if (emailLink) {
+                emailLink.textContent = configSite.contato_email;
+                emailLink.href = `mailto:${configSite.contato_email}`;
+            }
+            
+            const telefoneLink = document.getElementById('contato-telefone-link');
+            if (telefoneLink) {
+                telefoneLink.textContent = configSite.contato_telefone;
+                telefoneLink.href = `tel:${configSite.contato_telefone.replace(/\D/g, '')}`;
+            }
+            
+            const whatsappLink = document.getElementById('contato-whatsapp-link');
+            if (whatsappLink) {
+                whatsappLink.textContent = configSite.contato_whatsapp;
+                const whatsappNumero = configSite.contato_whatsapp.replace(/\D/g, '');
+                whatsappLink.href = `https://wa.me/55${whatsappNumero}`;
+            }
+            
+            setHtmlSeguro('contato-horario', configSite.contato_horario);
+        }
+
+        async function carregarCategorias() {
+            try {
+                const { data, error } = await supabaseClient.from('categorias').select('*').order('ordem');
+                if (error || !data) return;
+                categoriasCache = data;
+
+                const nav = document.getElementById('nav-categorias');
+                if (nav) {
+                    const navLinks = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                    nav.innerHTML = navLinks + '<a href="contato.html">Contato</a>';
+                }
+
+                const footer = document.getElementById('footer-categorias');
+                if (footer) {
+                    footer.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar categorias:', e);
+            }
+        }
+
+        // ============================================
+        // MÁSCARA DE TELEFONE
+        // ============================================
+        function aplicarMascaraTelefone() {
+            const tel = document.getElementById('telefone');
+            if (tel) {
+                tel.addEventListener('input', (e) => {
+                    let v = e.target.value.replace(/\D/g, '');
+                    if (v.length > 11) v = v.substring(0, 11);
+                    if (v.length > 10) {
+                        v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                    } else if (v.length > 6) {
+                        v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+                    } else if (v.length > 2) {
+                        v = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+                    }
+                    e.target.value = v;
+                });
+            }
+        }
+
+        // ============================================
+        // ENVIAR FORMULÁRIO
+        // ============================================
+        async function enviarFormulario(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telefone = document.getElementById('telefone').value.trim();
+            const assunto = document.getElementById('assunto').value;
+            const mensagem = document.getElementById('mensagem').value.trim();
+
+            // Validação
+            if (!nome || !email || !assunto || !mensagem) {
+                showToast('Preencha todos os campos obrigatórios', 'error');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+                showToast('E-mail inválido', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-text');
+            btn.disabled = true;
+            btnText.innerHTML = '<div class="spinner"></div> Enviando...';
+
+            try {
+                const { error } = await supabaseClient.from('contatos').insert([{
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    assunto: assunto,
+                    mensagem: mensagem,
+                    status: 'novo'
+                }]);
+
+                if (error) throw error;
+
+                // Mostrar mensagem de sucesso
+                document.getElementById('contact-form').style.display = 'none';
+                document.getElementById('success-message').classList.add('show');
+
+                showToast('✅ Mensagem enviada com sucesso!');
+
+                // Limpar formulário
+                document.getElementById('contact-form').reset();
+
+            } catch (error) {
+                console.error('Erro ao enviar mensagem:', error);
+                showToast('Erro ao enviar mensagem. Tente novamente.', 'error');
+                btn.disabled = false;
+                btnText.textContent = '📩 Enviar Mensagem';
+            }
+        }
+
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Fecha todos
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Abre o clicado (se não estava ativo)
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // ============================================
+        // CARRINHO
+        // ============================================
+        function updateQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+                localStorage.setItem('s7te_cart', JSON.stringify(cart));
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const freteGratis = parseFloat(configSite.frete_gratis_acima || 500);
+            const valorFrete = parseFloat(configSite.valor_frete || 35.90);
+
+            const container = document.getElementById('cart-items');
+            const countEl = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total-value');
+            const subtotalEl = document.getElementById('cart-subtotal-value');
+            const shippingEl = document.getElementById('cart-shipping-value');
+            const shippingNote = document.getElementById('cart-shipping-note');
+
+            if (!container || !countEl) return;
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            countEl.textContent = totalQty;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: var(--text-gray); margin-top: 60px;">Seu carrinho está vazio.</p>';
+                if (shippingNote) shippingNote.style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${escapeHTML(item.imagem_url)}" class="cart-item-img" alt="${escapeHTML(item.nome)}"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'70\\' height=\\'70\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'70\\' height=\\'70\\'/%3E%3C/svg%3E'">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${escapeHTML(item.nome)}</div>
+                        <div class="cart-item-price">R$ ${formatarPreco(item.preco_venda)}</div>
+                        <div class="cart-controls">
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', -1)">−</button>
+                            <span style="min-width: 20px; text-align: center; font-weight: 700; font-size: 0.9rem;">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${escapeHTML(item.id)}', 1)">+</button>
+                            <button class="remove-btn" onclick="updateQty('${escapeHTML(item.id)}', -999)">Remover</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const shipping = subtotal >= freteGratis ? 0 : valorFrete;
+
+            if (subtotalEl) subtotalEl.textContent = `R$ ${formatarPreco(subtotal)}`;
+            if (shippingEl) shippingEl.textContent = shipping === 0 ? 'Grátis' : `R$ ${formatarPreco(shipping)}`;
+            if (totalEl) totalEl.textContent = `R$ ${formatarPreco(subtotal + shipping)}`;
+
+            if (shippingNote) {
+                if (subtotal >= freteGratis) {
+                    shippingNote.style.display = 'block';
+                    shippingNote.innerHTML = '🎉 Parabéns! Você ganhou frete grátis!';
+                } else {
+                    shippingNote.style.display = 'block';
+                    shippingNote.innerHTML = `💡 Faltam <strong>R$ ${formatarPreco(freteGratis - subtotal)}</strong> para frete grátis!`;
+                }
+            }
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            if (!sidebar || !overlay) return;
+            
+            if (forceOpen || !sidebar.classList.contains('active')) {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }
+
+        function goToCheckout() {
+            if (cart.length === 0) {
+                showToast('Adicione produtos ao carrinho primeiro!', 'error');
+                return;
+            }
+            toggleCart();
+            window.location.href = 'checkout.html';
+        }
+
+        // ============================================
+        // INICIALIZAÇÃO PARALELA
+        // ============================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarCategorias()
+                ]);
+                
+                aplicarMascaraTelefone();
+                updateCartUI();
+
+                // Event listener do formulário
+                document.getElementById('contact-form').addEventListener('submit', enviarFormulario);
+
+            } catch (error) {
+                console.error('Erro ao inicializar:', error);
+                updateCartUI();
+            }
+        });
+    </script>
+</body>
+</html>

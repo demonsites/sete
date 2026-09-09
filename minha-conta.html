@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta | S7TE</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --cobalt-deep: #0a2a6e;
+            --cobalt-main: #1a4fb8;
+            --cobalt-bright: #2563eb;
+            --gold: #fbbf24;
+            --gold-dark: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+            --radius: 8px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px -3px rgba(26, 79, 184, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+        }
+        a { text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        .header {
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { 
+            font-size: 1.6rem; 
+            font-weight: 900; 
+            letter-spacing: -0.02em;
+            color: white;
+        }
+        .logo span { color: var(--gold); }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-header {
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        .btn-header:hover { background: rgba(255,255,255,0.25); }
+        .btn-header.logout { background: var(--danger); }
+        .btn-header.logout:hover { background: #dc2626; }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 32px;
+        }
+        .welcome-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .welcome-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        .welcome-info h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .welcome-info p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 16px 24px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            background: white;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            background: var(--bg-light);
+            color: var(--cobalt-main);
+        }
+        .tab-btn.active {
+            color: var(--cobalt-main);
+            border-bottom-color: var(--cobalt-main);
+            background: rgba(26, 79, 184, 0.03);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 24px;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pedidos */
+        .order-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+        .order-card:hover {
+            box-shadow: var(--shadow);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .order-id {
+            font-weight: 800;
+            color: var(--cobalt-deep);
+            font-size: 1.1rem;
+        }
+        .order-date {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+        .order-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-aguardando { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
+        .status-pago { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .status-enviado { background: rgba(26, 79, 184, 0.1); color: var(--cobalt-main); }
+        .status-entregue { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .status-cancelado { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+        .order-products {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .order-product-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .order-product-row:last-child { border-bottom: none; }
+        .order-total {
+            text-align: right;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--cobalt-deep);
+        }
+
+        /* Dados do cliente */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .form-group label .req { color: var(--danger); }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: white;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+            box-shadow: 0 0 0 3px rgba(26, 79, 184, 0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-gray);
+        }
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .empty-state h3 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .empty-state a {
+            color: var(--cobalt-main);
+            font-weight: 700;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-gray);
+        }
+        .spinner-inline {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border);
+            border-top-color: var(--cobalt-main);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--radius);
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 3000;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
+        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.error { background: var(--danger); }
+
+        footer {
+            background: var(--cobalt-deep);
+            color: white;
+            padding: 32px 0;
+            margin-top: 60px;
+            text-align: center;
+        }
+        footer p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .welcome-info h1 {
+                font-size: 1.3rem;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab-btn {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+            .tab-btn.active {
+                border-left-color: var(--cobalt-main);
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .order-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">S<span>7</span>TE</a>
+            <div class="header-actions">
+                <a href="index.html" class="btn-header">🏠 Loja</a>
+                <button class="btn-header logout" id="btn-logout">🚪 Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome-section">
+            <div class="container">
+                <div class="welcome-content">
+                    <div class="welcome-avatar">👤</div>
+                    <div class="welcome-info">
+                        <h1 id="welcome-name">Olá, Cliente!</h1>
+                        <p id="welcome-email">seu@email.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="pedidos">
+                        📦 Meus Pedidos
+                    </button>
+                    <button class="tab-btn" data-tab="dados">
+                        👤 Meus Dados
+                    </button>
+                </div>
+
+                <!-- TAB: Pedidos -->
+                <div class="tab-content active" id="tab-pedidos">
+                    <div id="lista-pedidos" class="loading">
+                        <span class="spinner-inline"></span> Carregando pedidos...
+                    </div>
+                </div>
+
+                <!-- TAB: Dados -->
+                <div class="tab-content" id="tab-dados">
+                    <div id="dados-cliente" class="loading">
+                        <span class="spinner-inline"></span> Carregando dados...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 S7TE Tecnologia. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let clienteAtual = null;
+        let dadosCliente = null;
+
+        function formatarPreco(valor) {
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function formatarData(data) {
+            if (!data) return '-';
+            return new Date(data).toLocaleDateString('pt-BR', { 
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = 'toast show' + (type === 'error' ? ' error' : '');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function getStatusBadge(status) {
+            const badges = {
+                'aguardando_pagamento': '<span class="order-status status-aguardando">⏳ Aguardando</span>',
+                'pago': '<span class="order-status status-pago">✅ Pago</span>',
+                'enviado': '<span class="order-status status-enviado">🚚 Enviado</span>',
+                'entregue': '<span class="order-status status-entregue">📦 Entregue</span>',
+                'cancelado': '<span class="order-status status-cancelado">❌ Cancelado</span>'
+            };
+            return badges[status] || '<span class="order-status status-aguardando">' + escapeHTML(status || 'Pendente') + '</span>';
+        }
+
+        async function verificarAuth() {
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (!session) {
+                    window.location.href = 'cliente-login.html';
+                    return null;
+                }
+                return session;
+            } catch (error) {
+                console.error('Erro ao verificar auth:', error);
+                window.location.href = 'cliente-login.html';
+                return null;
+            }
+        }
+
+        async function carregarDadosCliente() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('clientes')
+                    .select('*')
+                    .eq('id', clienteAtual.id)
+                    .single();
+
+                if (error) throw error;
+                dadosCliente = data;
+
+                // Atualizar boas-vindas
+                document.getElementById('welcome-name').textContent = `Olá, ${data.nome.split(' ')[0]}!`;
+                document.getElementById('welcome-email').textContent = clienteAtual.email;
+
+                renderizarDadosCliente();
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                document.getElementById('dados-cliente').innerHTML = 
+                    '<div class="empty-state"><div class="icon">⚠️</div><h3>Erro ao carregar dados</h3></div>';
+            }
+        }
+
+        function renderizarDadosCliente() {
+            const container = document.getElementById('dados-cliente');
+            if (!dadosCliente) return;
+
+            const tipoDoc = dadosCliente.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF';
+            const docFormatado = dadosCliente.tipo_documento === 'cnpj' 
+                ? formatarCNPJ(dadosCliente.documento)
+                : formatarCPF(dadosCliente.documento);
+
+            container.innerHTML = `
+                <form id="form-dados">
+                    <div class="form-group">
+                        <label>Nome Completo <span class="req">*</span></label>
+                        <input type="text" class="form-input" id="nome" value="${escapeHTML(dadosCliente.nome)}" required>
+                    </div>
+
+                    ${dadosCliente.tipo_documento === 'cnpj' ? `
+                    <div class="form-group">
+                        <label>Razão Social</label>
+                        <input type="text" class="form-input" id="razao-social" value="${escapeHTML(dadosCliente.razao_social || '')}">
+                    </div>
+                    ` : ''}
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>${tipoDoc}</label>
+                            <input type="text" class="form-input" id="documento" value="${escapeHTML(docFormatado)}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone <span class="req">*</span></label>
+                            <input type="tel" class="form-input" id="telefone" value="${escapeHTML(dadosCliente.telefone || '')}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" class="form-input" value="${escapeHTML(clienteAtual.email)}" disabled>
+                        <small style="color: var(--text-gray); font-size: 0.8rem;">
+                            Para alterar o e-mail, entre em contato com o suporte.
+                        </small>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="btn-salvar-dados">
+                        💾 Salvar Alterações
+                    </button>
+                </form>
+            `;
+
+            document.getElementById('form-dados').addEventListener('submit', salvarDados);
+        }
+
+        function formatarCPF(cpf) {
+            if (!cpf) return '';
+            cpf = cpf.replace(/\D/g, '');
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+
+        function formatarCNPJ(cnpj) {
+            if (!cnpj) return '';
+            cnpj = cnpj.replace(/\D/g, '');
+            return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+
+        async function salvarDados(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value.trim();
+            const telefone = document.getElementById('telefone').value.trim();
+            const razaoSocial = document.getElementById('razao-social')?.value.trim() || null;
+
+            if (!nome || !telefone) {
+                showToast('Preencha todos os campos obrigatórios', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btn-salvar-dados');
+            btn.disabled = true;
+            btn.textContent = 'Salvando...';
+
+            try {
+                const updateData = {
+                    nome: nome,
+                    telefone: telefone,
+                    atualizado_em: new Date().toISOString()
+                };
+
+                if (razaoSocial !== null) {
+                    updateData.razao_social = razaoSocial;
+                }
+
+                const { error } = await supabaseClient
+                    .from('clientes')
+                    .update(updateData)
+                    .eq('id', clienteAtual.id);
+
+                if (error) throw error;
+
+                showToast('✅ Dados atualizados!');
+                document.getElementById('welcome-name').textContent = `Olá, ${nome.split(' ')[0]}!`;
+
+            } catch (error) {
+                console.error('Erro ao salvar:', error);
+                showToast('Erro ao salvar dados', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '💾 Salvar Alterações';
+            }
+        }
+
+        async function carregarPedidos() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('pedidos')
+                    .select('*')
+                    .eq('cliente_id', clienteAtual.id)
+                    .order('criado_em', { ascending: false });
+
+                if (error) throw error;
+
+                const container = document.getElementById('lista-pedidos');
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">📦</div>
+                            <h3>Nenhum pedido ainda</h3>
+                            <p>Que tal fazer sua primeira compra?</p>
+                            <a href="produtos.html">Ver Produtos →</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = data.map(pedido => {
+                    const itens = Array.isArray(pedido.itens) ? pedido.itens : [];
+                    return `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div>
+                                    <div class="order-id">Pedido #${escapeHTML(pedido.id.substring(0, 8).toUpperCase())}</div>
+                                    <div class="order-date">${formatarData(pedido.criado_em)}</div>
+                                </div>
+                                ${getStatusBadge(pedido.status)}
+                            </div>
+                            <div class="order-products">
+                                ${itens.map(item => `
+                                    <div class="order-product-row">
+                                        <span>${escapeHTML(item.nome)} × ${escapeHTML(item.quantidade) || 1}</span>
+                                        <span>R$ ${formatarPreco((item.preco || 0) * (item.quantidade || 1))}</span>
+                                    </div>
+                                `).join('') || '<em>Sem itens</em>'}
+                            </div>
+                            <div class="order-total">
+                                Total: R$ ${formatarPreco(pedido.total)}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+                document.getElementById('lista-pedidos').innerHTML = 
+                    '<div class="empty-state"><div class="icon">⚠️</div><h3>Erro ao carregar pedidos</h3></div>';
+            }
+        }
+
+        function setupTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.dataset.tab;
+                    
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    document.getElementById('tab-' + tab).classList.add('active');
+                });
+            });
+        }
+
+        async function sair() {
+            try {
+                await supabaseClient.auth.signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Erro ao sair:', error);
+                window.location.href = 'index.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await verificarAuth();
+            if (!session) return;
+
+            clienteAtual = session.user;
+
+            setupTabs();
+            await carregarDadosCliente();
+            await carregarPedidos();
+
+            document.getElementById('btn-logout').addEventListener('click', sair);
+        });
+    </script>
+</body>
+</html>

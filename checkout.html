@@ -822,7 +822,7 @@
                             <h2 class="section-title">3. Forma de Pagamento</h2>
                             
                             <div class="payment-options">
-                                <label class="payment-option selected" id="pix-option" onclick="selecionarPagamento('pix')">
+                                <label class="payment-option selected" id="pix-option" onclick="selecionarPagamento('pix', event)">
                                     <input type="radio" name="payment" value="pix" checked>
                                     <div class="payment-info">
                                         <div class="title">💰 PIX <span class="payment-badge">Recomendado</span></div>
@@ -832,7 +832,7 @@
                                     <span class="gateway-badge" id="gateway-name-pix">Gateway</span>
                                 </label>
                                 
-                                <label class="payment-option" id="credit-card-option" onclick="selecionarPagamento('credit_card')">
+                                <label class="payment-option" id="credit-card-option" onclick="selecionarPagamento('credit_card', event)">
                                     <input type="radio" name="payment" value="credit_card">
                                     <div class="payment-info">
                                         <div class="title">💳 Cartão de Crédito</div>
@@ -1048,6 +1048,17 @@
                 'identificationNumber': 'CPF/CNPJ'
             };
             return traducoes[campo] || campo;
+        }
+
+        // ✅ Validação de CPF/CNPJ
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, '');
+            return cpf.length === 11;
+        }
+
+        function validarCNPJ(cnpj) {
+            cnpj = cnpj.replace(/\D/g, '');
+            return cnpj.length === 14;
         }
 
         // ============================================
@@ -1282,7 +1293,7 @@
                         console.log('⚠️ Opção de PIX escondida');
                         
                         if (supports.includes('credit_card') && aceitaCartao) {
-                            selecionarPagamento('credit_card');
+                            selecionarPagamento('credit_card', null);
                         }
                     }
                 }
@@ -1446,11 +1457,16 @@
             select.addEventListener('change', atualizarTotais);
         }
 
-        function selecionarPagamento(metodo) {
+        function selecionarPagamento(metodo, event) {
             metodoPagamento = metodo;
 
             document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('selected');
+            } else {
+                const opcao = document.querySelector(`.payment-option input[value="${metodo}"]`).closest('.payment-option');
+                if (opcao) opcao.classList.add('selected');
+            }
 
             document.querySelectorAll('input[name="payment"]').forEach(r => {
                 r.checked = r.value === metodo;
@@ -1515,24 +1531,16 @@
                 detectarBandeiraVisual(v.replace(/\s/g, ''));
             });
 
-            // ✅ CORREÇÃO: Máscara melhorada da validade
             const cardExp = document.getElementById('card-expiry');
             cardExp.addEventListener('input', (e) => {
-                // Remover tudo que não for dígito
                 let v = e.target.value.replace(/\D/g, '');
-                
-                // Limitar a 4 dígitos
                 if (v.length > 4) v = v.substring(0, 4);
-                
-                // Adicionar barra após 2 dígitos
                 if (v.length >= 2) {
                     v = v.substring(0, 2) + '/' + v.substring(2);
                 }
-                
                 e.target.value = v;
             });
 
-            // Validar ao sair do campo
             cardExp.addEventListener('blur', (e) => {
                 const valor = e.target.value;
                 if (valor && valor.length === 5) {
@@ -1637,6 +1645,18 @@
                 return false;
             }
 
+            // ✅ Validação de CPF/CNPJ
+            const docRaw = document.getElementById('documento').value.replace(/\D/g, '');
+            const isCnpj = document.getElementById('doc-label').textContent.includes('CNPJ');
+            if (isCnpj && !validarCNPJ(docRaw)) {
+                showToast('CNPJ inválido. Verifique os dígitos.', 'error');
+                return false;
+            }
+            if (!isCnpj && !validarCPF(docRaw)) {
+                showToast('CPF inválido. Verifique os dígitos.', 'error');
+                return false;
+            }
+
             if (metodoPagamento === 'credit_card') {
                 const cardNum = document.getElementById('card-number').value.replace(/\s/g, '');
                 const cardName = document.getElementById('card-name').value;
@@ -1718,13 +1738,11 @@
         }
 
         async function tokenizarMercadoPago(cardData) {
-            // Verificar se o SDK está carregado
             if (typeof MercadoPago === 'undefined') {
                 console.error('❌ SDK do Mercado Pago não carregado');
                 throw new Error('SDK do Mercado Pago não carregado. Recarregue a página.');
             }
 
-            // Verificar se tem public key
             if (!gatewayAtivo?.credenciais?.public_key) {
                 console.error('❌ Public Key não configurada');
                 throw new Error('Public Key do Mercado Pago não configurada. Configure no admin.');
@@ -1739,74 +1757,35 @@
                 });
 
                 // ✅ CORREÇÃO: Parse robusto da data de validade
-                const expiryRaw = cardData.expiry.trim();
-                console.log('🔍 Data de validade (raw):', expiryRaw);
-
-                // Validar formato básico
-                if (!expiryRaw || expiryRaw.length < 4) {
-                    throw new Error('Data de validade inválida. Use o formato MM/AA (ex: 11/25).');
-                }
-
-                // Tentar diferentes formatos
-                let month, year;
+                const cleanExpiry = cardData.expiry.replace(/\D/g, '');
                 
-                if (expiryRaw.includes('/')) {
-                    // Formato: MM/AA ou MM/AAAA
-                    const parts = expiryRaw.split('/');
-                    month = parts[0].trim();
-                    year = parts[1].trim();
-                } else if (expiryRaw.length === 4) {
-                    // Formato: MMAA (sem barra)
-                    month = expiryRaw.substring(0, 2);
-                    year = expiryRaw.substring(2, 4);
-                } else if (expiryRaw.length === 6) {
-                    // Formato: MM AAAA (sem barra)
-                    month = expiryRaw.substring(0, 2);
-                    year = expiryRaw.substring(2, 6);
-                } else {
-                    throw new Error('Data de validade inválida. Use o formato MM/AA (ex: 11/25).');
+                if (cleanExpiry.length < 4) {
+                    throw new Error('Data de validade inválida. Use o formato MM/AA (ex: 12/25).');
                 }
 
-                // Converter para números
-                const expirationMonth = parseInt(month, 10);
-                let expirationYear = parseInt(year, 10);
+                // O SDK do Mercado Pago exige STRINGS: Mês com 2 dígitos, Ano com 4 dígitos
+                const expirationMonth = cleanExpiry.substring(0, 2); // Ex: "05" ou "12"
+                const yearTwoDigits = cleanExpiry.substring(2, 4);   // Ex: "25"
+                const expirationYear = `20${yearTwoDigits}`;         // Ex: "2025"
 
-                // Validar mês
-                if (isNaN(expirationMonth) || expirationMonth < 1 || expirationMonth > 12) {
-                    throw new Error('Mês de validade inválido. Use 01 a 12.');
-                }
-
-                // Validar ano
-                if (isNaN(expirationYear)) {
-                    throw new Error('Ano de validade inválido.');
-                }
-
-                // Se o ano tiver 2 dígitos, converter para 4 dígitos
-                if (year.length === 2) {
-                    expirationYear = 2000 + expirationYear;
-                }
-
-                // Validar se não está muito longe no futuro (máx 20 anos)
-                const currentYear = new Date().getFullYear();
-                if (expirationYear > currentYear + 20) {
-                    throw new Error('Ano de validade muito distante. Verifique a data.');
+                // Validação básica de mês
+                const monthNum = parseInt(expirationMonth, 10);
+                if (monthNum < 1 || monthNum > 12) {
+                    throw new Error('Mês de validade inválido. Deve ser entre 01 e 12.');
                 }
 
                 console.log('🔍 Data parseada:', {
                     month: expirationMonth,
-                    year: expirationYear,
-                    yearOriginal: year
+                    year: expirationYear
                 });
 
                 // Obter documento (CPF/CNPJ)
-                let docNumero = dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '');
-                let docTipo = dadosCliente?.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF';
+                let docNumero = (dadosCliente?.documento || document.getElementById('documento').value).replace(/\D/g, '');
+                let docTipo = (dadosCliente?.tipo_documento === 'cnpj') ? 'CNPJ' : 'CPF';
 
-                // Se não tiver documento ou for muito curto, usar CPF de teste
-                if (!docNumero || docNumero.length < 11) {
-                    console.warn('⚠️ Documento não encontrado ou inválido, usando CPF de teste');
-                    docNumero = '12345678909'; // CPF de teste válido
-                    docTipo = 'CPF';
+                // ✅ CORREÇÃO: Validação rigorosa do documento (sem CPF de teste)
+                if (!docNumero || (docTipo === 'CPF' && docNumero.length !== 11) || (docTipo === 'CNPJ' && docNumero.length !== 14)) {
+                    throw new Error('CPF ou CNPJ inválido. Verifique o campo de documento.');
                 }
 
                 console.log('🔍 Dados do cartão:', {
@@ -1818,34 +1797,16 @@
                     docNumber: docNumero.substring(0, 3) + '***'
                 });
 
-                // ✅ CORREÇÃO: Tentar com ano de 4 dígitos primeiro
-                let cardToken;
-                try {
-                    cardToken = await mp.createCardToken({
-                        cardNumber: cardData.number,
-                        cardholderName: cardData.name,
-                        cardExpirationMonth: expirationMonth,
-                        cardExpirationYear: expirationYear,
-                        securityCode: cardData.cvv,
-                        identificationType: docTipo,
-                        identificationNumber: docNumero
-                    });
-                } catch (firstError) {
-                    console.warn('⚠️ Erro com ano de 4 dígitos, tentando com 2 dígitos...');
-                    
-                    // Se falhar, tentar com ano de 2 dígitos
-                    const yearTwoDigits = expirationYear % 100;
-                    
-                    cardToken = await mp.createCardToken({
-                        cardNumber: cardData.number,
-                        cardholderName: cardData.name,
-                        cardExpirationMonth: expirationMonth,
-                        cardExpirationYear: yearTwoDigits,
-                        securityCode: cardData.cvv,
-                        identificationType: docTipo,
-                        identificationNumber: docNumero
-                    });
-                }
+                // ✅ CORREÇÃO: Chamada ao SDK com formato correto
+                const cardToken = await mp.createCardToken({
+                    cardNumber: cardData.number,
+                    cardholderName: cardData.name.toUpperCase(),
+                    cardExpirationMonth: expirationMonth,
+                    cardExpirationYear: expirationYear,
+                    securityCode: cardData.cvv,
+                    identificationType: docTipo,
+                    identificationNumber: docNumero
+                });
 
                 console.log('✅ Token do cartão gerado com sucesso');
 
@@ -1859,10 +1820,17 @@
                 console.error('❌ Erro na tokenização Mercado Pago:', error);
                 
                 // Tratar erro como array
-                let mensagemErro = 'Erro ao processar cartão.';
+                let mensagemErro = 'Erro ao processar cartão. Verifique os dados.';
                 
                 if (Array.isArray(error)) {
                     const mensagens = error.map(e => {
+                        if (e.cause && e.cause.code) {
+                            if (e.cause.code === '205') return 'Número do cartão inválido.';
+                            if (e.cause.code === '208') return 'Mês de validade inválido.';
+                            if (e.cause.code === '209') return 'Ano de validade inválido.';
+                            if (e.cause.code === '212') return 'CVV inválido.';
+                            if (e.cause.code === '214') return 'Documento (CPF/CNPJ) inválido.';
+                        }
                         if (e.field && e.message) {
                             return `${traduzirCampo(e.field)}: ${e.message}`;
                         }
@@ -1935,7 +1903,7 @@
                     creditCardHolder: {
                         name: cardData.name,
                         email: document.getElementById('email').value,
-                        cpfCnpj: dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, ''),
+                        cpfCnpj: (dadosCliente?.documento || document.getElementById('documento').value).replace(/\D/g, ''),
                         postalCode: document.getElementById('cep').value.replace(/\D/g, ''),
                         addressNumber: document.getElementById('numero').value,
                         addressComplement: document.getElementById('complemento').value
@@ -2197,12 +2165,20 @@
             window.scrollTo(0, 0);
         }
 
-        function copiarCodigoPix(btn) {
+        // ✅ CORREÇÃO: Usar Clipboard API moderna
+        async function copiarCodigoPix(btn) {
             const input = btn.previousElementSibling;
-            input.select();
-            document.execCommand('copy');
-            btn.textContent = '✅ Copiado!';
-            setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+            try {
+                await navigator.clipboard.writeText(input.value);
+                btn.textContent = '✅ Copiado!';
+                setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+            } catch (err) {
+                // Fallback para navegadores antigos
+                input.select();
+                document.execCommand('copy');
+                btn.textContent = '✅ Copiado!';
+                setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+            }
         }
 
         // ============================================

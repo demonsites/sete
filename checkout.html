@@ -916,7 +916,7 @@
                                 <span id="sum-total">R$ 0,00</span>
                             </div>
                             <div class="summary-pix-total active" id="sum-pix-box">
-                                <p>💰 Total no PIX:</p>
+                                <p> Total no PIX:</p>
                                 <strong id="sum-pix-total">R$ 0,00</strong>
                             </div>
                             <div class="installments-info" id="installments-info">
@@ -929,7 +929,7 @@
                         </button>
 
                         <div class="security-badges">
-                            <div class="security-badge">🔒 SSL</div>
+                            <div class="security-badge"> SSL</div>
                             <div class="security-badge">✓ Criptografado</div>
                             <div class="security-badge">🛡️ PCI-DSS</div>
                         </div>
@@ -1269,7 +1269,7 @@
                 const aceitaCartao = String(configSite.aceita_cartao).toLowerCase() === 'true';
                 const aceitaPix = String(configSite.aceita_pix).toLowerCase() === 'true';
 
-                console.log('🔍 aceita_cartao:', aceitaCartao);
+                console.log(' aceita_cartao:', aceitaCartao);
                 console.log('🔍 aceita_pix:', aceitaPix);
 
                 const creditCardOption = document.getElementById('credit-card-option');
@@ -1279,7 +1279,7 @@
                         console.log('✅ Opção de cartão VISÍVEL');
                     } else {
                         creditCardOption.style.display = 'none';
-                        console.log('⚠️ Opção de cartão escondida');
+                        console.log('️ Opção de cartão escondida');
                     }
                 }
 
@@ -1934,7 +1934,7 @@
         }
 
         // ============================================
-        // FINALIZAR PEDIDO
+        // ✅ FINALIZAR PEDIDO - CORREÇÃO APLICADA
         // ============================================
         async function finalizarPedido() {
             if (!validarFormulario()) return;
@@ -1988,16 +1988,18 @@
             };
 
             try {
-                let cartaoInfo = null;
+                let cartaoToken = null;
+                
                 if (metodoPagamento === 'credit_card') {
                     btn.innerHTML = '💳 Processando cartão...';
-                    cartaoInfo = await tokenizarCartao();
-                    pedido.cartao_token = cartaoInfo.token;
-                    pedido.cartao_bandeira = cartaoInfo.bandeira;
-                    pedido.cartao_ultimo4 = cartaoInfo.ultimo4;
+                    const cartaoInfo = await tokenizarCartao();
+                    cartaoToken = cartaoInfo.token; // Token vai APENAS para a Edge Function
+                    console.log('✅ Cartão tokenizado com sucesso');
                 }
 
                 btn.innerHTML = '💾 Salvando pedido...';
+                
+                // ✅ CORREÇÃO: Removido cartao_token, cartao_bandeira e cartao_ultimo4 do insert
                 const { data: pedidoSalvo, error: pedidoError } = await supabaseClient
                     .from('pedidos')
                     .insert([pedido])
@@ -2018,7 +2020,7 @@
                                 pedido_id: pedidoSalvo.id,
                                 metodo: metodoPagamento,
                                 parcelas: parcelas,
-                                cartao_token: cartaoInfo?.token || null
+                                cartao_token: cartaoToken // ✅ Token enviado apenas para a Edge Function
                             }
                         });
 
@@ -2035,7 +2037,7 @@
                 try {
                     await reduzirEstoque(produtosValidados);
                 } catch (estoqueError) {
-                    console.warn('⚠️ Aviso ao reduzir estoque:', estoqueError);
+                    console.warn('️ Aviso ao reduzir estoque:', estoqueError);
                 }
 
                 cart = [];
@@ -2096,7 +2098,7 @@
             } else if (pedido.metodo_pagamento === 'credit_card') {
                 pagamentoSection = `
                     <div class="pix-instructions" style="border-color: var(--cobalt-main); background: rgba(26, 79, 184, 0.05);">
-                        <h4 style="color: var(--cobalt-main);">💳 Pagamento com Cartão</h4>
+                        <h4 style="color: var(--cobalt-main);"> Pagamento com Cartão</h4>
                         <p style="margin-top: 12px; color: var(--text-gray);">
                             Seu pagamento de <strong>R$ ${formatarPreco(pedido.total)}</strong> em 
                             <strong>${pedido.parcelas}x de R$ ${formatarPreco(pedido.total / pedido.parcelas)}</strong> 
@@ -2143,7 +2145,7 @@
                             <p>R$ ${formatarPreco(pedido.total)}</p>
                         </div>
                         <div class="info-card">
-                            <div class="icon">📅</div>
+                            <div class="icon"></div>
                             <h4>Data</h4>
                             <p>${dataPedido}</p>
                         </div>
@@ -2204,7 +2206,7 @@
                 
                 console.log('✅ Checkout inicializado com sucesso');
             } catch (error) {
-                console.error('❌ Erro ao inicializar:', error);
+                console.error(' Erro ao inicializar:', error);
                 showToast('Erro ao carregar checkout', 'error');
             }
         });

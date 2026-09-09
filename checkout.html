@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- ✅ SDK MERCADO PAGO (CORREÇÃO DO ERRO) -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 
     <style>
         :root {
@@ -1021,16 +1024,36 @@
 
         async function carregarDadosCliente() {
             try {
+                console.log('🔍 Carregando dados do cliente:', clienteLogado.id);
+                
                 const { data, error } = await supabaseClient
                     .from('clientes')
                     .select('*')
                     .eq('id', clienteLogado.id)
                     .single();
 
-                if (error) throw error;
-                dadosCliente = data;
+                if (error) {
+                    console.error('❌ Erro do Supabase:', error);
+                    
+                    if (error.code === 'PGRST116') {
+                        console.log('⚠️ Cliente não encontrado, criando com dados básicos...');
+                        await criarClienteBasico();
+                        return;
+                    }
+                    
+                    throw error;
+                }
 
-                document.getElementById('user-name').textContent = data.nome.split(' ')[0];
+                if (!data) {
+                    console.warn('⚠️ Nenhum dado retornado, criando cliente básico...');
+                    await criarClienteBasico();
+                    return;
+                }
+
+                dadosCliente = data;
+                console.log('✅ Dados do cliente carregados:', data);
+
+                document.getElementById('user-name').textContent = data.nome ? data.nome.split(' ')[0] : 'Cliente';
                 
                 document.getElementById('nome').value = data.nome || '';
                 document.getElementById('email').value = clienteLogado.email || '';
@@ -1051,7 +1074,57 @@
                     }
                 }
             } catch (error) {
-                console.error('Erro ao carregar dados do cliente:', error);
+                console.error('❌ Erro ao carregar dados do cliente:', error);
+                showToast('⚠️ Não foi possível carregar seus dados. Preencha manualmente.', 'error');
+            }
+        }
+
+        async function criarClienteBasico() {
+            try {
+                const nome = clienteLogado.user_metadata?.nome || 'Cliente';
+                const cpf = clienteLogado.user_metadata?.cpf || '';
+                const telefone = clienteLogado.user_metadata?.telefone || '';
+                const tipoDoc = clienteLogado.user_metadata?.tipo_documento || 'cpf';
+                const razaoSocial = clienteLogado.user_metadata?.razao_social || null;
+
+                const insertData = {
+                    id: clienteLogado.id,
+                    nome: nome,
+                    documento: cpf,
+                    telefone: telefone,
+                    tipo_documento: tipoDoc
+                };
+
+                if (razaoSocial) {
+                    insertData.razao_social = razaoSocial;
+                }
+
+                const { error } = await supabaseClient
+                    .from('clientes')
+                    .insert([insertData]);
+
+                if (error) {
+                    console.error('❌ Erro ao criar cliente:', error);
+                    return;
+                }
+
+                console.log('✅ Cliente básico criado com sucesso');
+                
+                const { data } = await supabaseClient
+                    .from('clientes')
+                    .select('*')
+                    .eq('id', clienteLogado.id)
+                    .single();
+
+                if (data) {
+                    dadosCliente = data;
+                    document.getElementById('user-name').textContent = data.nome.split(' ')[0];
+                    document.getElementById('nome').value = data.nome || '';
+                    document.getElementById('email').value = clienteLogado.email || '';
+                    document.getElementById('telefone').value = data.telefone || '';
+                }
+            } catch (error) {
+                console.error('❌ Erro ao criar cliente básico:', error);
             }
         }
 
@@ -1487,33 +1560,51 @@
                         throw new Error('Gateway não suportado');
                 }
             } catch (error) {
-                console.error('Erro na tokenização:', error);
-                throw new Error('Erro ao processar cartão. Verifique os dados.');
+                console.error('❌ Erro na tokenização:', error);
+                throw new Error('Erro ao processar cartão: ' + error.message);
             }
         }
 
         async function tokenizarMercadoPago(cardData) {
-            const mp = new MercadoPago(gatewayAtivo.credenciais.public_key, {
-                locale: 'pt-BR'
-            });
+            if (typeof MercadoPago === 'undefined') {
+                console.error('❌ SDK do Mercado Pago não carregado');
+                showToast('⚠️ Erro ao carregar Mercado Pago. Recarregue a página.', 'error');
+                throw new Error('SDK do Mercado Pago não carregado');
+            }
 
-            const [month, year] = cardData.expiry.split('/');
-            
-            const cardToken = await mp.createCardToken({
-                cardNumber: cardData.number,
-                cardholderName: cardData.name,
-                cardExpirationMonth: parseInt(month),
-                cardExpirationYear: parseInt('20' + year),
-                securityCode: cardData.cvv,
-                identificationType: dadosCliente?.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF',
-                identificationNumber: dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '')
-            });
+            if (!gatewayAtivo?.credenciais?.public_key) {
+                console.error('❌ Public Key do Mercado Pago não configurada');
+                throw new Error('Public Key não configurada');
+            }
 
-            return {
-                token: cardToken.id,
-                bandeira: cardToken.payment_method_id,
-                ultimo4: cardToken.last_four_digits
-            };
+            try {
+                const mp = new MercadoPago(gatewayAtivo.credenciais.public_key, {
+                    locale: 'pt-BR'
+                });
+
+                const [month, year] = cardData.expiry.split('/');
+                
+                const cardToken = await mp.createCardToken({
+                    cardNumber: cardData.number,
+                    cardholderName: cardData.name,
+                    cardExpirationMonth: parseInt(month),
+                    cardExpirationYear: parseInt('20' + year),
+                    securityCode: cardData.cvv,
+                    identificationType: dadosCliente?.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF',
+                    identificationNumber: dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '')
+                });
+
+                console.log('✅ Token do cartão gerado:', cardToken);
+
+                return {
+                    token: cardToken.id,
+                    bandeira: cardToken.payment_method_id,
+                    ultimo4: cardToken.last_four_digits
+                };
+            } catch (error) {
+                console.error('❌ Erro na tokenização Mercado Pago:', error);
+                throw new Error('Erro ao processar cartão: ' + error.message);
+            }
         }
 
         async function tokenizarPagBank(cardData) {
@@ -1553,8 +1644,6 @@
         }
 
         async function tokenizarAsaas(cardData) {
-            const [month, year] = cardData.expiry.split('/');
-            
             const response = await fetch('https://api.asaas.com/v3/creditCard/tokenization', {
                 method: 'POST',
                 headers: {
@@ -1683,24 +1772,31 @@
 
                 btn.innerHTML = metodoPagamento === 'pix' ? '💰 Gerando PIX...' : '💳 Processando pagamento...';
                 
-                const { data: pagamento, error: pagamentoError } = await supabaseClient.functions
-                    .invoke('processar-pagamento', {
-                        body: { 
-                            pedido_id: pedidoSalvo.id,
-                            metodo: metodoPagamento,
-                            parcelas: parcelas,
-                            cartao_token: cartaoInfo?.token || null
-                        }
-                    });
+                let pagamento = null;
+                try {
+                    const { data, error: pagamentoError } = await supabaseClient.functions
+                        .invoke('processar-pagamento', {
+                            body: { 
+                                pedido_id: pedidoSalvo.id,
+                                metodo: metodoPagamento,
+                                parcelas: parcelas,
+                                cartao_token: cartaoInfo?.token || null
+                            }
+                        });
 
-                if (pagamentoError) {
-                    console.warn('Gateway não configurado, pedido salvo como aguardando:', pagamentoError);
+                    if (!pagamentoError) {
+                        pagamento = data;
+                    } else {
+                        console.warn('⚠️ Gateway não configurado:', pagamentoError);
+                    }
+                } catch (funcError) {
+                    console.warn('⚠️ Edge Function não disponível:', funcError);
                 }
 
                 try {
                     await reduzirEstoque(produtosValidados);
                 } catch (estoqueError) {
-                    console.warn('Aviso ao reduzir estoque:', estoqueError);
+                    console.warn('⚠️ Aviso ao reduzir estoque:', estoqueError);
                 }
 
                 cart = [];
@@ -1710,7 +1806,7 @@
                 mostrarSucesso(numeroPedido, pedido, pagamento);
 
             } catch (error) {
-                console.error('Erro ao finalizar pedido:', error);
+                console.error('❌ Erro ao finalizar pedido:', error);
                 showToast('Erro ao processar pedido: ' + error.message, 'error');
                 btn.disabled = false;
                 btn.innerHTML = textoOriginal;
@@ -1854,7 +1950,7 @@
                 aplicarMascaras();
                 renderizarResumo();
             } catch (error) {
-                console.error('Erro ao inicializar:', error);
+                console.error('❌ Erro ao inicializar:', error);
             }
         });
     </script>

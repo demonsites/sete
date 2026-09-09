@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- ✅ SDK MERCADO PAGO (CORREÇÃO DO ERRO) -->
+    <!-- ✅ SDK MERCADO PAGO -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 
     <style>
@@ -81,6 +81,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .secure-header {
@@ -467,6 +473,14 @@
             font-size: 1.1rem;
             color: var(--success);
         }
+        .installments-info {
+            margin-top: 12px;
+            color: var(--cobalt-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .installments-info.active { display: block; }
 
         .btn-finalize {
             width: 100%;
@@ -680,7 +694,7 @@
     <header>
         <div class="container header-inner">
             <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
-            <div style="display: flex; align-items: center; gap: 16px;">
+            <div class="header-right">
                 <div class="user-badge" id="user-badge" style="display: none;">
                     👤 <span id="user-name">Cliente</span>
                 </div>
@@ -713,7 +727,7 @@
 
                 <div class="checkout-layout">
                     <div class="checkout-forms">
-                        <!-- 1. IDENTIFICAÇÃO (Pré-preenchida) -->
+                        <!-- 1. IDENTIFICAÇÃO -->
                         <div class="checkout-section">
                             <h2 class="section-title">1. Identificação</h2>
                             <div class="form-row">
@@ -808,7 +822,7 @@
                             <h2 class="section-title">3. Forma de Pagamento</h2>
                             
                             <div class="payment-options">
-                                <label class="payment-option selected" onclick="selecionarPagamento('pix')">
+                                <label class="payment-option selected" id="pix-option" onclick="selecionarPagamento('pix')">
                                     <input type="radio" name="payment" value="pix" checked>
                                     <div class="payment-info">
                                         <div class="title">💰 PIX <span class="payment-badge">Recomendado</span></div>
@@ -905,7 +919,7 @@
                                 <p>💰 Total no PIX:</p>
                                 <strong id="sum-pix-total">R$ 0,00</strong>
                             </div>
-                            <div class="summary-row" id="installments-info" style="display: none; margin-top: 12px; color: var(--cobalt-main); font-weight: 600;">
+                            <div class="installments-info" id="installments-info">
                                 <span id="installments-text">6x de R$ 0,00 sem juros</span>
                             </div>
                         </div>
@@ -936,11 +950,17 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // ============================================
+        // CONFIGURAÇÃO SUPABASE
+        // ============================================
         const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
         
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
         let configSite = {};
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
         let produtosValidados = [];
@@ -950,6 +970,17 @@
         let clienteLogado = null;
         let dadosCliente = null;
 
+        // Supports padrão por gateway (fallback)
+        const SUPPORTS_PADRAO = {
+            'mercado_pago': ['pix', 'credit_card', 'boleto'],
+            'picpay': ['pix', 'credit_card'],
+            'asaas': ['pix', 'credit_card', 'boleto'],
+            'pagbank': ['pix', 'credit_card', 'boleto']
+        };
+
+        // ============================================
+        // HELPERS
+        // ============================================
         function formatarPreco(valor) {
             const num = parseFloat(valor || 0);
             return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
@@ -996,6 +1027,18 @@
             return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
         }
 
+        function detectarBandeira(numero) {
+            if (/^4/.test(numero)) return 'visa';
+            if (/^5[1-5]/.test(numero) || /^2[2-7]/.test(numero)) return 'mastercard';
+            if (/^636[0-9]|^438935|^504175|^451416|^636297/.test(numero)) return 'elo';
+            if (/^3[47]/.test(numero)) return 'amex';
+            if (/^606282/.test(numero)) return 'hipercard';
+            return 'visa';
+        }
+
+        // ============================================
+        // AUTENTICAÇÃO
+        // ============================================
         async function verificarLogin() {
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
@@ -1009,6 +1052,7 @@
                 }
 
                 clienteLogado = session.user;
+                console.log('✅ Cliente logado:', clienteLogado.email);
                 
                 const userBadge = document.getElementById('user-badge');
                 if (userBadge) userBadge.style.display = 'flex';
@@ -1016,7 +1060,7 @@
                 await carregarDadosCliente();
                 return true;
             } catch (error) {
-                console.error('Erro ao verificar login:', error);
+                console.error('❌ Erro ao verificar login:', error);
                 window.location.href = 'cliente-login.html?redirect=checkout.html';
                 return false;
             }
@@ -1030,67 +1074,42 @@
                     .from('clientes')
                     .select('*')
                     .eq('id', clienteLogado.id)
-                    .single();
+                    .maybeSingle();
 
                 if (error) {
                     console.error('❌ Erro do Supabase:', error);
-                    
-                    if (error.code === 'PGRST116') {
-                        console.log('⚠️ Cliente não encontrado, criando com dados básicos...');
-                        await criarClienteBasico();
-                        return;
-                    }
-                    
-                    throw error;
+                    await criarClienteBasico();
+                    return;
                 }
 
                 if (!data) {
-                    console.warn('⚠️ Nenhum dado retornado, criando cliente básico...');
+                    console.log('⚠️ Cliente não encontrado, criando...');
                     await criarClienteBasico();
                     return;
                 }
 
                 dadosCliente = data;
                 console.log('✅ Dados do cliente carregados:', data);
-
-                document.getElementById('user-name').textContent = data.nome ? data.nome.split(' ')[0] : 'Cliente';
-                
-                document.getElementById('nome').value = data.nome || '';
-                document.getElementById('email').value = clienteLogado.email || '';
-                document.getElementById('telefone').value = data.telefone || '';
-                
-                if (data.documento) {
-                    const docInput = document.getElementById('documento');
-                    const docLabel = document.getElementById('doc-label');
-                    
-                    if (data.tipo_documento === 'cnpj') {
-                        docLabel.innerHTML = 'CNPJ <span class="req">*</span>';
-                        docInput.value = formatarCNPJ(data.documento);
-                        docInput.maxLength = 18;
-                    } else {
-                        docLabel.innerHTML = 'CPF <span class="req">*</span>';
-                        docInput.value = formatarCPF(data.documento);
-                        docInput.maxLength = 14;
-                    }
-                }
+                preencherDadosCliente();
             } catch (error) {
                 console.error('❌ Erro ao carregar dados do cliente:', error);
-                showToast('⚠️ Não foi possível carregar seus dados. Preencha manualmente.', 'error');
+                showToast('⚠️ Preencha seus dados manualmente', 'error');
             }
         }
 
         async function criarClienteBasico() {
             try {
-                const nome = clienteLogado.user_metadata?.nome || 'Cliente';
-                const cpf = clienteLogado.user_metadata?.cpf || '';
-                const telefone = clienteLogado.user_metadata?.telefone || '';
-                const tipoDoc = clienteLogado.user_metadata?.tipo_documento || 'cpf';
-                const razaoSocial = clienteLogado.user_metadata?.razao_social || null;
+                const metadata = clienteLogado.user_metadata || {};
+                const nome = metadata.nome || 'Cliente';
+                const documento = metadata.documento || metadata.cpf || '';
+                const telefone = metadata.telefone || '';
+                const tipoDoc = metadata.tipo_documento || 'cpf';
+                const razaoSocial = metadata.razao_social || null;
 
                 const insertData = {
                     id: clienteLogado.id,
                     nome: nome,
-                    documento: cpf,
+                    documento: documento,
                     telefone: telefone,
                     tipo_documento: tipoDoc
                 };
@@ -1108,7 +1127,7 @@
                     return;
                 }
 
-                console.log('✅ Cliente básico criado com sucesso');
+                console.log('✅ Cliente básico criado');
                 
                 const { data } = await supabaseClient
                     .from('clientes')
@@ -1118,16 +1137,40 @@
 
                 if (data) {
                     dadosCliente = data;
-                    document.getElementById('user-name').textContent = data.nome.split(' ')[0];
-                    document.getElementById('nome').value = data.nome || '';
-                    document.getElementById('email').value = clienteLogado.email || '';
-                    document.getElementById('telefone').value = data.telefone || '';
+                    preencherDadosCliente();
                 }
             } catch (error) {
                 console.error('❌ Erro ao criar cliente básico:', error);
             }
         }
 
+        function preencherDadosCliente() {
+            if (!dadosCliente) return;
+
+            document.getElementById('user-name').textContent = dadosCliente.nome ? dadosCliente.nome.split(' ')[0] : 'Cliente';
+            document.getElementById('nome').value = dadosCliente.nome || '';
+            document.getElementById('email').value = clienteLogado.email || '';
+            document.getElementById('telefone').value = dadosCliente.telefone || '';
+            
+            if (dadosCliente.documento) {
+                const docInput = document.getElementById('documento');
+                const docLabel = document.getElementById('doc-label');
+                
+                if (dadosCliente.tipo_documento === 'cnpj') {
+                    docLabel.innerHTML = 'CNPJ <span class="req">*</span>';
+                    docInput.value = formatarCNPJ(dadosCliente.documento);
+                    docInput.maxLength = 18;
+                } else {
+                    docLabel.innerHTML = 'CPF <span class="req">*</span>';
+                    docInput.value = formatarCPF(dadosCliente.documento);
+                    docInput.maxLength = 14;
+                }
+            }
+        }
+
+        // ============================================
+        // CONFIGURAÇÕES
+        // ============================================
         async function carregarConfigSite() {
             const padroes = {
                 urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500',
@@ -1144,14 +1187,19 @@
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
+                    data.forEach(c => { 
+                        if (c.chave && c.valor !== undefined) {
+                            padroes[c.chave] = c.valor;
+                        }
+                    });
                 }
             } catch (e) {
-                console.warn('Usando valores padrão:', e);
+                console.warn('⚠️ Usando valores padrão:', e);
             }
 
             configSite = padroes;
             parcelasMax = parseInt(padroes.parcelas_max) || 6;
+            console.log('✅ Configurações carregadas:', configSite);
             aplicarConfigSite();
         }
 
@@ -1164,6 +1212,9 @@
             setTextoSeguro('installments-subtitle', `Até ${parcelasMax}x sem juros`);
         }
 
+        // ============================================
+        // GATEWAY
+        // ============================================
         async function carregarGatewayAtivo() {
             try {
                 const { data, error } = await supabaseClient
@@ -1171,9 +1222,10 @@
                     .select('*')
                     .eq('ativo', true)
                     .limit(1)
-                    .single();
+                    .maybeSingle();
 
                 if (error || !data) {
+                    console.warn('⚠️ Nenhum gateway ativo, usando modo demo');
                     gatewayAtivo = null;
                     setTextoSeguro('gateway-name-pix', 'Demo');
                     setTextoSeguro('gateway-name-cc', 'Demo');
@@ -1184,18 +1236,55 @@
                 setTextoSeguro('gateway-name-pix', data.nome);
                 setTextoSeguro('gateway-name-cc', data.nome);
 
-                const supports = data.credenciais?.supports || [];
-                const aceitaCartao = configSite.aceita_cartao === 'true';
+                // Usar supports das credenciais OU o padrão do gateway
+                const supports = data.credenciais?.supports || SUPPORTS_PADRAO[data.chave] || ['pix', 'credit_card'];
                 
-                if (!supports.includes('credit_card') || !aceitaCartao) {
-                    document.getElementById('credit-card-option').style.display = 'none';
+                console.log('✅ Gateway ativo:', data.nome);
+                console.log('🔍 Métodos suportados:', supports);
+
+                const aceitaCartao = String(configSite.aceita_cartao).toLowerCase() === 'true';
+                const aceitaPix = String(configSite.aceita_pix).toLowerCase() === 'true';
+
+                console.log('🔍 aceita_cartao:', aceitaCartao);
+                console.log('🔍 aceita_pix:', aceitaPix);
+
+                // Mostrar/esconder opção de cartão
+                const creditCardOption = document.getElementById('credit-card-option');
+                if (creditCardOption) {
+                    if (supports.includes('credit_card') && aceitaCartao) {
+                        creditCardOption.style.display = 'flex';
+                        console.log('✅ Opção de cartão VISÍVEL');
+                    } else {
+                        creditCardOption.style.display = 'none';
+                        console.log('⚠️ Opção de cartão escondida');
+                    }
+                }
+
+                // Mostrar/esconder opção de PIX
+                const pixOption = document.getElementById('pix-option');
+                if (pixOption) {
+                    if (supports.includes('pix') && aceitaPix) {
+                        pixOption.style.display = 'flex';
+                        console.log('✅ Opção de PIX VISÍVEL');
+                    } else {
+                        pixOption.style.display = 'none';
+                        console.log('⚠️ Opção de PIX escondida');
+                        
+                        // Se PIX não disponível, selecionar cartão
+                        if (supports.includes('credit_card') && aceitaCartao) {
+                            selecionarPagamento('credit_card');
+                        }
+                    }
                 }
             } catch (e) {
-                console.warn('Nenhum gateway ativo:', e);
+                console.warn('⚠️ Erro ao carregar gateway:', e);
                 gatewayAtivo = null;
             }
         }
 
+        // ============================================
+        // CARRINHO
+        // ============================================
         async function validarCarrinho() {
             if (cart.length === 0) return false;
 
@@ -1317,7 +1406,11 @@
 
             const installmentsInfo = document.getElementById('installments-info');
             if (installmentsInfo) {
-                installmentsInfo.style.display = metodoPagamento === 'credit_card' ? 'flex' : 'none';
+                installmentsInfo.classList.toggle('active', metodoPagamento === 'credit_card');
+                if (metodoPagamento === 'credit_card') {
+                    const parcelas = parseInt(document.getElementById('installments').value) || 1;
+                    setTextoSeguro('installments-text', `${parcelas}x de R$ ${formatarPreco(total / parcelas)} sem juros`);
+                }
             }
         }
 
@@ -1339,6 +1432,8 @@
                 option.textContent = `${i}x de R$ ${formatarPreco(valorParcela)} sem juros`;
                 select.appendChild(option);
             }
+
+            select.addEventListener('change', atualizarTotais);
         }
 
         function selecionarPagamento(metodo) {
@@ -1357,6 +1452,9 @@
             atualizarTotais();
         }
 
+        // ============================================
+        // MÁSCARAS
+        // ============================================
         function aplicarMascaras() {
             const doc = document.getElementById('documento');
             doc.addEventListener('input', (e) => {
@@ -1404,7 +1502,7 @@
                 if (v.length > 16) v = v.substring(0, 16);
                 v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
                 e.target.value = v;
-                detectarBandeiraCartao(v.replace(/\s/g, ''));
+                detectarBandeiraVisual(v.replace(/\s/g, ''));
             });
 
             const cardExp = document.getElementById('card-expiry');
@@ -1423,7 +1521,7 @@
             });
         }
 
-        function detectarBandeiraCartao(numero) {
+        function detectarBandeiraVisual(numero) {
             const brands = document.querySelectorAll('.card-brand');
             brands.forEach(b => b.classList.remove('active'));
 
@@ -1471,6 +1569,9 @@
             }
         }
 
+        // ============================================
+        // VALIDAÇÃO
+        // ============================================
         function validarFormulario() {
             const campos = [
                 { id: 'nome', label: 'Nome' },
@@ -1510,8 +1611,20 @@
                 const cardExp = document.getElementById('card-expiry').value;
                 const cardCvv = document.getElementById('card-cvv').value;
 
-                if (cardNum.length < 13 || !cardName || cardExp.length !== 5 || cardCvv.length < 3) {
-                    showToast('Preencha todos os dados do cartão', 'error');
+                if (cardNum.length < 13) {
+                    showToast('Número do cartão inválido', 'error');
+                    return false;
+                }
+                if (!cardName.trim()) {
+                    showToast('Preencha o nome impresso no cartão', 'error');
+                    return false;
+                }
+                if (cardExp.length !== 5) {
+                    showToast('Validade inválida. Use MM/AA', 'error');
+                    return false;
+                }
+                if (cardCvv.length < 3) {
+                    showToast('CVV inválido', 'error');
                     return false;
                 }
             }
@@ -1519,6 +1632,9 @@
             return true;
         }
 
+        // ============================================
+        // ESTOQUE
+        // ============================================
         async function reduzirEstoque(itens) {
             const updates = itens.map(item => 
                 supabaseClient.rpc('reduzir_estoque', {
@@ -1530,12 +1646,16 @@
             await Promise.all(updates);
         }
 
+        // ============================================
+        // TOKENIZAÇÃO DE CARTÃO
+        // ============================================
         async function tokenizarCartao() {
             if (!gatewayAtivo) {
+                console.log('⚠️ Sem gateway, usando token demo');
                 return {
                     token: 'DEMO_TOKEN_' + Date.now(),
-                    bandeira: 'visa',
-                    ultimo4: document.getElementById('card-number').value.slice(-4)
+                    bandeira: detectarBandeira(document.getElementById('card-number').value.replace(/\s/g, '')),
+                    ultimo4: document.getElementById('card-number').value.replace(/\s/g, '').slice(-4)
                 };
             }
 
@@ -1557,7 +1677,7 @@
                     case 'picpay':
                         return await tokenizarPicPay(cardData);
                     default:
-                        throw new Error('Gateway não suportado');
+                        throw new Error('Gateway não suportado: ' + gatewayAtivo.chave);
                 }
             } catch (error) {
                 console.error('❌ Erro na tokenização:', error);
@@ -1568,13 +1688,12 @@
         async function tokenizarMercadoPago(cardData) {
             if (typeof MercadoPago === 'undefined') {
                 console.error('❌ SDK do Mercado Pago não carregado');
-                showToast('⚠️ Erro ao carregar Mercado Pago. Recarregue a página.', 'error');
-                throw new Error('SDK do Mercado Pago não carregado');
+                throw new Error('SDK do Mercado Pago não carregado. Recarregue a página.');
             }
 
             if (!gatewayAtivo?.credenciais?.public_key) {
-                console.error('❌ Public Key do Mercado Pago não configurada');
-                throw new Error('Public Key não configurada');
+                console.error('❌ Public Key não configurada');
+                throw new Error('Public Key do Mercado Pago não configurada');
             }
 
             try {
@@ -1583,6 +1702,8 @@
                 });
 
                 const [month, year] = cardData.expiry.split('/');
+                const docNumero = dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '');
+                const docTipo = dadosCliente?.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF';
                 
                 const cardToken = await mp.createCardToken({
                     cardNumber: cardData.number,
@@ -1590,8 +1711,8 @@
                     cardExpirationMonth: parseInt(month),
                     cardExpirationYear: parseInt('20' + year),
                     securityCode: cardData.cvv,
-                    identificationType: dadosCliente?.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF',
-                    identificationNumber: dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '')
+                    identificationType: docTipo,
+                    identificationNumber: docNumero
                 });
 
                 console.log('✅ Token do cartão gerado:', cardToken);
@@ -1603,7 +1724,7 @@
                 };
             } catch (error) {
                 console.error('❌ Erro na tokenização Mercado Pago:', error);
-                throw new Error('Erro ao processar cartão: ' + error.message);
+                throw new Error('Erro ao tokenizar cartão: ' + error.message);
             }
         }
 
@@ -1640,7 +1761,7 @@
                 };
             }
             
-            throw new Error(data.message || 'Erro na tokenização');
+            throw new Error(data.message || 'Erro na tokenização PagBank');
         }
 
         async function tokenizarAsaas(cardData) {
@@ -1677,7 +1798,7 @@
                 };
             }
             
-            throw new Error(data.description || 'Erro na tokenização');
+            throw new Error(data.description || 'Erro na tokenização Asaas');
         }
 
         async function tokenizarPicPay(cardData) {
@@ -1689,15 +1810,9 @@
             };
         }
 
-        function detectarBandeira(numero) {
-            if (/^4/.test(numero)) return 'visa';
-            if (/^5[1-5]/.test(numero) || /^2[2-7]/.test(numero)) return 'mastercard';
-            if (/^636[0-9]|^438935|^504175|^451416|^636297/.test(numero)) return 'elo';
-            if (/^3[47]/.test(numero)) return 'amex';
-            if (/^606282/.test(numero)) return 'hipercard';
-            return 'visa';
-        }
-
+        // ============================================
+        // FINALIZAR PEDIDO
+        // ============================================
         async function finalizarPedido() {
             if (!validarFormulario()) return;
 
@@ -1786,6 +1901,7 @@
 
                     if (!pagamentoError) {
                         pagamento = data;
+                        console.log('✅ Pagamento processado:', pagamento);
                     } else {
                         console.warn('⚠️ Gateway não configurado:', pagamentoError);
                     }
@@ -1934,8 +2050,13 @@
             setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
         }
 
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
+                console.log('🚀 Iniciando checkout...');
+                
                 const logado = await verificarLogin();
                 if (!logado) return;
 
@@ -1949,8 +2070,11 @@
                 
                 aplicarMascaras();
                 renderizarResumo();
+                
+                console.log('✅ Checkout inicializado com sucesso');
             } catch (error) {
                 console.error('❌ Erro ao inicializar:', error);
+                showToast('Erro ao carregar checkout', 'error');
             }
         });
     </script>

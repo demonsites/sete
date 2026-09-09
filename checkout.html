@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout | S7TE</title>
     <meta name="description" content="Finalize sua compra com segurança.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +56,6 @@
             padding: 12px 0;
             font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 0.03em;
         }
         .urgency-bar strong { color: var(--gold); }
 
@@ -87,10 +89,19 @@
             font-size: 0.9rem;
         }
 
-        /* Checkout Container */
-        .checkout-wrapper {
-            padding: 40px 0 80px;
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-light);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-gray);
         }
+
+        .checkout-wrapper { padding: 40px 0 80px; }
         .checkout-back {
             display: inline-flex;
             align-items: center;
@@ -109,7 +120,6 @@
             align-items: start;
         }
 
-        /* Steps */
         .checkout-steps {
             display: flex;
             gap: 8px;
@@ -153,7 +163,6 @@
         }
         .step.active .step-text { color: var(--cobalt-deep); }
 
-        /* Sections */
         .checkout-section {
             background: white;
             border-radius: 12px;
@@ -178,7 +187,6 @@
             border-radius: 2px;
         }
 
-        /* Formulário */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -186,10 +194,7 @@
             margin-bottom: 16px;
         }
         .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
+        .form-group { display: flex; flex-direction: column; }
         .form-group.full { grid-column: 1 / -1; }
         
         .form-group label {
@@ -200,7 +205,7 @@
         }
         .form-group label .req { color: var(--danger); }
 
-        .form-input {
+        .form-input, .form-select {
             width: 100%;
             padding: 12px 14px;
             border: 2px solid var(--border);
@@ -210,21 +215,19 @@
             transition: var(--transition);
             background: white;
         }
-        .form-input:focus {
+        .form-input:focus, .form-select:focus {
             outline: none;
             border-color: var(--cobalt-main);
             box-shadow: 0 0 0 3px rgba(26, 79, 184, 0.1);
         }
-        .form-input.error {
-            border-color: var(--danger);
+        .form-input.error { border-color: var(--danger); }
+        .form-input:disabled {
+            background: var(--bg-light);
+            color: var(--text-gray);
+            cursor: not-allowed;
         }
+        select.form-input { background: white; cursor: pointer; }
 
-        select.form-input {
-            background: white;
-            cursor: pointer;
-        }
-
-        /* Pagamento */
         .payment-options {
             display: flex;
             flex-direction: column;
@@ -241,9 +244,7 @@
             transition: var(--transition);
             background: white;
         }
-        .payment-option:hover {
-            border-color: var(--cobalt-main);
-        }
+        .payment-option:hover { border-color: var(--cobalt-main); }
         .payment-option.selected {
             border-color: var(--cobalt-main);
             background: rgba(26, 79, 184, 0.03);
@@ -254,9 +255,7 @@
             accent-color: var(--cobalt-main);
             cursor: pointer;
         }
-        .payment-info {
-            flex: 1;
-        }
+        .payment-info { flex: 1; }
         .payment-info .title {
             font-weight: 700;
             font-size: 1rem;
@@ -284,6 +283,15 @@
             border-radius: 20px;
             text-transform: uppercase;
         }
+        .gateway-badge {
+            padding: 4px 10px;
+            background: var(--cobalt-main);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
 
         .payment-details {
             margin-top: 20px;
@@ -301,25 +309,19 @@
             padding: 24px;
             text-align: center;
         }
-        .pix-info-box .icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
-        }
-        .pix-info-box h4 {
-            color: var(--success);
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-        .pix-info-box p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
+        .pix-info-box .icon { font-size: 3rem; margin-bottom: 12px; }
+        .pix-info-box h4 { color: var(--success); font-size: 1.1rem; margin-bottom: 8px; }
+        .pix-info-box p { color: var(--text-gray); font-size: 0.9rem; }
 
-        /* Cartão */
+        .card-form {
+            display: grid;
+            gap: 16px;
+        }
         .card-brands {
             display: flex;
             gap: 8px;
             margin-bottom: 16px;
+            flex-wrap: wrap;
         }
         .card-brand {
             padding: 4px 12px;
@@ -330,8 +332,12 @@
             font-weight: 700;
             color: var(--text-gray);
         }
+        .card-brand.active {
+            border-color: var(--cobalt-main);
+            color: var(--cobalt-main);
+            background: rgba(26, 79, 184, 0.05);
+        }
 
-        /* Sidebar de Resumo */
         .order-summary {
             background: white;
             border-radius: 12px;
@@ -402,10 +408,7 @@
             align-items: center;
             justify-content: center;
         }
-        .summary-item-info {
-            flex: 1;
-            min-width: 0;
-        }
+        .summary-item-info { flex: 1; min-width: 0; }
         .summary-item-name {
             font-size: 0.85rem;
             font-weight: 600;
@@ -434,10 +437,7 @@
             font-size: 0.9rem;
             color: var(--text-gray);
         }
-        .summary-row.discount {
-            color: var(--success);
-            font-weight: 600;
-        }
+        .summary-row.discount { color: var(--success); font-weight: 600; }
         .summary-row.total {
             font-size: 1.3rem;
             font-weight: 900;
@@ -510,7 +510,6 @@
             gap: 4px;
         }
 
-        /* Success Screen */
         .success-screen {
             text-align: center;
             padding: 80px 20px;
@@ -592,7 +591,24 @@
             margin: 0;
         }
 
-        /* Toast */
+        .pix-instructions {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        .pix-instructions h4 {
+            color: var(--success);
+            margin-bottom: 12px;
+        }
+        .pix-instructions ol {
+            margin-left: 20px;
+            color: var(--text-gray);
+        }
+        .pix-instructions li { margin-bottom: 8px; }
+
         .toast {
             position: fixed;
             bottom: 24px;
@@ -607,6 +623,9 @@
             opacity: 0;
             transform: translateX(400px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: calc(100vw - 48px);
+            white-space: pre-line;
+            line-height: 1.5;
         }
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.error { background: var(--danger); }
@@ -623,21 +642,21 @@
         }
         .footer-bottom p { font-size: 0.8rem; color: #94a3b8; }
 
-        /* Responsivo */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         @media (max-width: 1024px) {
-            .checkout-layout {
-                grid-template-columns: 1fr;
-            }
-            .order-summary {
-                position: static;
-                order: -1;
-            }
-            .checkout-steps {
-                flex-wrap: wrap;
-            }
-            .step-text {
-                font-size: 0.8rem;
-            }
+            .checkout-layout { grid-template-columns: 1fr; }
+            .order-summary { position: static; order: -1; }
+            .checkout-steps { flex-wrap: wrap; }
+            .step-text { font-size: 0.8rem; }
         }
         @media (max-width: 768px) {
             .form-row, .form-row.three { grid-template-columns: 1fr; }
@@ -658,8 +677,13 @@
     <header>
         <div class="container header-inner">
             <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
-            <div class="secure-header">
-                🔒 <span>Checkout Seguro</span>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="user-badge" id="user-badge" style="display: none;">
+                    👤 <span id="user-name">Cliente</span>
+                </div>
+                <div class="secure-header">
+                    🔒 <span>Checkout Seguro</span>
+                </div>
             </div>
         </div>
     </header>
@@ -669,10 +693,9 @@
             <a href="carrinho.html" class="checkout-back" id="back-link">← Voltar ao carrinho</a>
 
             <div id="checkout-content">
-                <!-- Conteúdo principal -->
                 <div class="checkout-steps">
-                    <div class="step active">
-                        <div class="step-number">1</div>
+                    <div class="step completed">
+                        <div class="step-number">✓</div>
                         <span class="step-text">Identificação</span>
                     </div>
                     <div class="step active">
@@ -687,33 +710,31 @@
 
                 <div class="checkout-layout">
                     <div class="checkout-forms">
-                        <!-- 1. IDENTIFICAÇÃO -->
+                        <!-- 1. IDENTIFICAÇÃO (Pré-preenchida) -->
                         <div class="checkout-section">
                             <h2 class="section-title">1. Identificação</h2>
-                            <form id="form-identificacao">
-                                <div class="form-row">
-                                    <div class="form-group full">
-                                        <label>Nome Completo <span class="req">*</span></label>
-                                        <input type="text" class="form-input" id="nome" required>
-                                    </div>
+                            <div class="form-row">
+                                <div class="form-group full">
+                                    <label>Nome Completo <span class="req">*</span></label>
+                                    <input type="text" class="form-input" id="nome" required>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>CPF <span class="req">*</span></label>
-                                        <input type="text" class="form-input" id="cpf" placeholder="000.000.000-00" maxlength="14" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Telefone <span class="req">*</span></label>
-                                        <input type="text" class="form-input" id="telefone" placeholder="(11) 99999-9999" maxlength="15" required>
-                                    </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label id="doc-label">CPF <span class="req">*</span></label>
+                                    <input type="text" class="form-input" id="documento" placeholder="000.000.000-00" maxlength="18" required>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group full">
-                                        <label>E-mail <span class="req">*</span></label>
-                                        <input type="email" class="form-input" id="email" placeholder="seu@email.com" required>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Telefone <span class="req">*</span></label>
+                                    <input type="text" class="form-input" id="telefone" placeholder="(11) 99999-9999" maxlength="15" required>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group full">
+                                    <label>E-mail <span class="req">*</span></label>
+                                    <input type="email" class="form-input" id="email" required>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 2. ENDEREÇO -->
@@ -782,6 +803,7 @@
                         <!-- 3. PAGAMENTO -->
                         <div class="checkout-section">
                             <h2 class="section-title">3. Forma de Pagamento</h2>
+                            
                             <div class="payment-options">
                                 <label class="payment-option selected" onclick="selecionarPagamento('pix')">
                                     <input type="radio" name="payment" value="pix" checked>
@@ -790,54 +812,58 @@
                                         <div class="subtitle">Aprovação imediata</div>
                                         <div class="discount" id="pix-discount-label">5% de desconto</div>
                                     </div>
+                                    <span class="gateway-badge" id="gateway-name-pix">Gateway</span>
                                 </label>
-                                <label class="payment-option" onclick="selecionarPagamento('credit_card')">
+                                
+                                <label class="payment-option" id="credit-card-option" onclick="selecionarPagamento('credit_card')">
                                     <input type="radio" name="payment" value="credit_card">
                                     <div class="payment-info">
                                         <div class="title">💳 Cartão de Crédito</div>
-                                        <div class="subtitle">Até 6x sem juros</div>
+                                        <div class="subtitle" id="installments-subtitle">Até 6x sem juros</div>
                                     </div>
+                                    <span class="gateway-badge" id="gateway-name-cc">Gateway</span>
                                 </label>
                             </div>
 
-                            <!-- PIX Details -->
                             <div class="payment-details active" id="pix-details">
                                 <div class="pix-info-box">
                                     <div class="icon">💰</div>
                                     <h4>Pagamento via PIX</h4>
-                                    <p>Ao finalizar, você receberá um QR Code e código copia-e-cola para pagamento imediato. O pedido é confirmado automaticamente!</p>
+                                    <p>Ao finalizar, você receberá o QR Code e código copia-e-cola. O pedido é confirmado automaticamente!</p>
                                 </div>
                             </div>
 
-                            <!-- Cartão Details -->
                             <div class="payment-details" id="cc-details">
-                                <div class="card-brands">
+                                <div class="card-brands" id="card-brands">
                                     <span class="card-brand">VISA</span>
                                     <span class="card-brand">MASTER</span>
                                     <span class="card-brand">ELO</span>
                                     <span class="card-brand">AMEX</span>
+                                    <span class="card-brand">HIPER</span>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group full">
+
+                                <div class="card-form">
+                                    <div class="form-group">
                                         <label>Número do Cartão <span class="req">*</span></label>
-                                        <input type="text" class="form-input" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+                                        <input type="text" class="form-input" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric">
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group full">
-                                        <label>Nome impresso no cartão <span class="req">*</span></label>
+
+                                    <div class="form-group">
+                                        <label>Nome Impresso no Cartão <span class="req">*</span></label>
                                         <input type="text" class="form-input" id="card-name" placeholder="Como está no cartão">
                                     </div>
-                                </div>
-                                <div class="form-row three">
-                                    <div class="form-group">
-                                        <label>Validade <span class="req">*</span></label>
-                                        <input type="text" class="form-input" id="card-expiry" placeholder="MM/AA" maxlength="5">
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Validade <span class="req">*</span></label>
+                                            <input type="text" class="form-input" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>CVV <span class="req">*</span></label>
+                                            <input type="text" class="form-input" id="card-cvv" placeholder="123" maxlength="4" inputmode="numeric">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>CVV <span class="req">*</span></label>
-                                        <input type="text" class="form-input" id="card-cvv" placeholder="123" maxlength="4">
-                                    </div>
+
                                     <div class="form-group">
                                         <label>Parcelas <span class="req">*</span></label>
                                         <select class="form-input" id="installments"></select>
@@ -847,7 +873,6 @@
                         </div>
                     </div>
 
-                    <!-- RESUMO DO PEDIDO -->
                     <div class="order-summary">
                         <div class="summary-title">
                             Resumo do Pedido
@@ -865,7 +890,7 @@
                                 <span>Frete</span>
                                 <span id="sum-shipping" style="color: var(--success); font-weight: 700;">Grátis</span>
                             </div>
-                            <div class="summary-row discount" id="sum-discount-row" style="display: none;">
+                            <div class="summary-row discount" id="sum-discount-row">
                                 <span>Desconto PIX</span>
                                 <span id="sum-discount">- R$ 0,00</span>
                             </div>
@@ -873,9 +898,12 @@
                                 <span>Total</span>
                                 <span id="sum-total">R$ 0,00</span>
                             </div>
-                            <div class="summary-pix-total" id="sum-pix-box">
-                                <p>💰 No PIX você paga:</p>
+                            <div class="summary-pix-total active" id="sum-pix-box">
+                                <p>💰 Total no PIX:</p>
                                 <strong id="sum-pix-total">R$ 0,00</strong>
+                            </div>
+                            <div class="summary-row" id="installments-info" style="display: none; margin-top: 12px; color: var(--cobalt-main); font-weight: 600;">
+                                <span id="installments-text">6x de R$ 0,00 sem juros</span>
                             </div>
                         </div>
 
@@ -886,7 +914,7 @@
                         <div class="security-badges">
                             <div class="security-badge">🔒 SSL</div>
                             <div class="security-badge">✓ Criptografado</div>
-                            <div class="security-badge">🛡️ Dados Protegidos</div>
+                            <div class="security-badge">🛡️ PCI-DSS</div>
                         </div>
                     </div>
                 </div>
@@ -905,9 +933,6 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ============================================
-        // CONFIGURAÇÃO SUPABASE
-        // ============================================
         const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
         
@@ -915,13 +940,26 @@
 
         let configSite = {};
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
+        let produtosValidados = [];
         let metodoPagamento = 'pix';
+        let gatewayAtivo = null;
+        let parcelasMax = 6;
+        let clienteLogado = null;
+        let dadosCliente = null;
 
-        // ============================================
-        // HELPERS
-        // ============================================
         function formatarPreco(valor) {
-            return parseFloat(valor || 0).toFixed(2).replace('.', ',');
+            const num = parseFloat(valor || 0);
+            return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
+        }
+
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function showToast(msg, type = 'success') {
@@ -929,22 +967,94 @@
             if (!toast) return;
             toast.textContent = msg;
             toast.className = 'toast show' + (type === 'error' ? ' error' : '');
-            setTimeout(() => toast.classList.remove('show'), 3500);
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         function setTextoSeguro(id, texto) {
             const el = document.getElementById(id);
-            if (el) el.textContent = texto;
+            if (el) el.textContent = texto || '';
         }
 
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
-            if (el) el.innerHTML = html;
+            if (el) el.innerHTML = html || '';
         }
 
-        // ============================================
-        // CARREGAR CONFIGURAÇÕES
-        // ============================================
+        function formatarCPF(cpf) {
+            if (!cpf) return '';
+            cpf = cpf.replace(/\D/g, '');
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+
+        function formatarCNPJ(cnpj) {
+            if (!cnpj) return '';
+            cnpj = cnpj.replace(/\D/g, '');
+            return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+
+        async function verificarLogin() {
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                
+                if (!session) {
+                    showToast('Faça login para continuar com a compra', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'cliente-login.html?redirect=checkout.html';
+                    }, 1500);
+                    return false;
+                }
+
+                clienteLogado = session.user;
+                
+                const userBadge = document.getElementById('user-badge');
+                if (userBadge) userBadge.style.display = 'flex';
+
+                await carregarDadosCliente();
+                return true;
+            } catch (error) {
+                console.error('Erro ao verificar login:', error);
+                window.location.href = 'cliente-login.html?redirect=checkout.html';
+                return false;
+            }
+        }
+
+        async function carregarDadosCliente() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('clientes')
+                    .select('*')
+                    .eq('id', clienteLogado.id)
+                    .single();
+
+                if (error) throw error;
+                dadosCliente = data;
+
+                document.getElementById('user-name').textContent = data.nome.split(' ')[0];
+                
+                document.getElementById('nome').value = data.nome || '';
+                document.getElementById('email').value = clienteLogado.email || '';
+                document.getElementById('telefone').value = data.telefone || '';
+                
+                if (data.documento) {
+                    const docInput = document.getElementById('documento');
+                    const docLabel = document.getElementById('doc-label');
+                    
+                    if (data.tipo_documento === 'cnpj') {
+                        docLabel.innerHTML = 'CNPJ <span class="req">*</span>';
+                        docInput.value = formatarCNPJ(data.documento);
+                        docInput.maxLength = 18;
+                    } else {
+                        docLabel.innerHTML = 'CPF <span class="req">*</span>';
+                        docInput.value = formatarCPF(data.documento);
+                        docInput.maxLength = 14;
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dados do cliente:', error);
+            }
+        }
+
         async function carregarConfigSite() {
             const padroes = {
                 urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500',
@@ -952,31 +1062,119 @@
                 footer_copyright: '© 2026 S7TE Tecnologia em Odontologia.',
                 frete_gratis_acima: '500',
                 valor_frete: '35.90',
-                desconto_pix_percent: '5'
+                desconto_pix_percent: '5',
+                parcelas_max: '6',
+                aceita_cartao: 'true',
+                aceita_pix: 'true'
             };
 
             try {
                 const { data, error } = await supabaseClient.from('configuracoes').select('*');
                 if (data && data.length > 0) {
-                    data.forEach(c => padroes[c.chave] = c.valor);
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
                 }
             } catch (e) {
                 console.warn('Usando valores padrão:', e);
             }
 
             configSite = padroes;
-
-            setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            setHtmlSeguro('logo-text', configSite.logo_texto.replace('7', '<span>7</span>'));
-            setTextoSeguro('footer-copyright', configSite.footer_copyright);
-            setTextoSeguro('pix-discount-label', `${configSite.desconto_pix_percent}% de desconto`);
+            parcelasMax = parseInt(padroes.parcelas_max) || 6;
+            aplicarConfigSite();
         }
 
-        // ============================================
-        // REDIRECIONAR SE CARRINHO VAZIO
-        // ============================================
+        function aplicarConfigSite() {
+            setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
+            const logoTexto = configSite.logo_texto || 'S7TE';
+            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setTextoSeguro('footer-copyright', configSite.footer_copyright);
+            setTextoSeguro('pix-discount-label', `${escapeHTML(configSite.desconto_pix_percent || 5)}% de desconto`);
+            setTextoSeguro('installments-subtitle', `Até ${parcelasMax}x sem juros`);
+        }
+
+        async function carregarGatewayAtivo() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('gateways')
+                    .select('*')
+                    .eq('ativo', true)
+                    .limit(1)
+                    .single();
+
+                if (error || !data) {
+                    gatewayAtivo = null;
+                    setTextoSeguro('gateway-name-pix', 'Demo');
+                    setTextoSeguro('gateway-name-cc', 'Demo');
+                    return;
+                }
+
+                gatewayAtivo = data;
+                setTextoSeguro('gateway-name-pix', data.nome);
+                setTextoSeguro('gateway-name-cc', data.nome);
+
+                const supports = data.credenciais?.supports || [];
+                const aceitaCartao = configSite.aceita_cartao === 'true';
+                
+                if (!supports.includes('credit_card') || !aceitaCartao) {
+                    document.getElementById('credit-card-option').style.display = 'none';
+                }
+            } catch (e) {
+                console.warn('Nenhum gateway ativo:', e);
+                gatewayAtivo = null;
+            }
+        }
+
+        async function validarCarrinho() {
+            if (cart.length === 0) return false;
+
+            const ids = cart.map(item => item.id);
+            const { data, error } = await supabaseClient
+                .from('produtos')
+                .select('*')
+                .in('id', ids);
+
+            if (error) {
+                produtosValidados = cart;
+                return true;
+            }
+
+            const produtosMap = new Map(data.map(p => [p.id, p]));
+            const novoCarrinho = [];
+            const removidos = [];
+
+            for (const item of cart) {
+                const produtoAtual = produtosMap.get(item.id);
+                
+                if (!produtoAtual) {
+                    removidos.push(item.nome);
+                    continue;
+                }
+
+                if (produtoAtual.estoque <= 0) {
+                    removidos.push(`${item.nome} (esgotado)`);
+                    continue;
+                }
+
+                const novoItem = { ...produtoAtual };
+                novoItem.qty = Math.min(item.qty, produtoAtual.estoque);
+                novoCarrinho.push(novoItem);
+            }
+
+            produtosValidados = novoCarrinho;
+            
+            if (removidos.length > 0) {
+                showToast(`⚠️ Removidos: ${removidos.join(', ')}`, 'error');
+            }
+
+            if (JSON.stringify(novoCarrinho) !== JSON.stringify(cart)) {
+                cart = novoCarrinho;
+                localStorage.setItem('s7te_cart', JSON.stringify(cart));
+            }
+
+            return produtosValidados.length > 0;
+        }
+
         function verificarCarrinho() {
-            if (cart.length === 0) {
+            if (produtosValidados.length === 0) {
                 showToast('Seu carrinho está vazio!', 'error');
                 setTimeout(() => {
                     window.location.href = 'produtos.html';
@@ -986,26 +1184,23 @@
             return true;
         }
 
-        // ============================================
-        // RESUMO DO PEDIDO
-        // ============================================
         function renderizarResumo() {
             const container = document.getElementById('summary-items');
             const countEl = document.getElementById('summary-count');
             if (!container) return;
 
-            const totalItens = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalItens = produtosValidados.reduce((sum, item) => sum + item.qty, 0);
             if (countEl) countEl.textContent = `${totalItens} ${totalItens === 1 ? 'item' : 'itens'}`;
 
-            container.innerHTML = cart.map(item => `
+            container.innerHTML = produtosValidados.map(item => `
                 <div class="summary-item">
                     <div class="summary-item-img">
-                        <img src="${item.imagem_url}" alt="${item.nome}"
+                        <img src="${escapeHTML(item.imagem_url)}" alt="${escapeHTML(item.nome)}"
                              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'60\\' height=\\'60\\'%3E%3Crect fill=\\'%23e2e8f0\\' width=\\'60\\' height=\\'60\\'/%3E%3C/svg%3E'">
                         <span class="summary-item-qty">${item.qty}</span>
                     </div>
                     <div class="summary-item-info">
-                        <div class="summary-item-name">${item.nome}</div>
+                        <div class="summary-item-name">${escapeHTML(item.nome)}</div>
                         <div class="summary-item-price">R$ ${formatarPreco(item.preco_venda * item.qty)}</div>
                     </div>
                 </div>
@@ -1020,11 +1215,10 @@
             const valorFrete = parseFloat(configSite.valor_frete || 35.90);
             const descontoPix = parseFloat(configSite.desconto_pix_percent || 5);
 
-            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const subtotal = produtosValidados.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
             const frete = subtotal >= freteGratis ? 0 : valorFrete;
             const desconto = metodoPagamento === 'pix' ? subtotal * (descontoPix / 100) : 0;
             const total = subtotal + frete - desconto;
-            const totalPix = subtotal + frete - (subtotal * (descontoPix / 100));
 
             setTextoSeguro('sum-subtotal', `R$ ${formatarPreco(subtotal)}`);
             
@@ -1037,24 +1231,20 @@
 
             const discountRow = document.getElementById('sum-discount-row');
             if (discountRow) {
-                if (metodoPagamento === 'pix') {
-                    discountRow.style.display = 'flex';
-                    setTextoSeguro('sum-discount', `- R$ ${formatarPreco(desconto)}`);
-                } else {
-                    discountRow.style.display = 'none';
-                }
+                discountRow.style.display = metodoPagamento === 'pix' ? 'flex' : 'none';
             }
-
+            setTextoSeguro('sum-discount', `- R$ ${formatarPreco(desconto)}`);
             setTextoSeguro('sum-total', `R$ ${formatarPreco(total)}`);
-
+            
             const pixBox = document.getElementById('sum-pix-box');
             if (pixBox) {
-                if (metodoPagamento === 'pix') {
-                    pixBox.classList.remove('active');
-                } else {
-                    pixBox.classList.add('active');
-                    setTextoSeguro('sum-pix-total', `R$ ${formatarPreco(totalPix)}`);
-                }
+                pixBox.classList.toggle('active', metodoPagamento === 'pix');
+            }
+            setTextoSeguro('sum-pix-total', `R$ ${formatarPreco(total)}`);
+
+            const installmentsInfo = document.getElementById('installments-info');
+            if (installmentsInfo) {
+                installmentsInfo.style.display = metodoPagamento === 'credit_card' ? 'flex' : 'none';
             }
         }
 
@@ -1064,12 +1254,12 @@
 
             const freteGratis = parseFloat(configSite.frete_gratis_acima || 500);
             const valorFrete = parseFloat(configSite.valor_frete || 35.90);
-            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const subtotal = produtosValidados.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
             const frete = subtotal >= freteGratis ? 0 : valorFrete;
             const total = subtotal + frete;
 
             select.innerHTML = '';
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= parcelasMax; i++) {
                 const valorParcela = total / i;
                 const option = document.createElement('option');
                 option.value = i;
@@ -1078,9 +1268,6 @@
             }
         }
 
-        // ============================================
-        // PAGAMENTO
-        // ============================================
         function selecionarPagamento(metodo) {
             metodoPagamento = metodo;
 
@@ -1097,81 +1284,89 @@
             atualizarTotais();
         }
 
-        // ============================================
-        // MÁSCARAS DE INPUT
-        // ============================================
         function aplicarMascaras() {
-            const cpf = document.getElementById('cpf');
-            if (cpf) {
-                cpf.addEventListener('input', (e) => {
-                    let v = e.target.value.replace(/\D/g, '');
+            const doc = document.getElementById('documento');
+            doc.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length <= 11) {
                     if (v.length > 11) v = v.substring(0, 11);
                     v = v.replace(/(\d{3})(\d)/, '$1.$2');
                     v = v.replace(/(\d{3})(\d)/, '$1.$2');
                     v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-                    e.target.value = v;
-                });
-            }
+                } else {
+                    if (v.length > 14) v = v.substring(0, 14);
+                    v = v.replace(/(\d{2})(\d)/, '$1.$2');
+                    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                    v = v.replace(/(\d{3})(\d)/, '$1/$2');
+                    v = v.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+                }
+                e.target.value = v;
+            });
 
             const tel = document.getElementById('telefone');
-            if (tel) {
-                tel.addEventListener('input', (e) => {
-                    let v = e.target.value.replace(/\D/g, '');
-                    if (v.length > 11) v = v.substring(0, 11);
-                    if (v.length > 10) {
-                        v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-                    } else if (v.length > 6) {
-                        v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-                    } else if (v.length > 2) {
-                        v = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
-                    }
-                    e.target.value = v;
-                });
-            }
+            tel.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 11) v = v.substring(0, 11);
+                if (v.length > 10) {
+                    v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                } else if (v.length > 6) {
+                    v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+                } else if (v.length > 2) {
+                    v = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+                }
+                e.target.value = v;
+            });
 
             const cep = document.getElementById('cep');
-            if (cep) {
-                cep.addEventListener('input', (e) => {
-                    let v = e.target.value.replace(/\D/g, '');
-                    if (v.length > 8) v = v.substring(0, 8);
-                    v = v.replace(/(\d{5})(\d)/, '$1-$2');
-                    e.target.value = v;
-                });
-            }
+            cep.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 8) v = v.substring(0, 8);
+                v = v.replace(/(\d{5})(\d)/, '$1-$2');
+                e.target.value = v;
+            });
 
             const cardNum = document.getElementById('card-number');
-            if (cardNum) {
-                cardNum.addEventListener('input', (e) => {
-                    let v = e.target.value.replace(/\D/g, '');
-                    if (v.length > 16) v = v.substring(0, 16);
-                    v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
-                    e.target.value = v;
-                });
-            }
+            cardNum.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 16) v = v.substring(0, 16);
+                v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+                e.target.value = v;
+                detectarBandeiraCartao(v.replace(/\s/g, ''));
+            });
 
             const cardExp = document.getElementById('card-expiry');
-            if (cardExp) {
-                cardExp.addEventListener('input', (e) => {
-                    let v = e.target.value.replace(/\D/g, '');
-                    if (v.length > 4) v = v.substring(0, 4);
-                    if (v.length >= 2) {
-                        v = v.substring(0, 2) + '/' + v.substring(2);
-                    }
-                    e.target.value = v;
-                });
-            }
+            cardExp.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 4) v = v.substring(0, 4);
+                if (v.length >= 2) {
+                    v = v.substring(0, 2) + '/' + v.substring(2);
+                }
+                e.target.value = v;
+            });
 
             const cardCvv = document.getElementById('card-cvv');
-            if (cardCvv) {
-                cardCvv.addEventListener('input', (e) => {
-                    e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
-                });
+            cardCvv.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+            });
+        }
+
+        function detectarBandeiraCartao(numero) {
+            const brands = document.querySelectorAll('.card-brand');
+            brands.forEach(b => b.classList.remove('active'));
+
+            let bandeira = null;
+            if (/^4/.test(numero)) bandeira = 'VISA';
+            else if (/^5[1-5]/.test(numero) || /^2[2-7]/.test(numero)) bandeira = 'MASTER';
+            else if (/^636[0-9]|^438935|^504175|^451416|^636297/.test(numero)) bandeira = 'ELO';
+            else if (/^3[47]/.test(numero)) bandeira = 'AMEX';
+            else if (/^606282/.test(numero)) bandeira = 'HIPER';
+
+            if (bandeira) {
+                const brandEl = Array.from(brands).find(b => b.textContent === bandeira);
+                if (brandEl) brandEl.classList.add('active');
             }
         }
 
-        // ============================================
-        // BUSCAR CEP (ViaCEP)
-        // ============================================
         async function buscarCep() {
             const cepInput = document.getElementById('cep');
             const cep = cepInput.value.replace(/\D/g, '');
@@ -1203,13 +1398,10 @@
             }
         }
 
-        // ============================================
-        // VALIDAÇÃO
-        // ============================================
         function validarFormulario() {
             const campos = [
                 { id: 'nome', label: 'Nome' },
-                { id: 'cpf', label: 'CPF' },
+                { id: 'documento', label: 'CPF/CNPJ' },
                 { id: 'telefone', label: 'Telefone' },
                 { id: 'email', label: 'E-mail' },
                 { id: 'cep', label: 'CEP' },
@@ -1224,28 +1416,21 @@
                 const el = document.getElementById(campo.id);
                 if (!el || !el.value.trim()) {
                     showToast(`Preencha o campo: ${campo.label}`, 'error');
-                    el.focus();
-                    el.classList.add('error');
-                    setTimeout(() => el.classList.remove('error'), 3000);
+                    if (el) {
+                        el.focus();
+                        el.classList.add('error');
+                        setTimeout(() => el.classList.remove('error'), 3000);
+                    }
                     return false;
                 }
             }
 
-            // Validar email
             const email = document.getElementById('email').value;
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
                 showToast('E-mail inválido', 'error');
                 return false;
             }
 
-            // Validar CPF
-            const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
-            if (cpf.length !== 11) {
-                showToast('CPF inválido', 'error');
-                return false;
-            }
-
-            // Validar cartão se for o método
             if (metodoPagamento === 'credit_card') {
                 const cardNum = document.getElementById('card-number').value.replace(/\s/g, '');
                 const cardName = document.getElementById('card-name').value;
@@ -1261,9 +1446,169 @@
             return true;
         }
 
-        // ============================================
-        // FINALIZAR PEDIDO
-        // ============================================
+        async function reduzirEstoque(itens) {
+            const updates = itens.map(item => 
+                supabaseClient.rpc('reduzir_estoque', {
+                    produto_id: item.id,
+                    quantidade: item.qty
+                })
+            );
+            
+            await Promise.all(updates);
+        }
+
+        async function tokenizarCartao() {
+            if (!gatewayAtivo) {
+                return {
+                    token: 'DEMO_TOKEN_' + Date.now(),
+                    bandeira: 'visa',
+                    ultimo4: document.getElementById('card-number').value.slice(-4)
+                };
+            }
+
+            const cardData = {
+                number: document.getElementById('card-number').value.replace(/\s/g, ''),
+                name: document.getElementById('card-name').value,
+                expiry: document.getElementById('card-expiry').value,
+                cvv: document.getElementById('card-cvv').value
+            };
+
+            try {
+                switch (gatewayAtivo.chave) {
+                    case 'mercado_pago':
+                        return await tokenizarMercadoPago(cardData);
+                    case 'pagbank':
+                        return await tokenizarPagBank(cardData);
+                    case 'asaas':
+                        return await tokenizarAsaas(cardData);
+                    case 'picpay':
+                        return await tokenizarPicPay(cardData);
+                    default:
+                        throw new Error('Gateway não suportado');
+                }
+            } catch (error) {
+                console.error('Erro na tokenização:', error);
+                throw new Error('Erro ao processar cartão. Verifique os dados.');
+            }
+        }
+
+        async function tokenizarMercadoPago(cardData) {
+            const mp = new MercadoPago(gatewayAtivo.credenciais.public_key, {
+                locale: 'pt-BR'
+            });
+
+            const [month, year] = cardData.expiry.split('/');
+            
+            const cardToken = await mp.createCardToken({
+                cardNumber: cardData.number,
+                cardholderName: cardData.name,
+                cardExpirationMonth: parseInt(month),
+                cardExpirationYear: parseInt('20' + year),
+                securityCode: cardData.cvv,
+                identificationType: dadosCliente?.tipo_documento === 'cnpj' ? 'CNPJ' : 'CPF',
+                identificationNumber: dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '')
+            });
+
+            return {
+                token: cardToken.id,
+                bandeira: cardToken.payment_method_id,
+                ultimo4: cardToken.last_four_digits
+            };
+        }
+
+        async function tokenizarPagBank(cardData) {
+            const [month, year] = cardData.expiry.split('/');
+            
+            const response = await fetch('https://api.pagseguro.com/tokens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${gatewayAtivo.credenciais.access_token}`
+                },
+                body: JSON.stringify({
+                    type: 'card',
+                    card: {
+                        number: cardData.number,
+                        exp_month: parseInt(month),
+                        exp_year: parseInt('20' + year),
+                        security_code: cardData.cvv,
+                        holder: {
+                            name: cardData.name
+                        }
+                    }
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.id) {
+                return {
+                    token: data.id,
+                    bandeira: data.card?.brand || 'visa',
+                    ultimo4: data.card?.last_four_digits || cardData.number.slice(-4)
+                };
+            }
+            
+            throw new Error(data.message || 'Erro na tokenização');
+        }
+
+        async function tokenizarAsaas(cardData) {
+            const [month, year] = cardData.expiry.split('/');
+            
+            const response = await fetch('https://api.asaas.com/v3/creditCard/tokenization', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'access_token': gatewayAtivo.credenciais.api_key
+                },
+                body: JSON.stringify({
+                    creditCard: {
+                        creditCardNumber: cardData.number,
+                        creditCardBrand: detectarBandeira(cardData.number),
+                        creditCardToken: ''
+                    },
+                    creditCardHolder: {
+                        name: cardData.name,
+                        email: document.getElementById('email').value,
+                        cpfCnpj: dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, ''),
+                        postalCode: document.getElementById('cep').value.replace(/\D/g, ''),
+                        addressNumber: document.getElementById('numero').value,
+                        addressComplement: document.getElementById('complemento').value
+                    }
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.creditCardToken) {
+                return {
+                    token: data.creditCardToken,
+                    bandeira: detectarBandeira(cardData.number),
+                    ultimo4: cardData.number.slice(-4)
+                };
+            }
+            
+            throw new Error(data.description || 'Erro na tokenização');
+        }
+
+        async function tokenizarPicPay(cardData) {
+            return {
+                token: 'PICPAY_PENDING',
+                bandeira: detectarBandeira(cardData.number),
+                ultimo4: cardData.number.slice(-4),
+                cardData: cardData
+            };
+        }
+
+        function detectarBandeira(numero) {
+            if (/^4/.test(numero)) return 'visa';
+            if (/^5[1-5]/.test(numero) || /^2[2-7]/.test(numero)) return 'mastercard';
+            if (/^636[0-9]|^438935|^504175|^451416|^636297/.test(numero)) return 'elo';
+            if (/^3[47]/.test(numero)) return 'amex';
+            if (/^606282/.test(numero)) return 'hipercard';
+            return 'visa';
+        }
+
         async function finalizarPedido() {
             if (!validarFormulario()) return;
 
@@ -1276,26 +1621,31 @@
             const valorFrete = parseFloat(configSite.valor_frete || 35.90);
             const descontoPix = parseFloat(configSite.desconto_pix_percent || 5);
 
-            const subtotal = cart.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
+            const subtotal = produtosValidados.reduce((sum, item) => sum + (item.preco_venda * item.qty), 0);
             const frete = subtotal >= freteGratis ? 0 : valorFrete;
             const desconto = metodoPagamento === 'pix' ? subtotal * (descontoPix / 100) : 0;
             const total = subtotal + frete - desconto;
 
+            const parcelas = metodoPagamento === 'credit_card' 
+                ? parseInt(document.getElementById('installments').value) 
+                : 1;
+
             const pedido = {
-                cliente_nome: document.getElementById('nome').value,
-                cliente_email: document.getElementById('email').value,
-                cliente_telefone: document.getElementById('telefone').value,
-                cliente_cpf: document.getElementById('cpf').value,
+                cliente_id: clienteLogado.id,
+                cliente_nome: document.getElementById('nome').value.trim(),
+                cliente_email: document.getElementById('email').value.trim(),
+                cliente_telefone: document.getElementById('telefone').value.trim(),
+                cliente_cpf: document.getElementById('documento').value.replace(/\D/g, ''),
                 endereco: {
-                    cep: document.getElementById('cep').value,
-                    rua: document.getElementById('rua').value,
-                    numero: document.getElementById('numero').value,
-                    complemento: document.getElementById('complemento').value,
-                    bairro: document.getElementById('bairro').value,
-                    cidade: document.getElementById('cidade').value,
+                    cep: document.getElementById('cep').value.trim(),
+                    rua: document.getElementById('rua').value.trim(),
+                    numero: document.getElementById('numero').value.trim(),
+                    complemento: document.getElementById('complemento').value.trim(),
+                    bairro: document.getElementById('bairro').value.trim(),
+                    cidade: document.getElementById('cidade').value.trim(),
                     estado: document.getElementById('estado').value
                 },
-                itens: cart.map(i => ({
+                itens: produtosValidados.map(i => ({
                     id: i.id,
                     nome: i.nome,
                     preco: i.preco_venda,
@@ -1306,53 +1656,144 @@
                 desconto: desconto,
                 total: total,
                 metodo_pagamento: metodoPagamento,
-                status: metodoPagamento === 'pix' ? 'aguardando_pagamento' : 'pendente'
+                parcelas: parcelas,
+                status: 'aguardando_pagamento'
             };
 
             try {
-                // Salvar pedido no Supabase
-                const { data, error } = await supabaseClient
+                let cartaoInfo = null;
+                if (metodoPagamento === 'credit_card') {
+                    btn.innerHTML = '💳 Processando cartão...';
+                    cartaoInfo = await tokenizarCartao();
+                    pedido.cartao_token = cartaoInfo.token;
+                    pedido.cartao_bandeira = cartaoInfo.bandeira;
+                    pedido.cartao_ultimo4 = cartaoInfo.ultimo4;
+                }
+
+                btn.innerHTML = '💾 Salvando pedido...';
+                const { data: pedidoSalvo, error: pedidoError } = await supabaseClient
                     .from('pedidos')
                     .insert([pedido])
-                    .select();
+                    .select()
+                    .single();
 
-                if (error) throw error;
+                if (pedidoError) throw pedidoError;
 
-                // Gerar número do pedido
-                const numeroPedido = 'S7-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100).toString().padStart(2, '0');
+                const numeroPedido = 'S7-' + pedidoSalvo.id.substring(0, 8).toUpperCase();
 
-                // Limpar carrinho
+                btn.innerHTML = metodoPagamento === 'pix' ? '💰 Gerando PIX...' : '💳 Processando pagamento...';
+                
+                const { data: pagamento, error: pagamentoError } = await supabaseClient.functions
+                    .invoke('processar-pagamento', {
+                        body: { 
+                            pedido_id: pedidoSalvo.id,
+                            metodo: metodoPagamento,
+                            parcelas: parcelas,
+                            cartao_token: cartaoInfo?.token || null
+                        }
+                    });
+
+                if (pagamentoError) {
+                    console.warn('Gateway não configurado, pedido salvo como aguardando:', pagamentoError);
+                }
+
+                try {
+                    await reduzirEstoque(produtosValidados);
+                } catch (estoqueError) {
+                    console.warn('Aviso ao reduzir estoque:', estoqueError);
+                }
+
                 cart = [];
+                produtosValidados = [];
                 localStorage.setItem('s7te_cart', JSON.stringify(cart));
 
-                // Mostrar tela de sucesso
-                mostrarSucesso(numeroPedido, pedido);
+                mostrarSucesso(numeroPedido, pedido, pagamento);
 
             } catch (error) {
-                console.error('Erro ao salvar pedido:', error);
-                showToast('Erro ao processar pedido. Tente novamente.', 'error');
+                console.error('Erro ao finalizar pedido:', error);
+                showToast('Erro ao processar pedido: ' + error.message, 'error');
                 btn.disabled = false;
                 btn.innerHTML = textoOriginal;
             }
         }
 
-        function mostrarSucesso(numeroPedido, pedido) {
+        function mostrarSucesso(numeroPedido, pedido, pagamento) {
             const container = document.getElementById('checkout-content');
             const backLink = document.getElementById('back-link');
             if (backLink) backLink.style.display = 'none';
 
-            const metodoTexto = pedido.metodo_pagamento === 'pix' ? 'PIX' : 'Cartão de Crédito';
             const dataPedido = new Date().toLocaleDateString('pt-BR');
+            const metodoTexto = pedido.metodo_pagamento === 'pix' ? 'PIX' : `Cartão (${pedido.parcelas}x)`;
+            
+            let pagamentoSection = '';
+            
+            if (pedido.metodo_pagamento === 'pix' && pagamento && (pagamento.qr_code || pagamento.copia_e_cola)) {
+                pagamentoSection = `
+                    <div class="pix-instructions">
+                        <h4>💰 Pague com PIX</h4>
+                        ${pagamento.qr_code_base64 ? `
+                            <div style="text-align: center; margin: 16px 0;">
+                                <img src="data:image/png;base64,${pagamento.qr_code_base64}" 
+                                     alt="QR Code PIX" 
+                                     style="max-width: 200px; border-radius: 8px;">
+                            </div>
+                        ` : ''}
+                        ${pagamento.copia_e_cola ? `
+                            <div style="margin-top: 16px;">
+                                <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 8px;">
+                                    Ou copie o código abaixo:
+                                </p>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" readonly value="${escapeHTML(pagamento.copia_e_cola)}" 
+                                           style="flex: 1; padding: 12px; border: 2px solid var(--border); 
+                                                  border-radius: var(--radius); font-size: 0.85rem;">
+                                    <button onclick="copiarCodigoPix(this)" class="btn-finalize" style="padding: 12px 20px; margin: 0; width: auto;">
+                                        📋 Copiar
+                                    </button>
+                                </div>
+                            </div>
+                        ` : ''}
+                        <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-gray);">
+                            ⏱️ O código expira em 30 minutos. Após o pagamento, o pedido será confirmado automaticamente.
+                        </p>
+                    </div>
+                `;
+            } else if (pedido.metodo_pagamento === 'credit_card') {
+                pagamentoSection = `
+                    <div class="pix-instructions" style="border-color: var(--cobalt-main); background: rgba(26, 79, 184, 0.05);">
+                        <h4 style="color: var(--cobalt-main);">💳 Pagamento com Cartão</h4>
+                        <p style="margin-top: 12px; color: var(--text-gray);">
+                            Seu pagamento de <strong>R$ ${formatarPreco(pedido.total)}</strong> em 
+                            <strong>${pedido.parcelas}x de R$ ${formatarPreco(pedido.total / pedido.parcelas)}</strong> 
+                            está sendo processado.
+                        </p>
+                        <p style="margin-top: 12px; color: var(--text-gray);">
+                            Você receberá a confirmação por e-mail em instantes.
+                        </p>
+                    </div>
+                `;
+            } else {
+                pagamentoSection = `
+                    <div class="pix-instructions">
+                        <h4>📋 Próximos passos:</h4>
+                        <ol>
+                            <li>Você receberá as instruções de pagamento no seu e-mail</li>
+                            <li>Realize o pagamento conforme indicado</li>
+                            <li>Seu pedido será confirmado automaticamente</li>
+                        </ol>
+                    </div>
+                `;
+            }
 
             container.innerHTML = `
                 <div class="success-screen">
                     <div class="success-icon">✓</div>
                     <h1>Pedido Confirmado!</h1>
-                    <p>Obrigado por comprar na S7TE! Enviamos os detalhes para <strong>${pedido.cliente_email}</strong></p>
+                    <p>Obrigado por comprar na S7TE! Enviamos os detalhes para <strong>${escapeHTML(pedido.cliente_email)}</strong></p>
                     
                     <div class="order-number-box">
                         <span>Número do Pedido</span>
-                        <strong>${numeroPedido}</strong>
+                        <strong>${escapeHTML(numeroPedido)}</strong>
                     </div>
 
                     <div class="success-info">
@@ -1363,7 +1804,7 @@
                         </div>
                         <div class="info-card">
                             <div class="icon">💰</div>
-                            <h4>Total Pago</h4>
+                            <h4>Total</h4>
                             <p>R$ ${formatarPreco(pedido.total)}</p>
                         </div>
                         <div class="info-card">
@@ -1378,24 +1819,10 @@
                         </div>
                     </div>
 
-                    ${pedido.metodo_pagamento === 'pix' ? `
-                        <div class="pix-info-box" style="text-align: left; margin: 24px 0;">
-                            <h4>📋 Próximos passos:</h4>
-                            <p style="margin-top: 8px;">1. Você receberá o QR Code PIX no e-mail em instantes<br>
-                            2. Pague para confirmar o pedido<br>
-                            3. Após confirmação, enviaremos o código de rastreamento</p>
-                        </div>
-                    ` : `
-                        <div class="pix-info-box" style="text-align: left; margin: 24px 0;">
-                            <h4>📋 Próximos passos:</h4>
-                            <p style="margin-top: 8px;">1. Seu pagamento está sendo processado<br>
-                            2. Você receberá confirmação no e-mail<br>
-                            3. Após aprovação, enviaremos o código de rastreamento</p>
-                        </div>
-                    `}
+                    ${pagamentoSection}
 
-                    <button class="btn-finalize" onclick="window.location.href='index.html'" style="max-width: 300px; margin: 20px auto 0;">
-                        🏠 Voltar à Loja
+                    <button class="btn-finalize" onclick="window.location.href='minha-conta.html'" style="max-width: 300px; margin: 20px auto 0;">
+                        📦 Ver Meus Pedidos
                     </button>
                 </div>
             `;
@@ -1403,14 +1830,26 @@
             window.scrollTo(0, 0);
         }
 
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
+        function copiarCodigoPix(btn) {
+            const input = btn.previousElementSibling;
+            input.select();
+            document.execCommand('copy');
+            btn.textContent = '✅ Copiado!';
+            setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                await carregarConfigSite();
+                const logado = await verificarLogin();
+                if (!logado) return;
+
+                await Promise.all([
+                    carregarConfigSite(),
+                    carregarGatewayAtivo()
+                ]);
                 
-                if (!verificarCarrinho()) return;
+                const carrinhoValido = await validarCarrinho();
+                if (!carrinhoValido || !verificarCarrinho()) return;
                 
                 aplicarMascaras();
                 renderizarResumo();

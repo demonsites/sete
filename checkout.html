@@ -1036,7 +1036,7 @@
             return 'visa';
         }
 
-        // ✅ NOVA FUNÇÃO: Traduzir nomes de campos de erro
+        // ✅ Função para traduzir nomes de campos de erro
         function traduzirCampo(campo) {
             const traducoes = {
                 'cardNumber': 'Número do cartão',
@@ -1515,14 +1515,36 @@
                 detectarBandeiraVisual(v.replace(/\s/g, ''));
             });
 
+            // ✅ CORREÇÃO: Máscara melhorada da validade
             const cardExp = document.getElementById('card-expiry');
             cardExp.addEventListener('input', (e) => {
+                // Remover tudo que não for dígito
                 let v = e.target.value.replace(/\D/g, '');
+                
+                // Limitar a 4 dígitos
                 if (v.length > 4) v = v.substring(0, 4);
+                
+                // Adicionar barra após 2 dígitos
                 if (v.length >= 2) {
                     v = v.substring(0, 2) + '/' + v.substring(2);
                 }
+                
                 e.target.value = v;
+            });
+
+            // Validar ao sair do campo
+            cardExp.addEventListener('blur', (e) => {
+                const valor = e.target.value;
+                if (valor && valor.length === 5) {
+                    const [month, year] = valor.split('/');
+                    const monthNum = parseInt(month, 10);
+                    
+                    if (monthNum < 1 || monthNum > 12) {
+                        showToast('Mês de validade inválido. Use 01 a 12.', 'error');
+                        e.target.value = '';
+                        e.target.focus();
+                    }
+                }
             });
 
             const cardCvv = document.getElementById('card-cvv');
@@ -1716,20 +1738,65 @@
                     locale: 'pt-BR'
                 });
 
-                // Parse da data de validade
-                const [month, year] = cardData.expiry.split('/');
-                const expirationMonth = parseInt(month);
-                const expirationYear = parseInt('20' + year);
+                // ✅ CORREÇÃO: Parse robusto da data de validade
+                const expiryRaw = cardData.expiry.trim();
+                console.log('🔍 Data de validade (raw):', expiryRaw);
 
-                // Validar data de validade
-                if (isNaN(expirationMonth) || isNaN(expirationYear)) {
-                    throw new Error('Data de validade inválida. Use o formato MM/AA.');
+                // Validar formato básico
+                if (!expiryRaw || expiryRaw.length < 4) {
+                    throw new Error('Data de validade inválida. Use o formato MM/AA (ex: 11/25).');
                 }
+
+                // Tentar diferentes formatos
+                let month, year;
+                
+                if (expiryRaw.includes('/')) {
+                    // Formato: MM/AA ou MM/AAAA
+                    const parts = expiryRaw.split('/');
+                    month = parts[0].trim();
+                    year = parts[1].trim();
+                } else if (expiryRaw.length === 4) {
+                    // Formato: MMAA (sem barra)
+                    month = expiryRaw.substring(0, 2);
+                    year = expiryRaw.substring(2, 4);
+                } else if (expiryRaw.length === 6) {
+                    // Formato: MM AAAA (sem barra)
+                    month = expiryRaw.substring(0, 2);
+                    year = expiryRaw.substring(2, 6);
+                } else {
+                    throw new Error('Data de validade inválida. Use o formato MM/AA (ex: 11/25).');
+                }
+
+                // Converter para números
+                const expirationMonth = parseInt(month, 10);
+                let expirationYear = parseInt(year, 10);
 
                 // Validar mês
-                if (expirationMonth < 1 || expirationMonth > 12) {
+                if (isNaN(expirationMonth) || expirationMonth < 1 || expirationMonth > 12) {
                     throw new Error('Mês de validade inválido. Use 01 a 12.');
                 }
+
+                // Validar ano
+                if (isNaN(expirationYear)) {
+                    throw new Error('Ano de validade inválido.');
+                }
+
+                // Se o ano tiver 2 dígitos, converter para 4 dígitos
+                if (year.length === 2) {
+                    expirationYear = 2000 + expirationYear;
+                }
+
+                // Validar se não está muito longe no futuro (máx 20 anos)
+                const currentYear = new Date().getFullYear();
+                if (expirationYear > currentYear + 20) {
+                    throw new Error('Ano de validade muito distante. Verifique a data.');
+                }
+
+                console.log('🔍 Data parseada:', {
+                    month: expirationMonth,
+                    year: expirationYear,
+                    yearOriginal: year
+                });
 
                 // Obter documento (CPF/CNPJ)
                 let docNumero = dadosCliente?.documento || document.getElementById('documento').value.replace(/\D/g, '');
@@ -1751,16 +1818,34 @@
                     docNumber: docNumero.substring(0, 3) + '***'
                 });
 
-                // Criar token do cartão
-                const cardToken = await mp.createCardToken({
-                    cardNumber: cardData.number,
-                    cardholderName: cardData.name,
-                    cardExpirationMonth: expirationMonth,
-                    cardExpirationYear: expirationYear,
-                    securityCode: cardData.cvv,
-                    identificationType: docTipo,
-                    identificationNumber: docNumero
-                });
+                // ✅ CORREÇÃO: Tentar com ano de 4 dígitos primeiro
+                let cardToken;
+                try {
+                    cardToken = await mp.createCardToken({
+                        cardNumber: cardData.number,
+                        cardholderName: cardData.name,
+                        cardExpirationMonth: expirationMonth,
+                        cardExpirationYear: expirationYear,
+                        securityCode: cardData.cvv,
+                        identificationType: docTipo,
+                        identificationNumber: docNumero
+                    });
+                } catch (firstError) {
+                    console.warn('⚠️ Erro com ano de 4 dígitos, tentando com 2 dígitos...');
+                    
+                    // Se falhar, tentar com ano de 2 dígitos
+                    const yearTwoDigits = expirationYear % 100;
+                    
+                    cardToken = await mp.createCardToken({
+                        cardNumber: cardData.number,
+                        cardholderName: cardData.name,
+                        cardExpirationMonth: expirationMonth,
+                        cardExpirationYear: yearTwoDigits,
+                        securityCode: cardData.cvv,
+                        identificationType: docTipo,
+                        identificationNumber: docNumero
+                    });
+                }
 
                 console.log('✅ Token do cartão gerado com sucesso');
 
@@ -1773,11 +1858,10 @@
             } catch (error) {
                 console.error('❌ Erro na tokenização Mercado Pago:', error);
                 
-                // ✅ CORREÇÃO: Tratar erro como array
+                // Tratar erro como array
                 let mensagemErro = 'Erro ao processar cartão.';
                 
                 if (Array.isArray(error)) {
-                    // O SDK retorna um array de erros
                     const mensagens = error.map(e => {
                         if (e.field && e.message) {
                             return `${traduzirCampo(e.field)}: ${e.message}`;

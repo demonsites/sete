@@ -13,8 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- ✅ SDK MERCADO PAGO -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 
     <style>
@@ -699,7 +697,7 @@
                     👤 <span id="user-name">Cliente</span>
                 </div>
                 <div class="secure-header">
-                    🔒 <span>Checkout Seguro</span>
+                     <span>Checkout Seguro</span>
                 </div>
             </div>
         </div>
@@ -916,7 +914,7 @@
                                 <span id="sum-total">R$ 0,00</span>
                             </div>
                             <div class="summary-pix-total active" id="sum-pix-box">
-                                <p> Total no PIX:</p>
+                                <p>💰 Total no PIX:</p>
                                 <strong id="sum-pix-total">R$ 0,00</strong>
                             </div>
                             <div class="installments-info" id="installments-info">
@@ -929,9 +927,9 @@
                         </button>
 
                         <div class="security-badges">
-                            <div class="security-badge"> SSL</div>
+                            <div class="security-badge">🔒 SSL</div>
                             <div class="security-badge">✓ Criptografado</div>
-                            <div class="security-badge">🛡️ PCI-DSS</div>
+                            <div class="security-badge">️ PCI-DSS</div>
                         </div>
                     </div>
                 </div>
@@ -970,7 +968,6 @@
         let clienteLogado = null;
         let dadosCliente = null;
 
-        // Supports padrão por gateway (fallback)
         const SUPPORTS_PADRAO = {
             'mercado_pago': ['pix', 'credit_card', 'boleto'],
             'picpay': ['pix', 'credit_card'],
@@ -1036,7 +1033,6 @@
             return 'visa';
         }
 
-        // ✅ Função para traduzir nomes de campos de erro
         function traduzirCampo(campo) {
             const traducoes = {
                 'cardNumber': 'Número do cartão',
@@ -1050,7 +1046,6 @@
             return traducoes[campo] || campo;
         }
 
-        // ✅ Validação de CPF/CNPJ
         function validarCPF(cpf) {
             cpf = cpf.replace(/\D/g, '');
             return cpf.length === 11;
@@ -1117,7 +1112,7 @@
                 console.log('✅ Dados do cliente carregados:', data);
                 preencherDadosCliente();
             } catch (error) {
-                console.error('❌ Erro ao carregar dados do cliente:', error);
+                console.error(' Erro ao carregar dados do cliente:', error);
                 showToast('⚠️ Preencha seus dados manualmente', 'error');
             }
         }
@@ -1279,7 +1274,7 @@
                         console.log('✅ Opção de cartão VISÍVEL');
                     } else {
                         creditCardOption.style.display = 'none';
-                        console.log('️ Opção de cartão escondida');
+                        console.log('⚠️ Opção de cartão escondida');
                     }
                 }
 
@@ -1345,7 +1340,7 @@
             produtosValidados = novoCarrinho;
             
             if (removidos.length > 0) {
-                showToast(`⚠️ Removidos: ${removidos.join(', ')}`, 'error');
+                showToast(`️ Removidos: ${removidos.join(', ')}`, 'error');
             }
 
             if (JSON.stringify(novoCarrinho) !== JSON.stringify(cart)) {
@@ -1645,7 +1640,6 @@
                 return false;
             }
 
-            // ✅ Validação de CPF/CNPJ
             const docRaw = document.getElementById('documento').value.replace(/\D/g, '');
             const isCnpj = document.getElementById('doc-label').textContent.includes('CNPJ');
             if (isCnpj && !validarCNPJ(docRaw)) {
@@ -1750,25 +1744,22 @@
 
             try {
                 console.log('🔍 Iniciando tokenização Mercado Pago...');
-                console.log('🔍 Public Key:', gatewayAtivo.credenciais.public_key.substring(0, 20) + '...');
+                console.log(' Public Key:', gatewayAtivo.credenciais.public_key.substring(0, 20) + '...');
 
                 const mp = new MercadoPago(gatewayAtivo.credenciais.public_key, {
                     locale: 'pt-BR'
                 });
 
-                // ✅ CORREÇÃO: Parse robusto da data de validade
                 const cleanExpiry = cardData.expiry.replace(/\D/g, '');
                 
                 if (cleanExpiry.length < 4) {
                     throw new Error('Data de validade inválida. Use o formato MM/AA (ex: 12/25).');
                 }
 
-                // O SDK do Mercado Pago exige STRINGS: Mês com 2 dígitos, Ano com 4 dígitos
-                const expirationMonth = cleanExpiry.substring(0, 2); // Ex: "05" ou "12"
-                const yearTwoDigits = cleanExpiry.substring(2, 4);   // Ex: "25"
-                const expirationYear = `20${yearTwoDigits}`;         // Ex: "2025"
+                const expirationMonth = cleanExpiry.substring(0, 2);
+                const yearTwoDigits = cleanExpiry.substring(2, 4);
+                const expirationYear = `20${yearTwoDigits}`;
 
-                // Validação básica de mês
                 const monthNum = parseInt(expirationMonth, 10);
                 if (monthNum < 1 || monthNum > 12) {
                     throw new Error('Mês de validade inválido. Deve ser entre 01 e 12.');
@@ -1779,11 +1770,9 @@
                     year: expirationYear
                 });
 
-                // Obter documento (CPF/CNPJ)
                 let docNumero = (dadosCliente?.documento || document.getElementById('documento').value).replace(/\D/g, '');
                 let docTipo = (dadosCliente?.tipo_documento === 'cnpj') ? 'CNPJ' : 'CPF';
 
-                // ✅ CORREÇÃO: Validação rigorosa do documento (sem CPF de teste)
                 if (!docNumero || (docTipo === 'CPF' && docNumero.length !== 11) || (docTipo === 'CNPJ' && docNumero.length !== 14)) {
                     throw new Error('CPF ou CNPJ inválido. Verifique o campo de documento.');
                 }
@@ -1797,7 +1786,6 @@
                     docNumber: docNumero.substring(0, 3) + '***'
                 });
 
-                // ✅ CORREÇÃO: Chamada ao SDK com formato correto
                 const cardToken = await mp.createCardToken({
                     cardNumber: cardData.number,
                     cardholderName: cardData.name.toUpperCase(),
@@ -1817,9 +1805,8 @@
                 };
 
             } catch (error) {
-                console.error('❌ Erro na tokenização Mercado Pago:', error);
+                console.error(' Erro na tokenização Mercado Pago:', error);
                 
-                // Tratar erro como array
                 let mensagemErro = 'Erro ao processar cartão. Verifique os dados.';
                 
                 if (Array.isArray(error)) {
@@ -1934,7 +1921,7 @@
         }
 
         // ============================================
-        // ✅ FINALIZAR PEDIDO - CORREÇÃO APLICADA
+        // FINALIZAR PEDIDO
         // ============================================
         async function finalizarPedido() {
             if (!validarFormulario()) return;
@@ -1993,13 +1980,12 @@
                 if (metodoPagamento === 'credit_card') {
                     btn.innerHTML = '💳 Processando cartão...';
                     const cartaoInfo = await tokenizarCartao();
-                    cartaoToken = cartaoInfo.token; // Token vai APENAS para a Edge Function
+                    cartaoToken = cartaoInfo.token;
                     console.log('✅ Cartão tokenizado com sucesso');
                 }
 
                 btn.innerHTML = '💾 Salvando pedido...';
                 
-                // ✅ CORREÇÃO: Removido cartao_token, cartao_bandeira e cartao_ultimo4 do insert
                 const { data: pedidoSalvo, error: pedidoError } = await supabaseClient
                     .from('pedidos')
                     .insert([pedido])
@@ -2020,7 +2006,7 @@
                                 pedido_id: pedidoSalvo.id,
                                 metodo: metodoPagamento,
                                 parcelas: parcelas,
-                                cartao_token: cartaoToken // ✅ Token enviado apenas para a Edge Function
+                                cartao_token: cartaoToken
                             }
                         });
 
@@ -2037,7 +2023,7 @@
                 try {
                     await reduzirEstoque(produtosValidados);
                 } catch (estoqueError) {
-                    console.warn('️ Aviso ao reduzir estoque:', estoqueError);
+                    console.warn('⚠️ Aviso ao reduzir estoque:', estoqueError);
                 }
 
                 cart = [];
@@ -2098,7 +2084,7 @@
             } else if (pedido.metodo_pagamento === 'credit_card') {
                 pagamentoSection = `
                     <div class="pix-instructions" style="border-color: var(--cobalt-main); background: rgba(26, 79, 184, 0.05);">
-                        <h4 style="color: var(--cobalt-main);"> Pagamento com Cartão</h4>
+                        <h4 style="color: var(--cobalt-main);">💳 Pagamento com Cartão</h4>
                         <p style="margin-top: 12px; color: var(--text-gray);">
                             Seu pagamento de <strong>R$ ${formatarPreco(pedido.total)}</strong> em 
                             <strong>${pedido.parcelas}x de R$ ${formatarPreco(pedido.total / pedido.parcelas)}</strong> 
@@ -2135,7 +2121,7 @@
 
                     <div class="success-info">
                         <div class="info-card">
-                            <div class="icon">💳</div>
+                            <div class="icon"></div>
                             <h4>Pagamento</h4>
                             <p>${metodoTexto}</p>
                         </div>
@@ -2145,7 +2131,7 @@
                             <p>R$ ${formatarPreco(pedido.total)}</p>
                         </div>
                         <div class="info-card">
-                            <div class="icon"></div>
+                            <div class="icon">📅</div>
                             <h4>Data</h4>
                             <p>${dataPedido}</p>
                         </div>
@@ -2167,7 +2153,6 @@
             window.scrollTo(0, 0);
         }
 
-        // ✅ CORREÇÃO: Usar Clipboard API moderna
         async function copiarCodigoPix(btn) {
             const input = btn.previousElementSibling;
             try {
@@ -2175,7 +2160,6 @@
                 btn.textContent = '✅ Copiado!';
                 setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
             } catch (err) {
-                // Fallback para navegadores antigos
                 input.select();
                 document.execCommand('copy');
                 btn.textContent = '✅ Copiado!';
@@ -2206,7 +2190,7 @@
                 
                 console.log('✅ Checkout inicializado com sucesso');
             } catch (error) {
-                console.error(' Erro ao inicializar:', error);
+                console.error('❌ Erro ao inicializar:', error);
                 showToast('Erro ao carregar checkout', 'error');
             }
         });

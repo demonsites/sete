@@ -105,11 +105,18 @@
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         
         .logo { 
+            display: flex;
+            align-items: center;
             font-size: 1.8rem; 
             font-weight: 900; 
             letter-spacing: -0.02em; 
             color: var(--cobalt-deep);
             cursor: pointer;
+        }
+        .logo img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
         }
         .logo span { 
             background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
@@ -161,7 +168,7 @@
         }
 
         .hero {
-            padding: 80px 0;
+            padding: 60px 0;
             background: linear-gradient(135deg, var(--cobalt-deep) 0%, var(--cobalt-main) 50%, var(--cobalt-bright) 100%);
             color: white;
             position: relative;
@@ -180,50 +187,51 @@
             display: inline-block;
             background: var(--gold);
             color: var(--cobalt-deep);
-            padding: 6px 16px;
-            font-size: 0.8rem;
+            padding: 4px 12px;
+            font-size: 0.65rem;
             font-weight: 800;
             border-radius: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
         .hero h1 { 
-            font-size: 3.5rem; 
+            font-size: 1.75rem;
             font-weight: 900; 
-            margin-bottom: 20px; 
-            line-height: 1.1;
+            margin-bottom: 14px; 
+            line-height: 1.15;
             letter-spacing: -0.02em;
         }
         .hero p { 
-            font-size: 1.2rem; 
-            margin-bottom: 32px; 
+            font-size: 0.85rem;
+            margin-bottom: 20px; 
             opacity: 0.95;
             max-width: 600px;
+            line-height: 1.5;
         }
         .hero-stats {
             display: flex;
-            gap: 40px;
-            margin-top: 40px;
-            padding-top: 32px;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.2);
         }
         .hero-stat strong {
             display: block;
-            font-size: 2rem;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--gold);
         }
         .hero-stat span {
-            font-size: 0.85rem;
+            font-size: 0.65rem;
             opacity: 0.9;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--cobalt-deep);
-            padding: 16px 40px;
-            font-size: 1rem;
+            padding: 10px 24px;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -708,11 +716,11 @@
             .hero-stats { flex-wrap: wrap; gap: 24px; }
         }
         @media (max-width: 768px) {
-            .hero { padding: 60px 0; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
+            .hero { padding: 40px 0; }
+            .hero h1 { font-size: 1.4rem; }
+            .hero p { font-size: 0.8rem; }
             .hero-stats { gap: 20px; }
-            .hero-stat strong { font-size: 1.5rem; }
+            .hero-stat strong { font-size: 0.9rem; }
             
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
             .product-info { padding: 14px; }
@@ -732,6 +740,7 @@
             .benefits { grid-template-columns: 1fr; padding: 20px 0; }
             .benefit-item { padding: 12px; }
             .logo { font-size: 1.4rem; }
+            .logo img { height: 40px; }
         }
     </style>
 </head>
@@ -741,7 +750,10 @@
 
     <header>
         <div class="container header-inner">
-            <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
+            <a href="index.html" class="logo" id="logo-text">
+                <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;">
+                S<span>7</span>TE
+            </a>
             
             <nav class="nav-desktop" id="nav-categorias">
                 <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
@@ -1009,8 +1021,9 @@
             setTextoSeguro('footer-telefone', get('footer_telefone'));
             setTextoSeguro('footer-copyright', get('footer_copyright'));
             
-            const logoTexto = get('logo_texto');
-            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            const logoTexto = get('logo_texto') || 'S7TE';
+            const logoImg = '<img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; vertical-align: middle; margin-right: 8px;">';
+            setHtmlSeguro('logo-text', logoImg + escapeHTML(logoTexto).replace('7', '<span>7</span>'));
             setTextoSeguro('footer-nome-loja', logoTexto);
 
             const freteGratis = configSite.frete_gratis_acima || '500';

@@ -498,7 +498,7 @@
 
     <header>
         <div class="container header-inner">
-            <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
+            <a href="index.html" class="logo"><img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;"></a>
             
             <nav class="nav-desktop" id="nav-categorias">
                 <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
@@ -652,9 +652,7 @@
 
         function aplicarConfigSite() {
             setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            const logoTexto = configSite.logo_texto || 'S7TE';
-            setHtmlSeguro('logo-text', escapeHTML(logoTexto).replace('7', '<span>7</span>'));
-            setTextoSeguro('footer-nome-loja', logoTexto);
+            setTextoSeguro('footer-nome-loja', configSite.logo_texto || 'S7TE');
             setTextoSeguro('footer-sobre', configSite.footer_sobre);
             setHtmlSeguro('footer-endereco', configSite.footer_endereco);
             setTextoSeguro('footer-email', configSite.footer_email);

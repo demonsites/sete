@@ -86,8 +86,8 @@
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
             text-align: center;
-            padding: 12px 0;
-            font-size: 0.85rem;
+            padding: 10px 0;
+            font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 0.03em;
         }
@@ -99,54 +99,76 @@
             background: white;
             border-bottom: 1px solid var(--border);
             z-index: 1000;
-            padding: 16px 0;
+            padding: 12px 0;
             box-shadow: var(--shadow);
         }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .header-inner { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 20px;
+        }
         
         .logo { 
             display: flex;
             align-items: center;
-            font-size: 1.8rem; 
-            font-weight: 900; 
-            letter-spacing: -0.02em; 
-            color: var(--cobalt-deep);
+            gap: 8px;
             cursor: pointer;
+            flex-shrink: 0;
         }
         .logo img {
-            height: 48px;
+            height: 40px;
             width: auto;
             object-fit: contain;
         }
-        .logo span { 
+        .logo-text {
+            font-size: 1.3rem; 
+            font-weight: 900; 
+            letter-spacing: -0.02em; 
+            color: var(--cobalt-deep);
+        }
+        .logo-text span { 
             background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .nav-desktop { display: flex; gap: 28px; align-items: center; }
+        .nav-desktop { 
+            display: flex; 
+            gap: 20px; 
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
         .nav-desktop a { 
-            font-size: 0.9rem; 
+            font-size: 0.75rem; 
             font-weight: 600; 
             text-transform: uppercase; 
             letter-spacing: 0.05em; 
             color: var(--text-dark);
+            white-space: nowrap;
         }
         .nav-desktop a:hover { color: var(--cobalt-main); }
         .nav-desktop a.promo-link { color: var(--danger); }
 
-        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .header-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            flex-shrink: 0;
+        }
         
-        .auth-buttons { display: flex; gap: 8px; }
+        .auth-buttons { display: flex; gap: 6px; }
         .auth-btn {
-            padding: 8px 16px;
-            font-size: 0.8rem;
+            padding: 6px 12px;
+            font-size: 0.7rem;
             font-weight: 700;
-            border-radius: var(--radius);
+            border-radius: 6px;
             transition: var(--transition);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
         }
         .auth-btn-login {
             background: var(--bg-light);
@@ -163,7 +185,7 @@
             color: white;
         }
         .auth-btn-signup:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(26, 79, 184, 0.4);
         }
         .auth-btn-logout {
@@ -183,31 +205,89 @@
         
         .cart-btn { 
             position: relative; 
-            font-size: 0.9rem; 
+            font-size: 0.75rem; 
             font-weight: 700; 
             display: flex; 
             align-items: center; 
-            gap: 8px; 
+            gap: 6px; 
             color: var(--text-dark);
-            padding: 8px 16px;
-            border-radius: var(--radius);
+            padding: 6px 12px;
+            border-radius: 6px;
             background: var(--bg-light);
             transition: var(--transition);
         }
         .cart-btn:hover { background: var(--cobalt-main); color: white; }
-        .cart-btn svg { width: 20px; height: 20px; }
+        .cart-btn svg { width: 18px; height: 18px; }
         
         .cart-count { 
             background: var(--gold); 
             color: var(--cobalt-deep); 
-            font-size: 0.75rem; 
+            font-size: 0.65rem; 
             font-weight: 800;
-            min-width: 22px; 
-            height: 22px; 
+            min-width: 18px; 
+            height: 18px; 
             border-radius: 50%; 
             display: flex; 
             align-items: center; 
             justify-content: center;
+        }
+
+        /* Menu Mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: var(--transition);
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            padding: 20px;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        .mobile-menu a {
+            display: block;
+            padding: 12px 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+        }
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        .mobile-menu a:hover {
+            color: var(--cobalt-main);
+        }
+        .mobile-menu .auth-buttons {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid var(--border);
         }
 
         .hero {
@@ -917,6 +997,7 @@
 
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
+            .menu-toggle { display: flex; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .benefits { grid-template-columns: repeat(2, 1fr); }
             .hero-stats { flex-wrap: wrap; gap: 24px; }
@@ -946,8 +1027,8 @@
             
             .benefits { grid-template-columns: 1fr; padding: 20px 0; }
             .benefit-item { padding: 12px; }
-            .logo { font-size: 1.4rem; }
-            .logo img { height: 40px; }
+            .logo img { height: 36px; }
+            .logo-text { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -958,8 +1039,8 @@
     <header>
         <div class="container header-inner">
             <a href="index.html" class="logo" id="logo-text">
-                <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;">
-                S<span>7</span>TE
+                <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE">
+                <div class="logo-text">S<span>7</span>TE</div>
             </a>
             
             <nav class="nav-desktop" id="nav-categorias">
@@ -969,7 +1050,7 @@
 
             <div class="header-actions">
                 <div class="auth-buttons" id="auth-buttons">
-                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
+                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar</button>
                     <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
                 </div>
                 <button class="cart-btn" onclick="toggleCart()">
@@ -977,12 +1058,27 @@
                         <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
-                    Carrinho
                     <span id="cart-count" class="cart-count">0</span>
                 </button>
+                <div class="menu-toggle" id="menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
     </header>
+
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div id="mobile-menu-categorias"></div>
+        <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
+        <a href="contato.html">Contato</a>
+        <div class="auth-buttons" id="mobile-auth-buttons">
+            <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
+            <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+        </div>
+    </div>
 
     <main>
         <section class="hero">
@@ -1210,6 +1306,16 @@
         }
 
         // ============================================
+        // MENU MOBILE
+        // ============================================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const toggle = document.getElementById('menu-toggle');
+            menu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // ============================================
         // AUTENTICAÇÃO
         // ============================================
         function showAuthMessage(msg, type) {
@@ -1348,16 +1454,24 @@
 
         async function updateAuthButtons() {
             const authButtons = document.getElementById('auth-buttons');
+            const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
             const { data: { session } } = await supabaseClient.auth.getSession();
             
             if (session) {
                 const userName = session.user.user_metadata?.full_name || session.user.email;
-                authButtons.innerHTML = `
+                const buttonsHTML = `
                     <button class="auth-btn auth-btn-account" onclick="window.location.href='conta.html'">Minha Conta</button>
                     <button class="auth-btn auth-btn-logout" onclick="handleLogout()">Sair</button>
                 `;
+                authButtons.innerHTML = buttonsHTML;
+                mobileAuthButtons.innerHTML = buttonsHTML;
             } else {
-                authButtons.innerHTML = `
+                const buttonsHTML = `
+                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar</button>
+                    <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                `;
+                authButtons.innerHTML = buttonsHTML;
+                mobileAuthButtons.innerHTML = `
                     <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
                     <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
                 `;
@@ -1434,8 +1548,7 @@
             setTextoSeguro('footer-copyright', get('footer_copyright'));
             
             const logoTexto = get('logo_texto') || 'S7TE';
-            const logoImg = '<img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; vertical-align: middle; margin-right: 8px;">';
-            setHtmlSeguro('logo-text', logoImg + escapeHTML(logoTexto).replace('7', '<span>7</span>'));
+            setHtmlSeguro('logo-text', `<img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE"><div class="logo-text">${escapeHTML(logoTexto).replace('7', '<span>7</span>')}</div>`);
             setTextoSeguro('footer-nome-loja', logoTexto);
 
             const freteGratis = configSite.frete_gratis_acima || '500';
@@ -1449,11 +1562,20 @@
                 categoriasCache = data;
 
                 const nav = document.getElementById('nav-categorias');
+                const mobileNav = document.getElementById('mobile-menu-categorias');
+                
                 if (nav) {
                     const navLinks = data.map(c => 
                         `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
                     nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
+                }
+                
+                if (mobileNav) {
+                    const mobileLinks = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                    mobileNav.innerHTML = mobileLinks;
                 }
 
                 const footer = document.getElementById('footer-categorias');

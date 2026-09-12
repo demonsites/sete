@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> IMPORTS| Tecnologia em Odontologia Digital</title>
+    <title>S7TE | Tecnologia em Odontologia Digital</title>
     <meta name="description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM para odontologia digital. Entrega rápida e preços imbatíveis.">
     
     <!-- SEO: Open Graph / Facebook -->
@@ -125,7 +125,7 @@
             background-clip: text;
         }
 
-        .nav-desktop { display: flex; gap: 28px; }
+        .nav-desktop { display: flex; gap: 28px; align-items: center; }
         .nav-desktop a { 
             font-size: 0.9rem; 
             font-weight: 600; 
@@ -137,6 +137,49 @@
         .nav-desktop a.promo-link { color: var(--danger); }
 
         .header-actions { display: flex; align-items: center; gap: 12px; }
+        
+        .auth-buttons { display: flex; gap: 8px; }
+        .auth-btn {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .auth-btn-login {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+        .auth-btn-login:hover {
+            background: var(--cobalt-main);
+            color: white;
+            border-color: var(--cobalt-main);
+        }
+        .auth-btn-signup {
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+        }
+        .auth-btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 79, 184, 0.4);
+        }
+        .auth-btn-logout {
+            background: var(--danger);
+            color: white;
+        }
+        .auth-btn-logout:hover {
+            background: #dc2626;
+        }
+        .auth-btn-account {
+            background: var(--success);
+            color: white;
+        }
+        .auth-btn-account:hover {
+            background: #059669;
+        }
         
         .cart-btn { 
             position: relative; 
@@ -709,11 +752,175 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Modal de Autenticação */
+        .auth-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 42, 110, 0.7);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .auth-modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 440px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .auth-modal-overlay.active .auth-modal {
+            transform: scale(1);
+        }
+        .auth-modal-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+        .auth-modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .auth-modal-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .auth-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .auth-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border);
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .auth-tab.active {
+            color: var(--cobalt-main);
+            border-bottom-color: var(--cobalt-main);
+        }
+        .auth-form-container {
+            padding: 24px;
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 79, 184, 0.4);
+        }
+        .btn-auth:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .auth-message {
+            padding: 12px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .auth-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            display: block;
+        }
+        .auth-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            display: block;
+        }
+
         @media (max-width: 1024px) {
             .nav-desktop { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .benefits { grid-template-columns: repeat(2, 1fr); }
             .hero-stats { flex-wrap: wrap; gap: 24px; }
+            .auth-buttons { display: none; }
         }
         @media (max-width: 768px) {
             .hero { padding: 40px 0; }
@@ -752,7 +959,7 @@
         <div class="container header-inner">
             <a href="index.html" class="logo" id="logo-text">
                 <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;">
-                <span></span>IMPORTS
+                S<span>7</span>TE
             </a>
             
             <nav class="nav-desktop" id="nav-categorias">
@@ -761,11 +968,16 @@
             </nav>
 
             <div class="header-actions">
+                <div class="auth-buttons" id="auth-buttons">
+                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
+                    <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                </div>
                 <button class="cart-btn" onclick="toggleCart()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
+                    Carrinho
                     <span id="cart-count" class="cart-count">0</span>
                 </button>
             </div>
@@ -776,6 +988,7 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
+                    <span class="hero-badge" id="hero-badge">⚡ Estoque Limitado</span>
                     <h1 id="hero-titulo">Tecnologia de Ponta para Odontologia Digital</h1>
                     <p id="hero-subtitulo">Insumos profissionais, zircônia premium e equipamentos CAD/CAM com entrega rápida e preços imbatíveis.</p>
                     <a href="produtos.html" class="btn-primary" id="hero-botao">Ver Produtos em Oferta →</a>
@@ -846,7 +1059,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4 id="footer-nome-loja">IMPORTS</h4>
+                    <h4 id="footer-nome-loja">S7TE</h4>
                     <p id="footer-sobre">Tecnologia de ponta para odontologia digital. Insumos profissionais com entrega rápida e preços imbatíveis.</p>
                 </div>
                 <div class="footer-col">
@@ -868,7 +1081,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p id="footer-copyright">© 2026 E07 IMPORTS Tecnologia em Odontologia.</p>
+                <p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p>
                 <p><a href="#" style="opacity:0.5; font-size:0.7rem;">Área Admin</a></p>
             </div>
         </div>
@@ -889,6 +1102,54 @@
             <button class="btn-checkout" onclick="goToCheckout()">Finalizar Compra</button>
         </div>
     </aside>
+
+    <!-- Modal de Autenticação -->
+    <div class="auth-modal-overlay" id="auth-modal-overlay">
+        <div class="auth-modal">
+            <div class="auth-modal-header">
+                <button class="auth-modal-close" onclick="closeAuthModal()">×</button>
+                <h3 id="auth-modal-title">Acessar Conta</h3>
+                <p id="auth-modal-subtitle">Faça login para continuar</p>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Entrar</div>
+                <div class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Criar Conta</div>
+            </div>
+            <div class="auth-form-container">
+                <div id="auth-message" class="auth-message"></div>
+                
+                <!-- Formulário de Login -->
+                <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" placeholder="Sua senha" required>
+                    </div>
+                    <button type="submit" class="btn-auth" id="login-btn">Entrar</button>
+                </form>
+                
+                <!-- Formulário de Cadastro -->
+                <form id="signup-form" class="auth-form" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signup-name">Nome Completo</label>
+                        <input type="text" id="signup-name" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">E-mail</label>
+                        <input type="email" id="signup-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Senha</label>
+                        <input type="password" id="signup-password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn-auth" id="signup-btn">Criar Conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="toast" id="toast"></div>
 
@@ -914,7 +1175,6 @@
             return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
         }
 
-        // 🔒 SANITIZAÇÃO ROBUSTA — previne XSS
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -939,7 +1199,6 @@
             if (el) el.textContent = texto || '';
         }
 
-        // HTML seguro apenas para conteúdo conhecido (urgency bar com <strong>)
         function setHtmlSeguro(id, html) {
             const el = document.getElementById(id);
             if (el) el.innerHTML = html || '';
@@ -948,6 +1207,161 @@
         function getCategoriaNome(slug) {
             const c = categoriasCache.find(cat => cat.slug === slug);
             return c ? c.nome : slug || '-';
+        }
+
+        // ============================================
+        // AUTENTICAÇÃO
+        // ============================================
+        function showAuthMessage(msg, type) {
+            const messageEl = document.getElementById('auth-message');
+            messageEl.textContent = msg;
+            messageEl.className = 'auth-message ' + type;
+        }
+
+        function clearAuthMessage() {
+            const messageEl = document.getElementById('auth-message');
+            messageEl.className = 'auth-message';
+            messageEl.textContent = '';
+        }
+
+        function switchAuthTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('tab-login').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+                document.getElementById('auth-modal-title').textContent = 'Acessar Conta';
+                document.getElementById('auth-modal-subtitle').textContent = 'Faça login para continuar';
+            } else {
+                document.getElementById('tab-signup').classList.add('active');
+                document.getElementById('signup-form').classList.add('active');
+                document.getElementById('auth-modal-title').textContent = 'Criar Conta';
+                document.getElementById('auth-modal-subtitle').textContent = 'Cadastre-se para continuar';
+            }
+            clearAuthMessage();
+        }
+
+        function openAuthModal(tab = 'login') {
+            document.getElementById('auth-modal-overlay').classList.add('active');
+            clearAuthMessage();
+            switchAuthTab(tab);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal-overlay').classList.remove('active');
+            clearAuthMessage();
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('login-btn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+            
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) {
+                    showAuthMessage('E-mail ou senha incorretos', 'error');
+                } else {
+                    showAuthMessage('Login realizado com sucesso!', 'success');
+                    updateAuthButtons();
+                    setTimeout(() => {
+                        closeAuthModal();
+                        window.location.href = 'checkout.html';
+                    }, 1000);
+                }
+            } catch (e) {
+                showAuthMessage('Erro ao fazer login. Tente novamente.', 'error');
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Entrar';
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const btn = document.getElementById('signup-btn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Criando conta...';
+            
+            try {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name
+                        }
+                    }
+                });
+                
+                if (error) {
+                    if (error.message.includes('already')) {
+                        showAuthMessage('Este e-mail já está cadastrado', 'error');
+                    } else {
+                        showAuthMessage('Erro ao criar conta: ' + error.message, 'error');
+                    }
+                } else {
+                    showAuthMessage('Conta criada com sucesso! Redirecionando...', 'success');
+                    updateAuthButtons();
+                    setTimeout(() => {
+                        closeAuthModal();
+                        window.location.href = 'checkout.html';
+                    }, 1500);
+                }
+            } catch (e) {
+                showAuthMessage('Erro ao criar conta. Tente novamente.', 'error');
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Criar Conta';
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                await supabaseClient.auth.signOut();
+                updateAuthButtons();
+                showToast('Você saiu da sua conta');
+            } catch (e) {
+                console.error('Erro ao fazer logout:', e);
+            }
+        }
+
+        async function updateAuthButtons() {
+            const authButtons = document.getElementById('auth-buttons');
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            if (session) {
+                const userName = session.user.user_metadata?.full_name || session.user.email;
+                authButtons.innerHTML = `
+                    <button class="auth-btn auth-btn-account" onclick="window.location.href='conta.html'">Minha Conta</button>
+                    <button class="auth-btn auth-btn-logout" onclick="handleLogout()">Sair</button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
+                    <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                `;
+            }
         }
 
         // ============================================
@@ -1313,13 +1727,24 @@
             }
         }
 
-        function goToCheckout() {
+        async function goToCheckout() {
             if (cart.length === 0) {
                 showToast('Adicione produtos ao carrinho primeiro!', 'error');
                 return;
             }
-            toggleCart();
-            window.location.href = 'checkout.html';
+            
+            // Verifica se o usuário está logado
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            if (!session) {
+                // Usuário não está logado, abre o modal de autenticação
+                toggleCart(); // Fecha o carrinho
+                openAuthModal();
+            } else {
+                // Usuário já está logado, vai direto para o checkout
+                toggleCart();
+                window.location.href = 'checkout.html';
+            }
         }
 
         // ============================================
@@ -1336,6 +1761,9 @@
                 
                 // Depende dos produtos carregados
                 await carregarBanner();
+                
+                // Atualiza os botões de autenticação baseado no status do usuário
+                await updateAuthButtons();
                 
                 updateCartUI();
             } catch (error) {

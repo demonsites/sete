@@ -6,21 +6,18 @@
     <title>S7TE | Tecnologia em Odontologia Digital</title>
     <meta name="description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM para odontologia digital. Entrega rápida e preços imbatíveis.">
     
-    <!-- SEO: Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/">
     <meta property="og:title" content="S7TE | Tecnologia em Odontologia Digital">
     <meta property="og:description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM. Frete grátis acima de R$ 500.">
     <meta property="og:image" content="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png">
     
-    <!-- SEO: Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://SEU-USUARIO.github.io/s7te-loja/">
     <meta property="twitter:title" content="S7TE | Tecnologia em Odontologia Digital">
     <meta property="twitter:description" content="Insumos profissionais, zircônia premium e equipamentos CAD/CAM.">
     <meta property="twitter:image" content="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +25,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Schema.org: Organization -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -82,27 +78,32 @@
         button { font-family: inherit; cursor: pointer; border: none; background: none; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
+        /* Barra de Urgência */
         .urgency-bar {
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 8px 0;
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 0.03em;
         }
         .urgency-bar strong { color: var(--gold); }
 
+        /* HEADER PRINCIPAL */
         header {
             position: sticky;
             top: 0;
             background: white;
-            border-bottom: 1px solid var(--border);
             z-index: 1000;
-            padding: 12px 0;
             box-shadow: var(--shadow);
         }
-        .header-inner { 
+        
+        .header-main {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-main-inner { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
@@ -134,35 +135,60 @@
             background-clip: text;
         }
 
-        .nav-desktop { 
-            display: flex; 
-            gap: 20px; 
-            align-items: center;
+        /* Barra de Busca */
+        .search-bar {
             flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 44px 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+        }
+        .search-bar button {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: var(--cobalt-main);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            transition: var(--transition);
         }
-        .nav-desktop a { 
-            font-size: 0.75rem; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em; 
-            color: var(--text-dark);
-            white-space: nowrap;
+        .search-bar button:hover {
+            background: var(--cobalt-deep);
         }
-        .nav-desktop a:hover { color: var(--cobalt-main); }
-        .nav-desktop a.promo-link { color: var(--danger); }
+        .search-bar button svg {
+            width: 16px;
+            height: 16px;
+        }
 
+        /* Ações do Header */
         .header-actions { 
             display: flex; 
             align-items: center; 
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
         }
         
         .auth-buttons { display: flex; gap: 6px; }
         .auth-btn {
-            padding: 6px 12px;
-            font-size: 0.7rem;
+            padding: 8px 14px;
+            font-size: 0.75rem;
             font-weight: 700;
             border-radius: 6px;
             transition: var(--transition);
@@ -192,16 +218,12 @@
             background: var(--danger);
             color: white;
         }
-        .auth-btn-logout:hover {
-            background: #dc2626;
-        }
+        .auth-btn-logout:hover { background: #dc2626; }
         .auth-btn-account {
             background: var(--success);
             color: white;
         }
-        .auth-btn-account:hover {
-            background: #059669;
-        }
+        .auth-btn-account:hover { background: #059669; }
         
         .cart-btn { 
             position: relative; 
@@ -211,7 +233,7 @@
             align-items: center; 
             gap: 6px; 
             color: var(--text-dark);
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             background: var(--bg-light);
             transition: var(--transition);
@@ -232,6 +254,159 @@
             justify-content: center;
         }
 
+        /* MENU DE CATEGORIAS (Barra separada) */
+        .categories-bar {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+        }
+        .categories-bar-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            position: relative;
+        }
+        
+        /* Dropdown "Todas as Categorias" */
+        .categories-dropdown {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .categories-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--cobalt-deep);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .categories-dropdown-btn:hover {
+            background: var(--cobalt-main);
+        }
+        .categories-dropdown-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+        .categories-dropdown.active .categories-dropdown-btn svg {
+            transform: rotate(180deg);
+        }
+        
+        .categories-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 240px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        .categories-dropdown.active .categories-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .categories-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .categories-dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+        .categories-dropdown-menu a:hover {
+            background: var(--bg-light);
+            color: var(--cobalt-main);
+            padding-left: 20px;
+        }
+
+        /* Links de Categorias (scroll horizontal) */
+        .categories-scroll {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 8px;
+        }
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .categories-scroll a {
+            display: inline-block;
+            padding: 12px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+        .categories-scroll a:hover {
+            color: var(--cobalt-main);
+            border-bottom-color: var(--cobalt-main);
+        }
+        .categories-scroll a.promo-link {
+            color: var(--danger);
+        }
+        .categories-scroll a.promo-link:hover {
+            border-bottom-color: var(--danger);
+        }
+
+        /* Indicadores de scroll (flechas) */
+        .scroll-indicator {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .scroll-indicator:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        .scroll-indicator.left {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg-light) 0%, transparent 100%);
+        }
+        .scroll-indicator.right {
+            right: 0;
+            background: linear-gradient(270deg, var(--bg-light) 0%, transparent 100%);
+        }
+        .categories-scroll-container {
+            position: relative;
+            flex: 1;
+        }
+        .categories-scroll-container:hover .scroll-indicator {
+            opacity: 1;
+        }
+
         /* Menu Mobile */
         .menu-toggle {
             display: none;
@@ -241,7 +416,7 @@
             cursor: pointer;
         }
         .menu-toggle span {
-            width: 24px;
+            width: 22px;
             height: 2px;
             background: var(--text-dark);
             transition: var(--transition);
@@ -259,37 +434,75 @@
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 65px;
-            left: 0;
-            width: 100%;
+            top: 0;
+            left: -100%;
+            width: 280px;
+            height: 100vh;
             background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            z-index: 999;
-            padding: 20px;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: left 0.3s ease;
+            overflow-y: auto;
         }
         .mobile-menu.active {
-            display: block;
+            left: 0;
+        }
+        .mobile-menu-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+        }
+        .mobile-menu-header h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+        .mobile-menu-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
         .mobile-menu a {
             display: block;
-            padding: 12px 0;
+            padding: 14px 20px;
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-dark);
             border-bottom: 1px solid var(--border);
         }
-        .mobile-menu a:last-child {
-            border-bottom: none;
-        }
         .mobile-menu a:hover {
+            background: var(--bg-light);
             color: var(--cobalt-main);
         }
         .mobile-menu .auth-buttons {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 2px solid var(--border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .mobile-menu .auth-btn {
+            width: 100%;
+            text-align: center;
+        }
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+        }
+        .mobile-menu-overlay.active {
+            display: block;
         }
 
+        /* HERO */
         .hero {
             padding: 60px 0;
             background: linear-gradient(135deg, var(--cobalt-deep) 0%, var(--cobalt-main) 50%, var(--cobalt-bright) 100%);
@@ -995,8 +1208,10 @@
             display: block;
         }
 
+        /* RESPONSIVIDADE */
         @media (max-width: 1024px) {
-            .nav-desktop { display: none; }
+            .search-bar { display: none; }
+            .categories-bar { display: none; }
             .menu-toggle { display: flex; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .benefits { grid-template-columns: repeat(2, 1fr); }
@@ -1037,40 +1252,90 @@
     <div class="urgency-bar" id="urgency-bar"></div>
 
     <header>
-        <div class="container header-inner">
-            <a href="index.html" class="logo" id="logo-text">
-                <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE">
-                <div class="logo-text">S<span>7</span>TE</div>
-            </a>
-            
-            <nav class="nav-desktop" id="nav-categorias">
-                <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
-                <a href="contato.html">Contato</a>
-            </nav>
-
-            <div class="header-actions">
-                <div class="auth-buttons" id="auth-buttons">
-                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar</button>
-                    <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+        <!-- HEADER PRINCIPAL -->
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo" id="logo-text">
+                    <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE">
+                    <div class="logo-text">S<span>7</span>TE</div>
+                </a>
+                
+                <!-- Barra de Busca -->
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar produtos..." id="search-input">
+                    <button onclick="buscarProdutos()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </button>
                 </div>
-                <button class="cart-btn" onclick="toggleCart()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                    </svg>
-                    <span id="cart-count" class="cart-count">0</span>
-                </button>
-                <div class="menu-toggle" id="menu-toggle" onclick="toggleMobileMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+
+                <div class="header-actions">
+                    <div class="auth-buttons" id="auth-buttons">
+                        <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar</button>
+                        <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                    </div>
+                    <button class="cart-btn" onclick="toggleCart()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </button>
+                    <div class="menu-toggle" id="menu-toggle" onclick="toggleMobileMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BARRA DE CATEGORIAS -->
+        <div class="categories-bar">
+            <div class="container categories-bar-inner">
+                <!-- Dropdown "Todas as Categorias" -->
+                <div class="categories-dropdown" id="categories-dropdown">
+                    <button class="categories-dropdown-btn" onclick="toggleCategoriesDropdown()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <line x1="3" y1="18" x2="21" y2="18"/>
+                        </svg>
+                        Categorias
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="categories-dropdown-menu" id="categories-dropdown-menu"></div>
+                </div>
+
+                <!-- Links de Categorias (scroll horizontal) -->
+                <div class="categories-scroll-container">
+                    <div class="categories-scroll" id="categories-scroll"></div>
+                    <div class="scroll-indicator left" onclick="scrollCategories(-200)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </div>
+                    <div class="scroll-indicator right" onclick="scrollCategories(200)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Menu Mobile -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+            <h3>Menu</h3>
+        </div>
         <div id="mobile-menu-categorias"></div>
         <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
         <a href="contato.html">Contato</a>
@@ -1214,7 +1479,6 @@
             <div class="auth-form-container">
                 <div id="auth-message" class="auth-message"></div>
                 
-                <!-- Formulário de Login -->
                 <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
                     <div class="form-group">
                         <label for="login-email">E-mail</label>
@@ -1227,7 +1491,6 @@
                     <button type="submit" class="btn-auth" id="login-btn">Entrar</button>
                 </form>
                 
-                <!-- Formulário de Cadastro -->
                 <form id="signup-form" class="auth-form" onsubmit="handleSignup(event)">
                     <div class="form-group">
                         <label for="signup-name">Nome Completo</label>
@@ -1250,9 +1513,6 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ============================================
-        // CONFIGURAÇÃO SUPABASE
-        // ============================================
         const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
         
@@ -1263,9 +1523,6 @@
         let categoriasCache = [];
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
 
-        // ============================================
-        // HELPERS COM SANITIZAÇÃO
-        // ============================================
         function formatarPreco(valor) {
             const num = parseFloat(valor || 0);
             return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
@@ -1305,19 +1562,47 @@
             return c ? c.nome : slug || '-';
         }
 
-        // ============================================
         // MENU MOBILE
-        // ============================================
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            const toggle = document.getElementById('menu-toggle');
+            const overlay = document.getElementById('mobile-menu-overlay');
             menu.classList.toggle('active');
-            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
         }
 
-        // ============================================
+        // DROPDOWN CATEGORIAS
+        function toggleCategoriesDropdown() {
+            const dropdown = document.getElementById('categories-dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('categories-dropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // SCROLL HORIZONTAL
+        function scrollCategories(amount) {
+            const scroll = document.getElementById('categories-scroll');
+            scroll.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+
+        // BUSCA
+        function buscarProdutos() {
+            const termo = document.getElementById('search-input').value.trim();
+            if (termo) {
+                window.location.href = `produtos.html?busca=${encodeURIComponent(termo)}`;
+            }
+        }
+
+        document.getElementById('search-input')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') buscarProdutos();
+        });
+
         // AUTENTICAÇÃO
-        // ============================================
         function showAuthMessage(msg, type) {
             const messageEl = document.getElementById('auth-message');
             messageEl.textContent = msg;
@@ -1458,7 +1743,6 @@
             const { data: { session } } = await supabaseClient.auth.getSession();
             
             if (session) {
-                const userName = session.user.user_metadata?.full_name || session.user.email;
                 const buttonsHTML = `
                     <button class="auth-btn auth-btn-account" onclick="window.location.href='conta.html'">Minha Conta</button>
                     <button class="auth-btn auth-btn-logout" onclick="handleLogout()">Sair</button>
@@ -1478,9 +1762,7 @@
             }
         }
 
-        // ============================================
-        // CARREGAMENTO PARALELO (Promise.all)
-        // ============================================
+        // CARREGAMENTO
         async function carregarConfigSite() {
             const padroes = {
                 urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500 | ⚡ Entrega Expressa em 24h para SP',
@@ -1561,23 +1843,31 @@
                 if (error || !data) return;
                 categoriasCache = data;
 
-                const nav = document.getElementById('nav-categorias');
-                const mobileNav = document.getElementById('mobile-menu-categorias');
-                
-                if (nav) {
-                    const navLinks = data.map(c => 
+                // Dropdown de categorias
+                const dropdownMenu = document.getElementById('categories-dropdown-menu');
+                if (dropdownMenu) {
+                    dropdownMenu.innerHTML = data.map(c => 
                         `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
                     ).join('');
-                    nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
-                }
-                
-                if (mobileNav) {
-                    const mobileLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
-                    ).join('');
-                    mobileNav.innerHTML = mobileLinks;
                 }
 
+                // Scroll de categorias
+                const scrollNav = document.getElementById('categories-scroll');
+                if (scrollNav) {
+                    scrollNav.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('') + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
+                }
+
+                // Mobile menu
+                const mobileNav = document.getElementById('mobile-menu-categorias');
+                if (mobileNav) {
+                    mobileNav.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                }
+
+                // Footer
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
@@ -1589,9 +1879,6 @@
             }
         }
 
-        // ============================================
-        // PRODUTOS (com limite de 8 + link "ver mais")
-        // ============================================
         async function carregarProdutos() {
             const grid = document.getElementById('products-grid');
             if (!grid) return;
@@ -1662,9 +1949,6 @@
             grid.innerHTML = produtos.map(renderProductCard).join('');
         }
 
-        // ============================================
-        // BANNER (condicional: só se houver produto com badge sale)
-        // ============================================
         async function carregarBanner() {
             const bannerEl = document.getElementById('dynamic-banner');
             const bannerImg = document.getElementById('dynamic-banner-img');
@@ -1692,9 +1976,6 @@
             }
         }
 
-        // ============================================
-        // NEWSLETTER (salva no Supabase)
-        // ============================================
         async function salvarNewsletter(event) {
             event.preventDefault();
             
@@ -1736,9 +2017,6 @@
             }
         }
 
-        // ============================================
-        // CARRINHO
-        // ============================================
         function addToCart(id) {
             const product = produtosCache.find(p => p.id === id);
             if (!product) {
@@ -1855,38 +2133,27 @@
                 return;
             }
             
-            // Verifica se o usuário está logado
             const { data: { session } } = await supabaseClient.auth.getSession();
             
             if (!session) {
-                // Usuário não está logado, abre o modal de autenticação
-                toggleCart(); // Fecha o carrinho
+                toggleCart();
                 openAuthModal();
             } else {
-                // Usuário já está logado, vai direto para o checkout
                 toggleCart();
                 window.location.href = 'checkout.html';
             }
         }
 
-        // ============================================
-        // INICIALIZAÇÃO PARALELA
-        // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Carrega tudo em paralelo (3x mais rápido)
                 await Promise.all([
                     carregarConfigSite(),
                     carregarCategorias(),
                     carregarProdutos()
                 ]);
                 
-                // Depende dos produtos carregados
                 await carregarBanner();
-                
-                // Atualiza os botões de autenticação baseado no status do usuário
                 await updateAuthButtons();
-                
                 updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);

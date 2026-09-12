@@ -147,7 +147,7 @@
     <div class="urgency-bar" id="urgency-bar"></div>
     <header>
         <div class="container header-inner">
-            <a href="index.html" class="logo" id="logo-text">S<span>7</span>TE</a>
+            <a href="index.html" class="logo"><img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;"></a>
             <div class="header-right">
                 <div class="user-badge" id="user-badge" style="display: none;">👤 <span id="user-name">Cliente</span></div>
                 <div class="secure-header">🔒 <span>Checkout Seguro</span></div>
@@ -577,12 +577,11 @@
 
             return {
                 token: cardToken.id,
-                bandeira: cardToken.payment_method_id,  // ⭐ ESTA É A BANDEIRA REAL (visa, master, elo...)
+                bandeira: cardToken.payment_method_id,
                 ultimo4: cardToken.last_four_digits
             };
         }
 
-        // ⭐ FUNÇÃO CORRIGIDA - Captura e envia a bandeira
         async function finalizarPedido() {
             if (!validarFormulario()) return;
             const btn = document.getElementById('btn-finalize');
@@ -623,13 +622,13 @@
 
             try {
                 let cartaoToken = null;
-                let cartaoBandeira = null;  // ⭐ NOVA VARIÁVEL
+                let cartaoBandeira = null;
 
                 if (metodoPagamento === 'credit_card') {
                     btn.innerHTML = '💳 Processando cartão...';
                     const info = await tokenizarCartao();
                     cartaoToken = info.token;
-                    cartaoBandeira = info.bandeira;  // ⭐ CAPTURA A BANDEIRA REAL (visa, master, elo)
+                    cartaoBandeira = info.bandeira;
                     console.log('✅ Cartão tokenizado. Bandeira:', cartaoBandeira);
                 }
 
@@ -647,7 +646,7 @@
                         metodo: metodoPagamento,
                         parcelas: parcelas,
                         cartao_token: cartaoToken,
-                        cartao_bandeira: cartaoBandeira  // ⭐ ENVIA A BANDEIRA PARA A EDGE FUNCTION
+                        cartao_bandeira: cartaoBandeira
                     };
                     console.log('🚀 ENVIANDO PARA EDGE FUNCTION:', payload);
 
@@ -729,4 +728,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

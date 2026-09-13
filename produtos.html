@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos | E07 IMPORTS</title>
-    <meta name="description" content="Catálogo completo de produtos para odontologia digital. Filtre por categoria, preço e ordenação.">
+    <title>Produtos Odontológicos | S7TE</title>
+    <meta name="description" content="Zircônia premium, fresas, discos CAD/CAM e insumos profissionais para odontologia digital. Entrega rápida e garantia.">
     
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Produtos | S7TE">
-    <meta property="og:description" content="Catálogo completo de produtos para odontologia digital.">
-    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos.html">
+    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos-odontologicos.html">
+    <meta property="og:title" content="Produtos Odontológicos | S7TE">
+    <meta property="og:description" content="Zircônia premium, fresas, discos CAD/CAM e insumos profissionais para odontologia digital.">
+    <meta property="og:image" content="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png">
     
-    <!-- Favicon -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos-odontologicos.html">
+    <meta property="twitter:title" content="Produtos Odontológicos | S7TE">
+    <meta property="twitter:description" content="Zircônia premium, fresas, discos CAD/CAM e insumos profissionais.">
+    <meta property="twitter:image" content="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png">
+    
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,8 +64,8 @@
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
             text-align: center;
-            padding: 12px 0;
-            font-size: 0.85rem;
+            padding: 8px 0;
+            font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 0.03em;
         }
@@ -70,66 +75,404 @@
             position: sticky;
             top: 0;
             background: white;
-            border-bottom: 1px solid var(--border);
             z-index: 1000;
-            padding: 16px 0;
             box-shadow: var(--shadow);
         }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        
+        .header-main {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-main-inner { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 20px;
+        }
         
         .logo { 
-            font-size: 1.8rem; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        .logo-text {
+            font-size: 1.3rem; 
             font-weight: 900; 
             letter-spacing: -0.02em; 
             color: var(--cobalt-deep);
         }
-        .logo span { 
+        .logo-text span { 
             background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .nav-desktop { display: flex; gap: 28px; }
-        .nav-desktop a { 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em; 
-            color: var(--text-dark);
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
         }
-        .nav-desktop a:hover { color: var(--cobalt-main); }
-        .nav-desktop a.promo-link { color: var(--danger); }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 44px 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+        }
+        .search-bar button {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: var(--cobalt-main);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .search-bar button:hover {
+            background: var(--cobalt-deep);
+        }
+        .search-bar button svg {
+            width: 16px;
+            height: 16px;
+        }
 
-        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .header-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        
+        .auth-buttons { display: flex; gap: 6px; }
+        .auth-btn {
+            padding: 8px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .auth-btn-login {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+        .auth-btn-login:hover {
+            background: var(--cobalt-main);
+            color: white;
+            border-color: var(--cobalt-main);
+        }
+        .auth-btn-signup {
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+        }
+        .auth-btn-signup:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26, 79, 184, 0.4);
+        }
+        .auth-btn-logout {
+            background: var(--danger);
+            color: white;
+        }
+        .auth-btn-logout:hover { background: #dc2626; }
+        .auth-btn-account {
+            background: var(--success);
+            color: white;
+        }
+        .auth-btn-account:hover { background: #059669; }
         
         .cart-btn { 
             position: relative; 
-            font-size: 0.9rem; 
+            font-size: 0.75rem; 
             font-weight: 700; 
             display: flex; 
             align-items: center; 
-            gap: 8px; 
+            gap: 6px; 
             color: var(--text-dark);
-            padding: 8px 16px;
-            border-radius: var(--radius);
+            padding: 8px 14px;
+            border-radius: 6px;
             background: var(--bg-light);
             transition: var(--transition);
         }
         .cart-btn:hover { background: var(--cobalt-main); color: white; }
-        .cart-btn svg { width: 20px; height: 20px; }
+        .cart-btn svg { width: 18px; height: 18px; }
         
         .cart-count { 
             background: var(--gold); 
             color: var(--cobalt-deep); 
-            font-size: 0.75rem; 
+            font-size: 0.65rem; 
             font-weight: 800;
-            min-width: 22px; 
-            height: 22px; 
+            min-width: 18px; 
+            height: 18px; 
             border-radius: 50%; 
             display: flex; 
             align-items: center; 
             justify-content: center;
+        }
+
+        .categories-bar {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+        }
+        .categories-bar-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            position: relative;
+        }
+        
+        .categories-dropdown {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .categories-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--cobalt-deep);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .categories-dropdown-btn:hover {
+            background: var(--cobalt-main);
+        }
+        .categories-dropdown-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+        .categories-dropdown.active .categories-dropdown-btn svg {
+            transform: rotate(180deg);
+        }
+        
+        .categories-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 240px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        .categories-dropdown.active .categories-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .categories-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .categories-dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+        .categories-dropdown-menu a:hover {
+            background: var(--bg-light);
+            color: var(--cobalt-main);
+            padding-left: 20px;
+        }
+
+        .categories-scroll {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 8px;
+        }
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .categories-scroll a {
+            display: inline-block;
+            padding: 12px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+        .categories-scroll a:hover {
+            color: var(--cobalt-main);
+            border-bottom-color: var(--cobalt-main);
+        }
+        .categories-scroll a.promo-link {
+            color: var(--danger);
+        }
+        .categories-scroll a.promo-link:hover {
+            border-bottom-color: var(--danger);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .scroll-indicator:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        .scroll-indicator.left {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg-light) 0%, transparent 100%);
+        }
+        .scroll-indicator.right {
+            right: 0;
+            background: linear-gradient(270deg, var(--bg-light) 0%, transparent 100%);
+        }
+        .categories-scroll-container {
+            position: relative;
+            flex: 1;
+        }
+        .categories-scroll-container:hover .scroll-indicator {
+            opacity: 1;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            width: 22px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: var(--transition);
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+        .mobile-menu.active {
+            left: 0;
+        }
+        .mobile-menu-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+        }
+        .mobile-menu-header h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+        .mobile-menu-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .mobile-menu a {
+            display: block;
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+        }
+        .mobile-menu a:hover {
+            background: var(--bg-light);
+            color: var(--cobalt-main);
+        }
+        .mobile-menu .auth-buttons {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .mobile-menu .auth-btn {
+            width: 100%;
+            text-align: center;
+        }
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+        }
+        .mobile-menu-overlay.active {
+            display: block;
         }
 
         .page-header { 
@@ -154,7 +497,6 @@
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { margin: 0 8px; }
 
-        /* Barra de busca e filtros */
         .filters-bar {
             display: flex;
             gap: 12px;
@@ -245,7 +587,6 @@
         }
         .btn-clear:hover { border-color: var(--danger); color: var(--danger); }
 
-        /* Filtros de categoria */
         .category-filters {
             display: flex;
             gap: 12px;
@@ -295,6 +636,7 @@
         }
 
         .products-section { padding: 40px 0 80px; }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -444,7 +786,6 @@
             transform: none;
         }
 
-        /* Paginação */
         .pagination {
             display: flex;
             justify-content: center;
@@ -487,7 +828,6 @@
             margin: 0 12px;
         }
 
-        /* Estado vazio */
         .empty-state {
             text-align: center;
             padding: 80px 20px;
@@ -515,28 +855,56 @@
             font-weight: 700;
         }
 
-        /* Loading */
-        .loading-spinner {
-            display: flex;
-            justify-content: center;
-            padding: 60px 0;
-            grid-column: 1 / -1;
+        .newsletter { 
+            padding: 60px 0; 
+            text-align: center; 
+            background: var(--bg-light);
         }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border);
-            border-top-color: var(--cobalt-main);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        .newsletter h3 { 
+            font-size: 2rem; 
+            font-weight: 800; 
+            margin-bottom: 8px;
+            color: var(--cobalt-deep);
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .newsletter p { 
+            color: var(--text-gray); 
+            margin-bottom: 24px; 
+            font-size: 1.1rem;
+        }
+        .newsletter-form { 
+            display: flex; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            gap: 0;
+        }
+        .newsletter-form input {
+            flex: 1; 
+            padding: 14px; 
+            border: 2px solid var(--border);
+            border-right: none;
+            font-family: inherit; 
+            font-size: 0.9rem; 
+            border-radius: var(--radius) 0 0 var(--radius);
+        }
+        .newsletter-form input:focus { outline: none; border-color: var(--cobalt-main); }
+        .newsletter-form button {
+            padding: 14px 28px; 
+            background: var(--cobalt-main); 
+            color: white;
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.85rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            transition: var(--transition);
+        }
+        .newsletter-form button:hover { background: var(--cobalt-deep); }
+        .newsletter-form button:disabled { background: var(--text-gray); cursor: not-allowed; }
 
         footer { 
             background: var(--cobalt-deep); 
             color: white; 
             padding: 60px 0 30px; 
-            margin-top: 40px;
+            margin-top: 0;
         }
         .footer-grid { 
             display: grid; 
@@ -556,7 +924,8 @@
             font-size: 0.9rem; 
             color: #cbd5e1; 
             line-height: 2; 
-            display: block;
+            display: block; 
+            cursor: pointer;
         }
         .footer-col a:hover { color: var(--gold); }
         
@@ -637,6 +1006,7 @@
             color: var(--danger); 
             font-size: 0.8rem; 
             text-decoration: underline; 
+            cursor: pointer;
             font-weight: 600;
         }
         
@@ -707,13 +1077,195 @@
         .toast.show { opacity: 1; transform: translateX(0); }
         .toast.error { background: var(--danger); box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4); }
 
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            padding: 60px 0;
+            grid-column: 1 / -1;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--cobalt-main);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .auth-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 42, 110, 0.7);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .auth-modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 440px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .auth-modal-overlay.active .auth-modal {
+            transform: scale(1);
+        }
+        .auth-modal-header {
+            padding: 24px;
+            background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
+            color: white;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+        .auth-modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .auth-modal-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .auth-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .auth-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border);
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .auth-tab.active {
+            color: var(--cobalt-main);
+            border-bottom-color: var(--cobalt-main);
+        }
+        .auth-form-container {
+            padding: 24px;
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--cobalt-main);
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--cobalt-main), var(--cobalt-bright));
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 79, 184, 0.4);
+        }
+        .btn-auth:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .auth-message {
+            padding: 12px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .auth-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            display: block;
+        }
+        .auth-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            display: block;
+        }
+
         @media (max-width: 1024px) {
-            .nav-desktop { display: none; }
+            .search-bar { display: none; }
+            .categories-bar { display: none; }
+            .menu-toggle { display: flex; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .auth-buttons { display: none; }
         }
         @media (max-width: 768px) {
             .page-header { padding: 40px 0; }
             .page-header h1 { font-size: 1.8rem; }
+            .page-header p { font-size: 0.95rem; }
             
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
             .product-info { padding: 14px; }
@@ -725,10 +1277,16 @@
             .filters-bar { flex-direction: column; align-items: stretch; }
             .price-filters { justify-content: space-between; }
 
+            .newsletter h3 { font-size: 1.4rem; }
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; text-align: center; }
             #cart-sidebar { width: 100%; }
-            .logo { font-size: 1.4rem; }
+            .newsletter-form { flex-direction: column; gap: 12px; }
+            .newsletter-form input { border-right: 2px solid var(--border); border-radius: var(--radius); }
+            .newsletter-form button { border-radius: var(--radius); }
+            
+            .logo img { height: 36px; }
+            .logo-text { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -737,32 +1295,98 @@
     <div class="urgency-bar" id="urgency-bar"></div>
 
     <header>
-        <div class="container header-inner">
-            <a href="index.html" class="logo"><img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;"></a>
-            
-            <nav class="nav-desktop" id="nav-categorias">
-                <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
-                <a href="contato.html">Contato</a>
-            </nav>
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo" id="logo-text">
+                    <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE">
+                    <div class="logo-text">S<span>7</span>TE</div>
+                </a>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar produtos odontológicos..." id="search-input">
+                    <button onclick="buscarProdutos()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </button>
+                </div>
 
-            <div class="header-actions">
-                <button class="cart-btn" onclick="toggleCart()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                    </svg>
-                    Carrinho
-                    <span id="cart-count" class="cart-count">0</span>
-                </button>
+                <div class="header-actions">
+                    <div class="auth-buttons" id="auth-buttons">
+                        <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar</button>
+                        <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                    </div>
+                    <button class="cart-btn" onclick="toggleCart()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </button>
+                    <div class="menu-toggle" id="menu-toggle" onclick="toggleMobileMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="categories-bar">
+            <div class="container categories-bar-inner">
+                <div class="categories-dropdown" id="categories-dropdown">
+                    <button class="categories-dropdown-btn" onclick="toggleCategoriesDropdown()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <line x1="3" y1="18" x2="21" y2="18"/>
+                        </svg>
+                        Categorias
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="categories-dropdown-menu" id="categories-dropdown-menu"></div>
+                </div>
+
+                <div class="categories-scroll-container">
+                    <div class="categories-scroll" id="categories-scroll"></div>
+                    <div class="scroll-indicator left" onclick="scrollCategories(-200)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </div>
+                    <div class="scroll-indicator right" onclick="scrollCategories(200)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
+            <h3>Menu</h3>
+        </div>
+        <div id="mobile-menu-categorias"></div>
+        <a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a>
+        <a href="contato.html">Contato</a>
+        <div class="auth-buttons" id="mobile-auth-buttons">
+            <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
+            <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+        </div>
+    </div>
+
     <main>
         <div class="page-header">
             <div class="container">
-                <h1 id="page-title">Todos os Produtos</h1>
-                <p id="page-subtitle">Encontre os melhores produtos para o seu laboratório</p>
+                <h1 id="page-title">Produtos Odontológicos</h1>
+                <p id="page-subtitle">Zircônia, fresas, discos e acabamento premium</p>
             </div>
         </div>
 
@@ -770,16 +1394,15 @@
             <div class="breadcrumb">
                 <a href="index.html">Home</a>
                 <span>/</span>
-                <strong id="breadcrumb-current">Produtos</strong>
+                <strong id="breadcrumb-current">Produtos Odontológicos</strong>
             </div>
         </div>
 
         <section class="products-section">
             <div class="container">
-                <!-- Barra de busca e filtros -->
                 <div class="filters-bar">
                     <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Buscar produtos..." onkeyup="if(event.key==='Enter') aplicarFiltros()">
+                        <input type="text" id="filter-search" placeholder="Buscar em odontológicos..." onkeyup="if(event.key==='Enter') aplicarFiltros()">
                         <span class="search-icon">🔍</span>
                     </div>
                     
@@ -800,9 +1423,8 @@
                     <button class="btn-clear" onclick="limparFiltros()">Limpar</button>
                 </div>
 
-                <!-- Filtros de categoria -->
                 <div class="category-filters" id="category-filters">
-                    <button class="filter-btn active" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>
+                    <button class="filter-btn active" data-cat="odontologia" onclick="filtrarCategoria('odontologia', this)">🦷 Todos os Odontológicos</button>
                 </div>
 
                 <div class="results-info">
@@ -815,8 +1437,18 @@
                     <div class="loading-spinner"><div class="spinner"></div></div>
                 </div>
 
-                <!-- Paginação -->
                 <div id="pagination" class="pagination" style="display: none;"></div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <div class="container">
+                <h3 id="newsletter-titulo">Ganhe 10% OFF na Primeira Compra</h3>
+                <p id="newsletter-subtitulo">Cadastre-se e receba cupons exclusivos e novidades</p>
+                <form class="newsletter-form" id="newsletter-form" onsubmit="salvarNewsletter(event)">
+                    <input type="email" id="newsletter-email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" id="newsletter-botao">Quero Meu Cupom</button>
+                </form>
             </div>
         </section>
     </main>
@@ -825,8 +1457,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4 id="footer-nome-loja">E07 IMOPORTS</h4>
-                    <p id="footer-sobre">Tecnologia de ponta para odontologia digital.</p>
+                    <h4 id="footer-nome-loja">S7TE</h4>
+                    <p id="footer-sobre">Tecnologia de ponta para odontologia digital. Insumos profissionais com entrega rápida e preços imbatíveis.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Categorias</h4>
@@ -848,6 +1480,7 @@
             </div>
             <div class="footer-bottom">
                 <p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p>
+                <p><a href="admin.html" style="opacity:0.5; font-size:0.7rem;">Área Admin</a></p>
             </div>
         </div>
     </footer>
@@ -868,25 +1501,70 @@
         </div>
     </aside>
 
+    <div class="auth-modal-overlay" id="auth-modal-overlay">
+        <div class="auth-modal">
+            <div class="auth-modal-header">
+                <button class="auth-modal-close" onclick="closeAuthModal()">×</button>
+                <h3 id="auth-modal-title">Acessar Conta</h3>
+                <p id="auth-modal-subtitle">Faça login para continuar</p>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Entrar</div>
+                <div class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Criar Conta</div>
+            </div>
+            <div class="auth-form-container">
+                <div id="auth-message" class="auth-message"></div>
+                
+                <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" placeholder="Sua senha" required>
+                    </div>
+                    <button type="submit" class="btn-auth" id="login-btn">Entrar</button>
+                </form>
+                
+                <form id="signup-form" class="auth-form" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signup-name">Nome Completo</label>
+                        <input type="text" id="signup-name" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">E-mail</label>
+                        <input type="email" id="signup-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Senha</label>
+                        <input type="password" id="signup-password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn-auth" id="signup-btn">Criar Conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
-        // ============================================
-        // CONFIGURAÇÃO SUPABASE
-        // ============================================
         const SUPABASE_URL = 'https://ksqutwabqqkkthpqdpqo.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
         
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // ⚠️ CONFIGURAÇÃO ESPECÍFICA DESTA PÁGINA
+        // Slug fixo da categoria odontológica no Supabase
+        const CATEGORIA_FIXA = 'odontologia';
+
         let produtosCache = [];
         let configSite = {};
         let categoriasCache = [];
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
-        
-        // Estado dos filtros
+
         let filtros = {
-            categoria: 'todos',
+            categoria: CATEGORIA_FIXA,
             busca: '',
             ordenacao: 'recentes',
             precoMin: null,
@@ -896,9 +1574,6 @@
         };
         let totalProdutos = 0;
 
-        // ============================================
-        // HELPERS COM SANITIZAÇÃO
-        // ============================================
         function formatarPreco(valor) {
             const num = parseFloat(valor || 0);
             return Number.isFinite(num) ? num.toFixed(2).replace('.', ',') : '0,00';
@@ -938,92 +1613,145 @@
             return c ? c.nome : slug || '-';
         }
 
-        // ============================================
-        // CARREGAMENTO PARALELO
-        // ============================================
-        async function carregarConfigSite() {
-            const padroes = {
-                urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500 | ⚡ Entrega Expressa em 24h para SP',
-                logo_texto: 'S7TE',
-                footer_sobre: 'Tecnologia de ponta para odontologia digital.',
-                footer_endereco: 'Av. Paulista, 1500<br>São Paulo, SP',
-                footer_email: 'contato@s7te.com.br',
-                footer_telefone: '0800 123 4567',
-                footer_copyright: '© 2026 S7TE Tecnologia em Odontologia.',
-                frete_gratis_acima: '500',
-                valor_frete: '35.90',
-                desconto_pix_percent: '5'
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function toggleCategoriesDropdown() {
+            const dropdown = document.getElementById('categories-dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('categories-dropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function scrollCategories(amount) {
+            const scroll = document.getElementById('categories-scroll');
+            scroll.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+
+        // Busca do header → aplica filtro na página (mantendo categoria odontológica)
+        function buscarProdutos() {
+            const termo = document.getElementById('search-input').value.trim();
+            document.getElementById('filter-search').value = termo;
+            aplicarFiltros();
+        }
+
+        document.getElementById('search-input')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') buscarProdutos();
+        });
+
+        // ============ FILTROS (sempre dentro da categoria odontológica) ============
+        function aplicarFiltros() {
+            filtros.busca = document.getElementById('filter-search').value.trim();
+            filtros.ordenacao = document.getElementById('sort-select').value;
+            
+            const minVal = parseFloat(document.getElementById('price-min').value);
+            const maxVal = parseFloat(document.getElementById('price-max').value);
+            filtros.precoMin = isNaN(minVal) ? null : minVal;
+            filtros.precoMax = isNaN(maxVal) ? null : maxVal;
+            
+            filtros.pagina = 1;
+            carregarProdutos();
+        }
+
+        function limparFiltros() {
+            filtros = {
+                categoria: CATEGORIA_FIXA, // mantém na categoria odontológica
+                busca: '',
+                ordenacao: 'recentes',
+                precoMin: null,
+                precoMax: null,
+                pagina: 1,
+                porPagina: 12
             };
-
-            try {
-                const { data, error } = await supabaseClient.from('configuracoes').select('*');
-                if (data && data.length > 0) {
-                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
-                }
-            } catch (e) {
-                console.warn('Usando valores padrão:', e);
-            }
-
-            configSite = padroes;
-            aplicarConfigSite();
+            
+            document.getElementById('filter-search').value = '';
+            document.getElementById('search-input').value = '';
+            document.getElementById('sort-select').value = 'recentes';
+            document.getElementById('price-min').value = '';
+            document.getElementById('price-max').value = '';
+            
+            carregarProdutos();
         }
 
-        function aplicarConfigSite() {
-            setHtmlSeguro('urgency-bar', configSite.urgencia_texto);
-            setTextoSeguro('footer-nome-loja', configSite.logo_texto || 'S7TE');
-            setTextoSeguro('footer-sobre', configSite.footer_sobre);
-            setHtmlSeguro('footer-endereco', configSite.footer_endereco);
-            setTextoSeguro('footer-email', configSite.footer_email);
-            setTextoSeguro('footer-telefone', configSite.footer_telefone);
-            setTextoSeguro('footer-copyright', configSite.footer_copyright);
-        }
-
-        async function carregarCategorias() {
-            try {
-                const { data, error } = await supabaseClient.from('categorias').select('*').order('ordem');
-                if (error || !data) return;
-                categoriasCache = data;
-
-                const nav = document.getElementById('nav-categorias');
-                if (nav) {
-                    const navLinks = data.map(c => 
-                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
-                    ).join('');
-                    nav.innerHTML = navLinks + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
-                }
-
-                const footer = document.getElementById('footer-categorias');
-                if (footer) {
-                    footer.innerHTML = data.map(c => 
-                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
-                    ).join('');
-                }
-
-                renderizarFiltrosCategoria();
-            } catch (e) {
-                console.warn('Erro ao carregar categorias:', e);
+        // Filtro de categoria: só permite trocar entre subcategorias odontológicas
+        // ou voltar ao "todos odontológicos" (CATEGORIA_FIXA)
+        function filtrarCategoria(cat, btn) {
+            // Se tentar sair para outra categoria (ex: geral), redireciona
+            if (cat !== CATEGORIA_FIXA && cat !== 'promocoes' && 
+                !categoriasCache.some(c => c.slug === cat && (c.grupo === 'odontologia' || c.parent === 'odontologia'))) {
+                // Permite navegar, mas mantém contexto visual
             }
+            
+            filtros.categoria = cat;
+            filtros.pagina = 1;
+            
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active', 'promo-active');
+            });
+            
+            if (btn) {
+                btn.classList.add(cat === 'promocoes' ? 'promo-active' : 'active');
+            }
+            
+            carregarProdutos();
         }
 
         function renderizarFiltrosCategoria() {
             const container = document.getElementById('category-filters');
             if (!container) return;
 
-            let html = `<button class="filter-btn ${filtros.categoria === 'todos' ? 'active' : ''}" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>`;
+            // Botão principal: todos os odontológicos
+            let html = `<button class="filter-btn ${filtros.categoria === CATEGORIA_FIXA ? 'active' : ''}" data-cat="${CATEGORIA_FIXA}" onclick="filtrarCategoria('${CATEGORIA_FIXA}', this)">🦷 Todos os Odontológicos</button>`;
             
+            // Subcategorias odontológicas (se houver campo 'grupo' ou 'parent')
             categoriasCache.forEach(c => {
-                const isActive = filtros.categoria === c.slug;
-                html += `<button class="filter-btn ${isActive ? 'active' : ''}" data-cat="${escapeHTML(c.slug)}" onclick="filtrarCategoria('${escapeHTML(c.slug)}', this)">${escapeHTML(c.nome)}</button>`;
+                // Mostra apenas subcategorias que pertençam ao grupo odontológico
+                // (ajuste conforme sua estrutura: c.grupo === 'odontologia' ou c.parent === CATEGORIA_FIXA)
+                const isSubcatOdonto = c.grupo === 'odontologia' || c.parent === CATEGORIA_FIXA || c.slug === CATEGORIA_FIXA;
+                if (isSubcatOdonto && c.slug !== CATEGORIA_FIXA) {
+                    const isActive = filtros.categoria === c.slug;
+                    html += `<button class="filter-btn ${isActive ? 'active' : ''}" data-cat="${escapeHTML(c.slug)}" onclick="filtrarCategoria('${escapeHTML(c.slug)}', this)">${escapeHTML(c.nome)}</button>`;
+                }
             });
 
             html += `<button class="filter-btn ${filtros.categoria === 'promocoes' ? 'promo-active' : ''}" data-cat="promocoes" onclick="filtrarCategoria('promocoes', this)">🔥 Promoções</button>`;
+            
+            // Link para voltar ao catálogo geral
+            html += `<a href="produtos.html" style="display:inline-flex; align-items:center; gap:6px; padding:10px 24px; border:2px dashed var(--border); border-radius:50px; font-weight:600; font-size:0.9rem; color:var(--text-gray); margin-left:auto;">← Ver Catálogo Geral</a>`;
 
             container.innerHTML = html;
         }
 
-        // ============================================
-        // PRODUTOS COM PAGINAÇÃO SERVER-SIDE
-        // ============================================
+        function atualizarTitulo() {
+            const titulos = {
+                'odontologia': { titulo: 'Produtos Odontológicos', sub: 'Zircônia, fresas, discos e acabamento premium' },
+                'promocoes': { titulo: '🔥 Promoções Odontológicas', sub: 'Ofertas exclusivas para o seu laboratório' }
+            };
+
+            if (titulos[filtros.categoria]) {
+                setTextoSeguro('page-title', titulos[filtros.categoria].titulo);
+                setTextoSeguro('page-subtitle', titulos[filtros.categoria].sub);
+                setTextoSeguro('breadcrumb-current', titulos[filtros.categoria].titulo);
+            } else {
+                const nomeCat = getCategoriaNome(filtros.categoria);
+                setTextoSeguro('page-title', nomeCat);
+                setTextoSeguro('page-subtitle', `Produtos odontológicos da categoria ${nomeCat.toLowerCase()}`);
+                setTextoSeguro('breadcrumb-current', nomeCat);
+            }
+
+            setTextoSeguro('results-count', totalProdutos.toString());
+        }
+
+        // ============ PRODUTOS (filtrados pela categoria odontológica) ============
         async function carregarProdutos() {
             const grid = document.getElementById('products-grid');
             if (!grid) return;
@@ -1037,19 +1765,21 @@
                 .from('produtos')
                 .select('*', { count: 'exact' });
 
-            // Filtro de categoria
+            // Filtro de categoria (SEMPRE limitado a odontologia, exceto promoções)
             if (filtros.categoria === 'promocoes') {
-                query = query.eq('badge', 'sale');
-            } else if (filtros.categoria !== 'todos') {
+                query = query.eq('badge', 'sale').eq('categoria', CATEGORIA_FIXA);
+            } else if (filtros.categoria === CATEGORIA_FIXA) {
+                // Todos os odontológicos (categoria principal)
+                query = query.eq('categoria', CATEGORIA_FIXA);
+            } else {
+                // Subcategoria específica
                 query = query.eq('categoria', filtros.categoria);
             }
 
-            // Filtro de busca
             if (filtros.busca) {
                 query = query.ilike('nome', `%${filtros.busca}%`);
             }
 
-            // Filtro de preço
             if (filtros.precoMin !== null && filtros.precoMin > 0) {
                 query = query.gte('preco_venda', filtros.precoMin);
             }
@@ -1057,7 +1787,6 @@
                 query = query.lte('preco_venda', filtros.precoMax);
             }
 
-            // Ordenação
             switch (filtros.ordenacao) {
                 case 'preco-asc':
                     query = query.order('preco_venda', { ascending: true });
@@ -1074,7 +1803,6 @@
                     break;
             }
 
-            // Paginação
             query = query.range(from, to);
 
             const { data, error, count } = await query;
@@ -1093,31 +1821,11 @@
             atualizarURL();
         }
 
-        function atualizarTitulo() {
-            const titulos = {
-                'todos': { titulo: 'Todos os Produtos', sub: 'Encontre os melhores produtos para o seu laboratório' },
-                'promocoes': { titulo: '🔥 Promoções Imperdíveis', sub: 'Ofertas exclusivas com até 40% OFF por tempo limitado' }
-            };
-
-            if (titulos[filtros.categoria]) {
-                setTextoSeguro('page-title', titulos[filtros.categoria].titulo);
-                setTextoSeguro('page-subtitle', titulos[filtros.categoria].sub);
-                setTextoSeguro('breadcrumb-current', titulos[filtros.categoria].titulo);
-            } else {
-                const nomeCat = getCategoriaNome(filtros.categoria);
-                setTextoSeguro('page-title', nomeCat);
-                setTextoSeguro('page-subtitle', `Confira nossa seleção de ${nomeCat.toLowerCase()}`);
-                setTextoSeguro('breadcrumb-current', nomeCat);
-            }
-
-            setTextoSeguro('results-count', totalProdutos.toString());
-        }
-
         function atualizarURL() {
             const params = new URLSearchParams();
-            if (filtros.categoria !== 'todos') params.set('cat', filtros.categoria);
+            if (filtros.categoria !== CATEGORIA_FIXA) params.set('cat', filtros.categoria);
             if (filtros.pagina > 1) params.set('page', filtros.pagina);
-            if (filtros.busca) params.set('q', filtros.busca);
+            if (filtros.busca) params.set('busca', filtros.busca);
             if (filtros.ordenacao !== 'recentes') params.set('ord', filtros.ordenacao);
             if (filtros.precoMin) params.set('min', filtros.precoMin);
             if (filtros.precoMax) params.set('max', filtros.precoMax);
@@ -1173,19 +1881,19 @@
             if (!produtos || produtos.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">📦</div>
-                        <h3>Nenhum produto encontrado</h3>
-                        <p>Tente ajustar os filtros ou a busca.</p>
-                        <button class="btn-reset" onclick="limparFiltros()">Limpar Filtros</button>
+                        <div class="icon">🦷</div>
+                        <h3>Nenhum produto odontológico encontrado</h3>
+                        <p>Tente ajustar os filtros ou volte para o catálogo geral.</p>
+                        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                            <button class="btn-reset" onclick="limparFiltros()">Limpar Filtros</button>
+                            <a href="produtos.html" class="btn-reset" style="background: var(--gold); color: var(--cobalt-deep);">Ver Catálogo Geral</a>
+                        </div>
                     </div>`;
                 return;
             }
             grid.innerHTML = produtos.map(renderProductCard).join('');
         }
 
-        // ============================================
-        // PAGINAÇÃO
-        // ============================================
         function renderizarPaginacao() {
             const container = document.getElementById('pagination');
             if (!container) return;
@@ -1200,10 +1908,8 @@
             container.style.display = 'flex';
             let html = '';
 
-            // Botão anterior
             html += `<button class="page-btn" onclick="irParaPagina(${filtros.pagina - 1})" ${filtros.pagina === 1 ? 'disabled' : ''}>← Anterior</button>`;
 
-            // Números de página
             const maxButtons = 5;
             let startPage = Math.max(1, filtros.pagina - Math.floor(maxButtons / 2));
             let endPage = Math.min(totalPages, startPage + maxButtons - 1);
@@ -1226,7 +1932,6 @@
                 html += `<button class="page-btn" onclick="irParaPagina(${totalPages})">${totalPages}</button>`;
             }
 
-            // Botão próxima
             html += `<button class="page-btn" onclick="irParaPagina(${filtros.pagina + 1})" ${filtros.pagina === totalPages ? 'disabled' : ''}>Próxima →</button>`;
 
             container.innerHTML = html;
@@ -1239,64 +1944,345 @@
             filtros.pagina = pagina;
             carregarProdutos();
             
-            // Scroll suave para o topo dos produtos
             document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // ============================================
-        // FILTROS
-        // ============================================
-        function filtrarCategoria(cat, btn) {
-            filtros.categoria = cat;
-            filtros.pagina = 1;
+        function lerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
             
-            document.querySelectorAll('.filter-btn').forEach(b => {
-                b.classList.remove('active', 'promo-active');
-            });
-            
-            if (btn) {
-                btn.classList.add(cat === 'promocoes' ? 'promo-active' : 'active');
+            const cat = urlParams.get('cat');
+            if (cat) {
+                // Permite subcategorias odontológicas + promoções
+                if (cat === 'promocoes' || cat === CATEGORIA_FIXA || 
+                    categoriasCache.some(c => c.slug === cat && (c.grupo === 'odontologia' || c.parent === CATEGORIA_FIXA))) {
+                    filtros.categoria = cat;
+                }
             }
             
-            carregarProdutos();
+            const page = parseInt(urlParams.get('page'));
+            if (page && page > 0) filtros.pagina = page;
+            
+            const q = urlParams.get('busca');
+            if (q) {
+                filtros.busca = q;
+                document.getElementById('filter-search').value = q;
+                document.getElementById('search-input').value = q;
+            }
+            
+            const ord = urlParams.get('ord');
+            if (ord && ['recentes', 'preco-asc', 'preco-desc', 'nome'].includes(ord)) {
+                filtros.ordenacao = ord;
+                document.getElementById('sort-select').value = ord;
+            }
+            
+            const min = parseFloat(urlParams.get('min'));
+            if (!isNaN(min)) {
+                filtros.precoMin = min;
+                document.getElementById('price-min').value = min;
+            }
+            
+            const max = parseFloat(urlParams.get('max'));
+            if (!isNaN(max)) {
+                filtros.precoMax = max;
+                document.getElementById('price-max').value = max;
+            }
         }
 
-        function aplicarFiltros() {
-            filtros.busca = document.getElementById('search-input').value.trim();
-            filtros.ordenacao = document.getElementById('sort-select').value;
-            
-            const minVal = parseFloat(document.getElementById('price-min').value);
-            const maxVal = parseFloat(document.getElementById('price-max').value);
-            filtros.precoMin = isNaN(minVal) ? null : minVal;
-            filtros.precoMax = isNaN(maxVal) ? null : maxVal;
-            
-            filtros.pagina = 1;
-            carregarProdutos();
+        function showAuthMessage(msg, type) {
+            const messageEl = document.getElementById('auth-message');
+            messageEl.textContent = msg;
+            messageEl.className = 'auth-message ' + type;
         }
 
-        function limparFiltros() {
-            filtros = {
-                categoria: 'todos',
-                busca: '',
-                ordenacao: 'recentes',
-                precoMin: null,
-                precoMax: null,
-                pagina: 1,
-                porPagina: 12
+        function clearAuthMessage() {
+            const messageEl = document.getElementById('auth-message');
+            messageEl.className = 'auth-message';
+            messageEl.textContent = '';
+        }
+
+        function switchAuthTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('tab-login').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+                document.getElementById('auth-modal-title').textContent = 'Acessar Conta';
+                document.getElementById('auth-modal-subtitle').textContent = 'Faça login para continuar';
+            } else {
+                document.getElementById('tab-signup').classList.add('active');
+                document.getElementById('signup-form').classList.add('active');
+                document.getElementById('auth-modal-title').textContent = 'Criar Conta';
+                document.getElementById('auth-modal-subtitle').textContent = 'Cadastre-se para continuar';
+            }
+            clearAuthMessage();
+        }
+
+        function openAuthModal(tab = 'login') {
+            document.getElementById('auth-modal-overlay').classList.add('active');
+            clearAuthMessage();
+            switchAuthTab(tab);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal-overlay').classList.remove('active');
+            clearAuthMessage();
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('login-btn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+            
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) {
+                    showAuthMessage('E-mail ou senha incorretos', 'error');
+                } else {
+                    showAuthMessage('Login realizado com sucesso!', 'success');
+                    updateAuthButtons();
+                    setTimeout(() => {
+                        closeAuthModal();
+                        window.location.href = 'checkout.html';
+                    }, 1000);
+                }
+            } catch (e) {
+                showAuthMessage('Erro ao fazer login. Tente novamente.', 'error');
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Entrar';
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const btn = document.getElementById('signup-btn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Criando conta...';
+            
+            try {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name
+                        }
+                    }
+                });
+                
+                if (error) {
+                    if (error.message.includes('already')) {
+                        showAuthMessage('Este e-mail já está cadastrado', 'error');
+                    } else {
+                        showAuthMessage('Erro ao criar conta: ' + error.message, 'error');
+                    }
+                } else {
+                    showAuthMessage('Conta criada com sucesso! Redirecionando...', 'success');
+                    updateAuthButtons();
+                    setTimeout(() => {
+                        closeAuthModal();
+                        window.location.href = 'checkout.html';
+                    }, 1500);
+                }
+            } catch (e) {
+                showAuthMessage('Erro ao criar conta. Tente novamente.', 'error');
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Criar Conta';
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                await supabaseClient.auth.signOut();
+                updateAuthButtons();
+                showToast('Você saiu da sua conta');
+            } catch (e) {
+                console.error('Erro ao fazer logout:', e);
+            }
+        }
+
+        async function updateAuthButtons() {
+            const authButtons = document.getElementById('auth-buttons');
+            const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            if (session) {
+                const buttonsHTML = `
+                    <button class="auth-btn auth-btn-account" onclick="window.location.href='conta.html'">Minha Conta</button>
+                    <button class="auth-btn auth-btn-logout" onclick="handleLogout()">Sair</button>
+                `;
+                authButtons.innerHTML = buttonsHTML;
+                mobileAuthButtons.innerHTML = buttonsHTML;
+            } else {
+                const buttonsHTML = `
+                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar</button>
+                    <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                `;
+                authButtons.innerHTML = buttonsHTML;
+                mobileAuthButtons.innerHTML = `
+                    <button class="auth-btn auth-btn-login" onclick="openAuthModal('login')">Acessar Conta</button>
+                    <button class="auth-btn auth-btn-signup" onclick="openAuthModal('signup')">Criar Conta</button>
+                `;
+            }
+        }
+
+        async function carregarConfigSite() {
+            const padroes = {
+                urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500 | ⚡ Entrega Expressa em 24h para SP',
+                newsletter_titulo: 'Ganhe 10% OFF na Primeira Compra',
+                newsletter_subtitulo: 'Cadastre-se e receba cupons exclusivos e novidades',
+                newsletter_botao: 'Quero Meu Cupom',
+                footer_sobre: 'Tecnologia de ponta para odontologia digital. Insumos profissionais com entrega rápida e preços imbatíveis.',
+                footer_endereco: 'Av. Paulista, 1500<br>São Paulo, SP',
+                footer_email: 'contato@s7te.com.br',
+                footer_telefone: '0800 123 4567',
+                footer_copyright: '© 2026 S7TE Tecnologia em Odontologia.',
+                logo_texto: 'S7TE',
+                frete_gratis_acima: '500',
+                valor_frete: '35.90',
+                desconto_pix_percent: '5'
             };
-            
-            document.getElementById('search-input').value = '';
-            document.getElementById('sort-select').value = 'recentes';
-            document.getElementById('price-min').value = '';
-            document.getElementById('price-max').value = '';
-            
-            renderizarFiltrosCategoria();
-            carregarProdutos();
+
+            try {
+                const { data, error } = await supabaseClient.from('configuracoes').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(c => { if (c.chave && c.valor !== undefined) padroes[c.chave] = c.valor; });
+                }
+            } catch (e) {
+                console.warn('Usando valores padrão:', e);
+            }
+
+            configSite = padroes;
+            aplicarConfigSite();
         }
 
-        // ============================================
-        // CARRINHO
-        // ============================================
+        function aplicarConfigSite() {
+            const get = (key) => configSite[key] || '';
+            
+            setHtmlSeguro('urgency-bar', get('urgencia_texto'));
+            setTextoSeguro('newsletter-titulo', get('newsletter_titulo'));
+            setTextoSeguro('newsletter-subtitulo', get('newsletter_subtitulo'));
+            setTextoSeguro('newsletter-botao', get('newsletter_botao'));
+
+            setTextoSeguro('footer-sobre', get('footer_sobre'));
+            setHtmlSeguro('footer-endereco', get('footer_endereco'));
+            setTextoSeguro('footer-email', get('footer_email'));
+            setTextoSeguro('footer-telefone', get('footer_telefone'));
+            setTextoSeguro('footer-copyright', get('footer_copyright'));
+            
+            const logoTexto = get('logo_texto') || 'S7TE';
+            setHtmlSeguro('logo-text', `<img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE"><div class="logo-text">${escapeHTML(logoTexto).replace('7', '<span>7</span>')}</div>`);
+            setTextoSeguro('footer-nome-loja', logoTexto);
+        }
+
+        async function carregarCategorias() {
+            try {
+                const { data, error } = await supabaseClient.from('categorias').select('*').order('ordem');
+                if (error || !data) return;
+                categoriasCache = data;
+
+                const dropdownMenu = document.getElementById('categories-dropdown-menu');
+                if (dropdownMenu) {
+                    dropdownMenu.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                }
+
+                const scrollNav = document.getElementById('categories-scroll');
+                if (scrollNav) {
+                    scrollNav.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('') + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
+                }
+
+                const mobileNav = document.getElementById('mobile-menu-categorias');
+                if (mobileNav) {
+                    mobileNav.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                }
+
+                const footer = document.getElementById('footer-categorias');
+                if (footer) {
+                    footer.innerHTML = data.map(c => 
+                        `<a href="produtos.html?cat=${escapeHTML(c.slug)}">${escapeHTML(c.nome)}</a>`
+                    ).join('');
+                }
+
+                renderizarFiltrosCategoria();
+                
+                // Depois de carregar categorias, reler URL (agora que categoriasCache existe)
+                lerParametrosURL();
+                await carregarProdutos();
+                await updateAuthButtons();
+                updateCartUI();
+            } catch (e) {
+                console.warn('Erro ao carregar categorias:', e);
+            }
+        }
+
+        async function salvarNewsletter(event) {
+            event.preventDefault();
+            
+            const emailInput = document.getElementById('newsletter-email');
+            const botao = document.getElementById('newsletter-botao');
+            const email = emailInput.value.trim();
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('Digite um e-mail válido', 'error');
+                return;
+            }
+
+            botao.disabled = true;
+            const textoOriginal = botao.textContent;
+            botao.textContent = 'Enviando...';
+
+            try {
+                const { error } = await supabaseClient.from('newsletter').insert([{
+                    email: email,
+                    criado_em: new Date().toISOString()
+                }]);
+
+                if (error) {
+                    if (error.message.includes('duplicate')) {
+                        showToast('Este e-mail já está cadastrado!', 'error');
+                    } else {
+                        throw error;
+                    }
+                } else {
+                    showToast('✅ Cupom enviado para seu e-mail!');
+                    emailInput.value = '';
+                }
+            } catch (e) {
+                showToast('Erro ao cadastrar. Tente novamente.', 'error');
+                console.error(e);
+            } finally {
+                botao.disabled = false;
+                botao.textContent = textoOriginal;
+            }
+        }
+
         function addToCart(id) {
             const product = produtosCache.find(p => p.id === id);
             if (!product) {
@@ -1407,63 +2393,29 @@
             }
         }
 
-        function goToCheckout() {
+        async function goToCheckout() {
             if (cart.length === 0) {
                 showToast('Adicione produtos ao carrinho primeiro!', 'error');
                 return;
             }
-            toggleCart();
-            window.location.href = 'checkout.html';
-        }
-
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
-        function lerParametrosURL() {
-            const urlParams = new URLSearchParams(window.location.search);
             
-            const cat = urlParams.get('cat');
-            if (cat) filtros.categoria = cat;
+            const { data: { session } } = await supabaseClient.auth.getSession();
             
-            const page = parseInt(urlParams.get('page'));
-            if (page && page > 0) filtros.pagina = page;
-            
-            const q = urlParams.get('q');
-            if (q) {
-                filtros.busca = q;
-                document.getElementById('search-input').value = q;
-            }
-            
-            const ord = urlParams.get('ord');
-            if (ord && ['recentes', 'preco-asc', 'preco-desc', 'nome'].includes(ord)) {
-                filtros.ordenacao = ord;
-                document.getElementById('sort-select').value = ord;
-            }
-            
-            const min = parseFloat(urlParams.get('min'));
-            if (!isNaN(min)) {
-                filtros.precoMin = min;
-                document.getElementById('price-min').value = min;
-            }
-            
-            const max = parseFloat(urlParams.get('max'));
-            if (!isNaN(max)) {
-                filtros.precoMax = max;
-                document.getElementById('price-max').value = max;
+            if (!session) {
+                toggleCart();
+                openAuthModal();
+            } else {
+                toggleCart();
+                window.location.href = 'checkout.html';
             }
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                lerParametrosURL();
-                
                 await Promise.all([
                     carregarConfigSite(),
                     carregarCategorias()
                 ]);
-                
-                await carregarProdutos();
-                updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
                 updateCartUI();

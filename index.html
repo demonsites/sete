@@ -95,7 +95,7 @@
         }
 
         /* ============ 3) PAINEL + 2 CARDS ============ */
-        .catalog-section { padding: 48px 16px 60px; }
+        .catalog-section { padding: 48px 16px 0; }
         .catalog-panel {
             max-width: 780px;
             margin: 0 auto;
@@ -158,6 +158,51 @@
         }
         .cat-card:hover .cat-arrow { transform: translateX(4px); }
 
+        /* ============ 4) BANNER PROMOCIONAL (NOVO) ============ */
+        .promo-banner {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 32px 16px 60px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .promo-banner a {
+            display: block;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+            transition: var(--transition);
+            position: relative;
+        }
+        .promo-banner a:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+        }
+        .promo-banner img {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        .promo-banner .promo-tag {
+            position: absolute;
+            top: 14px; left: 14px;
+            background: var(--gold);
+            color: var(--cobalt-deep);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
         /* ============ WHATSAPP FLUTUANTE ============ */
         .whatsapp-float {
             position: fixed; right: 16px; bottom: 16px; z-index: 1500;
@@ -181,6 +226,7 @@
             .cat-card { padding: 24px 20px 74px; min-height: 210px; }
             .cat-title { font-size: 1.25rem; }
             .cat-desc { font-size: 0.95rem; }
+            .promo-banner { padding: 24px 16px 48px; }
         }
     </style>
 </head>
@@ -200,13 +246,12 @@
         <p class="hero-tagline">Produtos Importados, Preços Competitivos, Entrega Rápida.</p>
     </section>
 
-    <!-- 3) PAINEL + 2 CARDS COM LINKS CORRIGIDOS -->
+    <!-- 3) PAINEL COM 2 CARDS -->
     <section class="catalog-section">
         <div class="catalog-panel">
             <h1>Tecnologia global para o seu negócio. Conheça o catálogo E07 de produtos de ponta!</h1>
 
             <div class="category-cards">
-                <!-- CARD 1 (dourado) → Produtos Odontológicos -->
                 <a href="produtos-odontologicos.html" class="cat-card">
                     <div class="cat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -220,7 +265,6 @@
                     <span class="cat-arrow">→</span>
                 </a>
 
-                <!-- CARD 2 (branco) → Catálogo Geral -->
                 <a href="produtos.html" class="cat-card">
                     <div class="cat-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -237,6 +281,14 @@
         </div>
     </section>
 
+    <!-- 4) BANNER PROMOCIONAL (carregado do admin) -->
+    <section class="promo-banner" id="promo-banner">
+        <a href="produtos.html?cat=promocoes" id="promo-banner-link" aria-label="Ver promoções">
+            <span class="promo-tag">🔥 Promoção</span>
+            <img id="promo-banner-img" src="" alt="Promoção" loading="lazy">
+        </a>
+    </section>
+
     <!-- WHATSAPP FLUTUANTE -->
     <a href="#" class="whatsapp-float" id="whatsapp-float" target="_blank" rel="noopener" style="display:none;" aria-label="Falar no WhatsApp">
         <svg viewBox="0 0 32 32" fill="currentColor">
@@ -249,7 +301,8 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        (async () => {
+        // WhatsApp flutuante (número cadastrado no admin → Contato)
+        async function carregarWhatsapp() {
             try {
                 const { data } = await supabaseClient.from('configuracoes').select('*');
                 const cfg = {};
@@ -263,7 +316,49 @@
             } catch (e) {
                 console.warn('WhatsApp não configurado:', e);
             }
-        })();
+        }
+
+        // Banner promocional (carregado do admin → Banners)
+        async function carregarBanner() {
+            const bannerEl = document.getElementById('promo-banner');
+            const bannerImg = document.getElementById('promo-banner-img');
+            if (!bannerEl || !bannerImg) return;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('banners')
+                    .select('*')
+                    .eq('ativo', true)
+                    .order('criado_em', { ascending: false })
+                    .limit(1);
+
+                if (error || !data || data.length === 0) {
+                    bannerEl.style.display = 'none';
+                    return;
+                }
+
+                // Regra: só mostra o banner se houver produto com selo "Promoção"
+                const { data: promos } = await supabaseClient
+                    .from('produtos')
+                    .select('id')
+                    .eq('badge', 'sale')
+                    .limit(1);
+
+                if (!promos || promos.length === 0) {
+                    bannerEl.style.display = 'none';
+                    return;
+                }
+
+                bannerImg.src = data[0].imagem_url;
+                bannerEl.style.display = 'block';
+            } catch (e) {
+                console.warn('Banner não carregado:', e);
+                bannerEl.style.display = 'none';
+            }
+        }
+
+        carregarWhatsapp();
+        carregarBanner();
     </script>
 </body>
 </html>

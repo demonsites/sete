@@ -51,7 +51,6 @@
         a { text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; }
         img { max-width: 100%; display: block; }
 
-        /* ============ 1) PÍLULA DO TOPO ============ */
         .top-bar { padding: 16px 16px 0; }
         .urgency-bar {
             width: 100%;
@@ -69,7 +68,6 @@
             line-height: 1.9;
         }
 
-        /* ============ 2) LOGO + TAGLINE ============ */
         .hero { text-align: center; padding: 54px 24px 0; }
         .hero-logo {
             display: flex; align-items: center; justify-content: center; gap: 14px;
@@ -94,7 +92,6 @@
             line-height: 1.8;
         }
 
-        /* ============ 3) PAINEL + 2 CARDS ============ */
         .catalog-section { padding: 48px 16px 0; }
         .catalog-panel {
             max-width: 780px;
@@ -158,7 +155,7 @@
         }
         .cat-card:hover .cat-arrow { transform: translateX(4px); }
 
-        /* ============ 4) BANNER PROMOCIONAL (NOVO) ============ */
+        /* BANNER PROMOCIONAL */
         .promo-banner {
             max-width: 780px;
             margin: 0 auto;
@@ -203,7 +200,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
-        /* ============ WHATSAPP FLUTUANTE ============ */
         .whatsapp-float {
             position: fixed; right: 16px; bottom: 16px; z-index: 1500;
             width: 62px; height: 62px; border-radius: 50%;
@@ -232,12 +228,10 @@
 </head>
 <body>
 
-    <!-- 1) PÍLULA DO TOPO -->
     <div class="top-bar">
         <div class="urgency-bar">Produtos Importados · Preços Competitivos · Entrega Rápida</div>
     </div>
 
-    <!-- 2) LOGO + TAGLINE -->
     <section class="hero">
         <a href="index.html" class="hero-logo" id="logo-text">
             <img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo">
@@ -246,7 +240,6 @@
         <p class="hero-tagline">Produtos Importados, Preços Competitivos, Entrega Rápida.</p>
     </section>
 
-    <!-- 3) PAINEL COM 2 CARDS -->
     <section class="catalog-section">
         <div class="catalog-panel">
             <h1>Tecnologia global para o seu negócio. Conheça o catálogo E07 de produtos de ponta!</h1>
@@ -281,7 +274,7 @@
         </div>
     </section>
 
-    <!-- 4) BANNER PROMOCIONAL (carregado do admin) -->
+    <!-- BANNER PROMOCIONAL (aparece se estiver ATIVO no admin) -->
     <section class="promo-banner" id="promo-banner">
         <a href="produtos.html?cat=promocoes" id="promo-banner-link" aria-label="Ver promoções">
             <span class="promo-tag">🔥 Promoção</span>
@@ -289,7 +282,6 @@
         </a>
     </section>
 
-    <!-- WHATSAPP FLUTUANTE -->
     <a href="#" class="whatsapp-float" id="whatsapp-float" target="_blank" rel="noopener" style="display:none;" aria-label="Falar no WhatsApp">
         <svg viewBox="0 0 32 32" fill="currentColor">
             <path d="M16 3C9.4 3 4 8.4 4 15c0 2.6.8 5 2.3 7L4 29l6.2-2.2c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.7 1.3 1.3-3.6-.2-.4c-1.1-1.7-1.7-3.6-1.7-5.6 0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/>
@@ -301,7 +293,6 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcXV0d2FicXFra3RocHFkcHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3Mzc3MTQsImV4cCI6MjEwNDMxMzcxNH0.zctTCekjtWs7jElZoEIddw6UbEpTOqklnJS54uufGlY';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // WhatsApp flutuante (número cadastrado no admin → Contato)
         async function carregarWhatsapp() {
             try {
                 const { data } = await supabaseClient.from('configuracoes').select('*');
@@ -318,7 +309,7 @@
             }
         }
 
-        // Banner promocional (carregado do admin → Banners)
+        // Banner: aparece SEMPRE que estiver ATIVO no admin (sem exigir produto em promoção)
         async function carregarBanner() {
             const bannerEl = document.getElementById('promo-banner');
             const bannerImg = document.getElementById('promo-banner-img');
@@ -332,25 +323,21 @@
                     .order('criado_em', { ascending: false })
                     .limit(1);
 
-                if (error || !data || data.length === 0) {
+                if (error) {
+                    console.warn('Erro ao buscar banner:', error.message);
                     bannerEl.style.display = 'none';
                     return;
                 }
 
-                // Regra: só mostra o banner se houver produto com selo "Promoção"
-                const { data: promos } = await supabaseClient
-                    .from('produtos')
-                    .select('id')
-                    .eq('badge', 'sale')
-                    .limit(1);
-
-                if (!promos || promos.length === 0) {
+                if (!data || data.length === 0) {
+                    console.warn('Nenhum banner ativo encontrado.');
                     bannerEl.style.display = 'none';
                     return;
                 }
 
                 bannerImg.src = data[0].imagem_url;
                 bannerEl.style.display = 'block';
+                console.log('✅ Banner carregado:', data[0].imagem_url);
             } catch (e) {
                 console.warn('Banner não carregado:', e);
                 bannerEl.style.display = 'none';

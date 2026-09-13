@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos Odontológicos | S7TE</title>
-    <meta name="description" content="Zircônia premium, fresas, discos CAD/CAM e insumos profissionais para odontologia digital. Entrega rápida e garantia.">
+    <title>Catálogo Geral | S7TE</title>
+    <meta name="description" content="Catálogo geral de produtos: ferramentas, eletrônicos e muito mais. Preços competitivos e entrega rápida.">
     
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos-odontologicos.html">
-    <meta property="og:title" content="Produtos Odontológicos | S7TE">
-    <meta property="og:description" content="Zircônia premium, fresas, discos CAD/CAM e insumos profissionais para odontologia digital.">
+    <meta property="og:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos.html">
+    <meta property="og:title" content="Catálogo Geral | S7TE">
+    <meta property="og:description" content="Catálogo geral de produtos: ferramentas, eletrônicos e muito mais.">
     <meta property="og:image" content="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png">
     
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos-odontologicos.html">
-    <meta property="twitter:title" content="Produtos Odontológicos | S7TE">
-    <meta property="twitter:description" content="Zircônia premium, fresas, discos CAD/CAM e insumos profissionais.">
+    <meta property="twitter:url" content="https://SEU-USUARIO.github.io/s7te-loja/produtos.html">
+    <meta property="twitter:title" content="Catálogo Geral | S7TE">
+    <meta property="twitter:description" content="Catálogo geral de produtos: ferramentas, eletrônicos e muito mais.">
     <meta property="twitter:image" content="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png">
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a2a6e'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='55' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3ES7%3C/text%3E%3C/svg%3E">
@@ -60,6 +60,7 @@
         button { font-family: inherit; cursor: pointer; border: none; background: none; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
+        /* Barra de Urgência */
         .urgency-bar {
             background: linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-main));
             color: white;
@@ -71,6 +72,7 @@
         }
         .urgency-bar strong { color: var(--gold); }
 
+        /* HEADER PRINCIPAL */
         header {
             position: sticky;
             top: 0;
@@ -115,6 +117,7 @@
             background-clip: text;
         }
 
+        /* Barra de Busca */
         .search-bar {
             flex: 1;
             max-width: 500px;
@@ -156,6 +159,7 @@
             height: 16px;
         }
 
+        /* Ações do Header */
         .header-actions { 
             display: flex; 
             align-items: center; 
@@ -232,6 +236,7 @@
             justify-content: center;
         }
 
+        /* MENU DE CATEGORIAS (Barra separada) */
         .categories-bar {
             background: var(--bg-light);
             border-bottom: 1px solid var(--border);
@@ -381,6 +386,7 @@
             opacity: 1;
         }
 
+        /* Menu Mobile */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -475,6 +481,7 @@
             display: block;
         }
 
+        /* ============ CABEÇALHO DA PÁGINA DE PRODUTOS ============ */
         .page-header { 
             padding: 60px 0; 
             background: linear-gradient(135deg, var(--cobalt-deep), var(--cobalt-main));
@@ -497,6 +504,7 @@
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { margin: 0 8px; }
 
+        /* ============ FILTROS ============ */
         .filters-bar {
             display: flex;
             gap: 12px;
@@ -786,6 +794,7 @@
             transform: none;
         }
 
+        /* Paginação */
         .pagination {
             display: flex;
             justify-content: center;
@@ -828,6 +837,7 @@
             margin: 0 12px;
         }
 
+        /* Estado vazio */
         .empty-state {
             text-align: center;
             padding: 80px 20px;
@@ -1093,6 +1103,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Modal de Autenticação */
         .auth-modal-overlay {
             position: fixed;
             top: 0;
@@ -1255,6 +1266,7 @@
             display: block;
         }
 
+        /* RESPONSIVIDADE */
         @media (max-width: 1024px) {
             .search-bar { display: none; }
             .categories-bar { display: none; }
@@ -1295,6 +1307,7 @@
     <div class="urgency-bar" id="urgency-bar"></div>
 
     <header>
+        <!-- HEADER PRINCIPAL -->
         <div class="header-main">
             <div class="container header-main-inner">
                 <a href="index.html" class="logo" id="logo-text">
@@ -1302,8 +1315,9 @@
                     <div class="logo-text">S<span>7</span>TE</div>
                 </a>
                 
+                <!-- Barra de Busca -->
                 <div class="search-bar">
-                    <input type="text" placeholder="Buscar produtos odontológicos..." id="search-input">
+                    <input type="text" placeholder="Buscar produtos..." id="search-input">
                     <button onclick="buscarProdutos()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"/>
@@ -1333,6 +1347,7 @@
             </div>
         </div>
 
+        <!-- BARRA DE CATEGORIAS -->
         <div class="categories-bar">
             <div class="container categories-bar-inner">
                 <div class="categories-dropdown" id="categories-dropdown">
@@ -1367,6 +1382,7 @@
         </div>
     </header>
 
+    <!-- Menu Mobile -->
     <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobile-menu">
         <div class="mobile-menu-header">
@@ -1383,10 +1399,11 @@
     </div>
 
     <main>
+        <!-- CABEÇALHO DA PÁGINA -->
         <div class="page-header">
             <div class="container">
-                <h1 id="page-title">Produtos Odontológicos</h1>
-                <p id="page-subtitle">Zircônia, fresas, discos e acabamento premium</p>
+                <h1 id="page-title">Catálogo Geral</h1>
+                <p id="page-subtitle">Ferramentas, eletrônicos JBL, Alexa e mais</p>
             </div>
         </div>
 
@@ -1394,15 +1411,17 @@
             <div class="breadcrumb">
                 <a href="index.html">Home</a>
                 <span>/</span>
-                <strong id="breadcrumb-current">Produtos Odontológicos</strong>
+                <strong id="breadcrumb-current">Catálogo Geral</strong>
             </div>
         </div>
 
+        <!-- CATÁLOGO COM FILTROS -->
         <section class="products-section">
             <div class="container">
+                <!-- Barra de busca e filtros -->
                 <div class="filters-bar">
                     <div class="search-box">
-                        <input type="text" id="filter-search" placeholder="Buscar em odontológicos..." onkeyup="if(event.key==='Enter') aplicarFiltros()">
+                        <input type="text" id="filter-search" placeholder="Buscar produtos..." onkeyup="if(event.key==='Enter') aplicarFiltros()">
                         <span class="search-icon">🔍</span>
                     </div>
                     
@@ -1423,8 +1442,9 @@
                     <button class="btn-clear" onclick="limparFiltros()">Limpar</button>
                 </div>
 
+                <!-- Filtros de categoria -->
                 <div class="category-filters" id="category-filters">
-                    <button class="filter-btn active" data-cat="odontologia" onclick="filtrarCategoria('odontologia', this)">🦷 Todos os Odontológicos</button>
+                    <button class="filter-btn active" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>
                 </div>
 
                 <div class="results-info">
@@ -1437,6 +1457,7 @@
                     <div class="loading-spinner"><div class="spinner"></div></div>
                 </div>
 
+                <!-- Paginação -->
                 <div id="pagination" class="pagination" style="display: none;"></div>
             </div>
         </section>
@@ -1501,6 +1522,7 @@
         </div>
     </aside>
 
+    <!-- Modal de Autenticação -->
     <div class="auth-modal-overlay" id="auth-modal-overlay">
         <div class="auth-modal">
             <div class="auth-modal-header">
@@ -1554,17 +1576,14 @@
         
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ⚠️ CONFIGURAÇÃO ESPECÍFICA DESTA PÁGINA
-        // Slug fixo da categoria odontológica no Supabase
-        const CATEGORIA_FIXA = 'odontologia';
-
         let produtosCache = [];
         let configSite = {};
         let categoriasCache = [];
         let cart = JSON.parse(localStorage.getItem('s7te_cart')) || [];
 
+        // Estado dos filtros
         let filtros = {
-            categoria: CATEGORIA_FIXA,
+            categoria: 'todos',
             busca: '',
             ordenacao: 'recentes',
             precoMin: null,
@@ -1613,6 +1632,7 @@
             return c ? c.nome : slug || '-';
         }
 
+        // MENU MOBILE
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const overlay = document.getElementById('mobile-menu-overlay');
@@ -1620,6 +1640,7 @@
             overlay.classList.toggle('active');
         }
 
+        // DROPDOWN CATEGORIAS
         function toggleCategoriesDropdown() {
             const dropdown = document.getElementById('categories-dropdown');
             dropdown.classList.toggle('active');
@@ -1632,12 +1653,13 @@
             }
         });
 
+        // SCROLL HORIZONTAL
         function scrollCategories(amount) {
             const scroll = document.getElementById('categories-scroll');
             scroll.scrollBy({ left: amount, behavior: 'smooth' });
         }
 
-        // Busca do header → aplica filtro na página (mantendo categoria odontológica)
+        // BUSCA DO HEADER (aplica filtro na própria página)
         function buscarProdutos() {
             const termo = document.getElementById('search-input').value.trim();
             document.getElementById('filter-search').value = termo;
@@ -1648,7 +1670,7 @@
             if (e.key === 'Enter') buscarProdutos();
         });
 
-        // ============ FILTROS (sempre dentro da categoria odontológica) ============
+        // ============ FILTROS ============
         function aplicarFiltros() {
             filtros.busca = document.getElementById('filter-search').value.trim();
             filtros.ordenacao = document.getElementById('sort-select').value;
@@ -1664,7 +1686,7 @@
 
         function limparFiltros() {
             filtros = {
-                categoria: CATEGORIA_FIXA, // mantém na categoria odontológica
+                categoria: 'todos',
                 busca: '',
                 ordenacao: 'recentes',
                 precoMin: null,
@@ -1679,18 +1701,11 @@
             document.getElementById('price-min').value = '';
             document.getElementById('price-max').value = '';
             
+            renderizarFiltrosCategoria();
             carregarProdutos();
         }
 
-        // Filtro de categoria: só permite trocar entre subcategorias odontológicas
-        // ou voltar ao "todos odontológicos" (CATEGORIA_FIXA)
         function filtrarCategoria(cat, btn) {
-            // Se tentar sair para outra categoria (ex: geral), redireciona
-            if (cat !== CATEGORIA_FIXA && cat !== 'promocoes' && 
-                !categoriasCache.some(c => c.slug === cat && (c.grupo === 'odontologia' || c.parent === 'odontologia'))) {
-                // Permite navegar, mas mantém contexto visual
-            }
-            
             filtros.categoria = cat;
             filtros.pagina = 1;
             
@@ -1709,32 +1724,22 @@
             const container = document.getElementById('category-filters');
             if (!container) return;
 
-            // Botão principal: todos os odontológicos
-            let html = `<button class="filter-btn ${filtros.categoria === CATEGORIA_FIXA ? 'active' : ''}" data-cat="${CATEGORIA_FIXA}" onclick="filtrarCategoria('${CATEGORIA_FIXA}', this)">🦷 Todos os Odontológicos</button>`;
+            let html = `<button class="filter-btn ${filtros.categoria === 'todos' ? 'active' : ''}" data-cat="todos" onclick="filtrarCategoria('todos', this)">Todos</button>`;
             
-            // Subcategorias odontológicas (se houver campo 'grupo' ou 'parent')
             categoriasCache.forEach(c => {
-                // Mostra apenas subcategorias que pertençam ao grupo odontológico
-                // (ajuste conforme sua estrutura: c.grupo === 'odontologia' ou c.parent === CATEGORIA_FIXA)
-                const isSubcatOdonto = c.grupo === 'odontologia' || c.parent === CATEGORIA_FIXA || c.slug === CATEGORIA_FIXA;
-                if (isSubcatOdonto && c.slug !== CATEGORIA_FIXA) {
-                    const isActive = filtros.categoria === c.slug;
-                    html += `<button class="filter-btn ${isActive ? 'active' : ''}" data-cat="${escapeHTML(c.slug)}" onclick="filtrarCategoria('${escapeHTML(c.slug)}', this)">${escapeHTML(c.nome)}</button>`;
-                }
+                const isActive = filtros.categoria === c.slug;
+                html += `<button class="filter-btn ${isActive ? 'active' : ''}" data-cat="${escapeHTML(c.slug)}" onclick="filtrarCategoria('${escapeHTML(c.slug)}', this)">${escapeHTML(c.nome)}</button>`;
             });
 
             html += `<button class="filter-btn ${filtros.categoria === 'promocoes' ? 'promo-active' : ''}" data-cat="promocoes" onclick="filtrarCategoria('promocoes', this)">🔥 Promoções</button>`;
-            
-            // Link para voltar ao catálogo geral
-            html += `<a href="produtos.html" style="display:inline-flex; align-items:center; gap:6px; padding:10px 24px; border:2px dashed var(--border); border-radius:50px; font-weight:600; font-size:0.9rem; color:var(--text-gray); margin-left:auto;">← Ver Catálogo Geral</a>`;
 
             container.innerHTML = html;
         }
 
         function atualizarTitulo() {
             const titulos = {
-                'odontologia': { titulo: 'Produtos Odontológicos', sub: 'Zircônia, fresas, discos e acabamento premium' },
-                'promocoes': { titulo: '🔥 Promoções Odontológicas', sub: 'Ofertas exclusivas para o seu laboratório' }
+                'todos': { titulo: 'Catálogo Geral', sub: 'Ferramentas, eletrônicos JBL, Alexa e mais' },
+                'promocoes': { titulo: '🔥 Promoções Imperdíveis', sub: 'Ofertas exclusivas com até 40% OFF por tempo limitado' }
             };
 
             if (titulos[filtros.categoria]) {
@@ -1744,14 +1749,14 @@
             } else {
                 const nomeCat = getCategoriaNome(filtros.categoria);
                 setTextoSeguro('page-title', nomeCat);
-                setTextoSeguro('page-subtitle', `Produtos odontológicos da categoria ${nomeCat.toLowerCase()}`);
+                setTextoSeguro('page-subtitle', `Confira nossa seleção de ${nomeCat.toLowerCase()}`);
                 setTextoSeguro('breadcrumb-current', nomeCat);
             }
 
             setTextoSeguro('results-count', totalProdutos.toString());
         }
 
-        // ============ PRODUTOS (filtrados pela categoria odontológica) ============
+        // ============ PRODUTOS COM FILTROS + PAGINAÇÃO ============
         async function carregarProdutos() {
             const grid = document.getElementById('products-grid');
             if (!grid) return;
@@ -1765,21 +1770,19 @@
                 .from('produtos')
                 .select('*', { count: 'exact' });
 
-            // Filtro de categoria (SEMPRE limitado a odontologia, exceto promoções)
+            // Filtro de categoria
             if (filtros.categoria === 'promocoes') {
-                query = query.eq('badge', 'sale').eq('categoria', CATEGORIA_FIXA);
-            } else if (filtros.categoria === CATEGORIA_FIXA) {
-                // Todos os odontológicos (categoria principal)
-                query = query.eq('categoria', CATEGORIA_FIXA);
-            } else {
-                // Subcategoria específica
+                query = query.eq('badge', 'sale');
+            } else if (filtros.categoria !== 'todos') {
                 query = query.eq('categoria', filtros.categoria);
             }
 
+            // Filtro de busca
             if (filtros.busca) {
                 query = query.ilike('nome', `%${filtros.busca}%`);
             }
 
+            // Filtro de preço
             if (filtros.precoMin !== null && filtros.precoMin > 0) {
                 query = query.gte('preco_venda', filtros.precoMin);
             }
@@ -1787,6 +1790,7 @@
                 query = query.lte('preco_venda', filtros.precoMax);
             }
 
+            // Ordenação
             switch (filtros.ordenacao) {
                 case 'preco-asc':
                     query = query.order('preco_venda', { ascending: true });
@@ -1803,6 +1807,7 @@
                     break;
             }
 
+            // Paginação
             query = query.range(from, to);
 
             const { data, error, count } = await query;
@@ -1823,7 +1828,7 @@
 
         function atualizarURL() {
             const params = new URLSearchParams();
-            if (filtros.categoria !== CATEGORIA_FIXA) params.set('cat', filtros.categoria);
+            if (filtros.categoria !== 'todos') params.set('cat', filtros.categoria);
             if (filtros.pagina > 1) params.set('page', filtros.pagina);
             if (filtros.busca) params.set('busca', filtros.busca);
             if (filtros.ordenacao !== 'recentes') params.set('ord', filtros.ordenacao);
@@ -1881,19 +1886,17 @@
             if (!produtos || produtos.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">🦷</div>
-                        <h3>Nenhum produto odontológico encontrado</h3>
-                        <p>Tente ajustar os filtros ou volte para o catálogo geral.</p>
-                        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-                            <button class="btn-reset" onclick="limparFiltros()">Limpar Filtros</button>
-                            <a href="produtos.html" class="btn-reset" style="background: var(--gold); color: var(--cobalt-deep);">Ver Catálogo Geral</a>
-                        </div>
+                        <div class="icon">📦</div>
+                        <h3>Nenhum produto encontrado</h3>
+                        <p>Tente ajustar os filtros ou a busca.</p>
+                        <button class="btn-reset" onclick="limparFiltros()">Limpar Filtros</button>
                     </div>`;
                 return;
             }
             grid.innerHTML = produtos.map(renderProductCard).join('');
         }
 
+        // ============ PAGINAÇÃO ============
         function renderizarPaginacao() {
             const container = document.getElementById('pagination');
             if (!container) return;
@@ -1947,17 +1950,12 @@
             document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // ============ LEITURA DE PARÂMETROS DA URL ============
         function lerParametrosURL() {
             const urlParams = new URLSearchParams(window.location.search);
             
             const cat = urlParams.get('cat');
-            if (cat) {
-                // Permite subcategorias odontológicas + promoções
-                if (cat === 'promocoes' || cat === CATEGORIA_FIXA || 
-                    categoriasCache.some(c => c.slug === cat && (c.grupo === 'odontologia' || c.parent === CATEGORIA_FIXA))) {
-                    filtros.categoria = cat;
-                }
-            }
+            if (cat) filtros.categoria = cat;
             
             const page = parseInt(urlParams.get('page'));
             if (page && page > 0) filtros.pagina = page;
@@ -1988,6 +1986,7 @@
             }
         }
 
+        // AUTENTICAÇÃO
         function showAuthMessage(msg, type) {
             const messageEl = document.getElementById('auth-message');
             messageEl.textContent = msg;
@@ -2147,6 +2146,7 @@
             }
         }
 
+        // CARREGAMENTO
         async function carregarConfigSite() {
             const padroes = {
                 urgencia_texto: '🚚 <strong>FRETE GRATIS</strong> em compras acima de R$ 500 | ⚡ Entrega Expressa em 24h para SP',
@@ -2202,6 +2202,7 @@
                 if (error || !data) return;
                 categoriasCache = data;
 
+                // Dropdown de categorias
                 const dropdownMenu = document.getElementById('categories-dropdown-menu');
                 if (dropdownMenu) {
                     dropdownMenu.innerHTML = data.map(c => 
@@ -2209,6 +2210,7 @@
                     ).join('');
                 }
 
+                // Scroll de categorias
                 const scrollNav = document.getElementById('categories-scroll');
                 if (scrollNav) {
                     scrollNav.innerHTML = data.map(c => 
@@ -2216,6 +2218,7 @@
                     ).join('') + '<a href="produtos.html?cat=promocoes" class="promo-link">🔥 Promoções</a><a href="contato.html">Contato</a>';
                 }
 
+                // Mobile menu
                 const mobileNav = document.getElementById('mobile-menu-categorias');
                 if (mobileNav) {
                     mobileNav.innerHTML = data.map(c => 
@@ -2223,6 +2226,7 @@
                     ).join('');
                 }
 
+                // Footer
                 const footer = document.getElementById('footer-categorias');
                 if (footer) {
                     footer.innerHTML = data.map(c => 
@@ -2230,13 +2234,8 @@
                     ).join('');
                 }
 
+                // Chips de filtro
                 renderizarFiltrosCategoria();
-                
-                // Depois de carregar categorias, reler URL (agora que categoriasCache existe)
-                lerParametrosURL();
-                await carregarProdutos();
-                await updateAuthButtons();
-                updateCartUI();
             } catch (e) {
                 console.warn('Erro ao carregar categorias:', e);
             }
@@ -2412,10 +2411,16 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             try {
+                lerParametrosURL();
+                
                 await Promise.all([
                     carregarConfigSite(),
                     carregarCategorias()
                 ]);
+                
+                await carregarProdutos();
+                await updateAuthButtons();
+                updateCartUI();
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
                 updateCartUI();

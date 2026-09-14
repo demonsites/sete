@@ -147,7 +147,7 @@
     <div class="urgency-bar" id="urgency-bar"></div>
     <header>
         <div class="container header-inner">
-            <a href="/" class="logo"><img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;"></a>
+            <a href="/" class="logo" id="logo-link"><img src="https://ksqutwabqqkkthpqdpqo.supabase.co/storage/v1/object/public/assets/37020.png" alt="Logo S7TE" style="height: 48px; width: auto; margin-right: 8px; vertical-align: middle;"></a>
             <div class="header-right">
                 <div class="user-badge" id="user-badge" style="display: none;">👤 <span id="user-name">Cliente</span></div>
                 <div class="secure-header">🔒 <span>Checkout Seguro</span></div>
@@ -157,7 +157,7 @@
 
     <main class="checkout-wrapper">
         <div class="container">
-            <a href="/" class="checkout-back" id="back-link">← Voltar ao carrinho</a>
+            <a href="/" class="checkout-back" id="back-link">← Voltar às compras</a>
             <div id="checkout-content">
                 <div class="checkout-steps">
                     <div class="step completed"><div class="step-number">✓</div><span class="step-text">Identificação</span></div>
@@ -294,6 +294,29 @@
         function formatarCNPJ(c) { return c.replace(/\D/g, '').replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5'); }
         function detectarBandeira(n) { if (/^4/.test(n)) return 'visa'; if (/^5[1-5]/.test(n) || /^2[2-7]/.test(n)) return 'mastercard'; if (/^636[0-9]|^438935|^504175|^451416|^636297/.test(n)) return 'elo'; if (/^3[47]/.test(n)) return 'amex'; if (/^606282/.test(n)) return 'hipercard'; return 'visa'; }
 
+        // 🆕 FUNÇÃO: Detecta a página de categoria com base nos produtos do carrinho
+        function getPaginaCategoria() {
+            if (!produtosValidados || produtosValidados.length === 0) {
+                return 'produtos.html';
+            }
+            const todosOdonto = produtosValidados.every(p => p.categoria === 'odontologia');
+            if (todosOdonto) {
+                return 'produtos-odontologicos.html';
+            }
+            // Se tem mix de categorias ou só catálogo geral, vai para catálogo geral
+            return 'produtos.html';
+        }
+
+        // 🆕 FUNÇÃO: Aplica o link correto no botão voltar e no logo
+        function aplicarLinksDeRetorno() {
+            const pagina = getPaginaCategoria();
+            const backLink = document.getElementById('back-link');
+            const logoLink = document.getElementById('logo-link');
+            if (backLink) backLink.href = pagina;
+            if (logoLink) logoLink.href = pagina;
+            console.log('🔗 Links de retorno apontam para:', pagina);
+        }
+
         async function verificarLogin() {
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
@@ -372,7 +395,12 @@
         }
 
         function verificarCarrinho() {
-            if (produtosValidados.length === 0) { showToast('Carrinho vazio!', 'error'); setTimeout(() => window.location.href = 'produtos.html', 1500); return false; }
+            if (produtosValidados.length === 0) {
+                showToast('Carrinho vazio!', 'error');
+                // 🆕 Redireciona para catálogo geral (não há produtos para detectar categoria)
+                setTimeout(() => window.location.href = 'produtos.html', 1500);
+                return false;
+            }
             return true;
         }
 
@@ -721,6 +749,8 @@
                 if (!await verificarLogin()) return;
                 await Promise.all([carregarConfigSite(), carregarGatewayAtivo()]);
                 if (!await validarCarrinho() || !verificarCarrinho()) return;
+                // 🆕 Aplica os links de retorno após validar o carrinho (quando já sabemos a categoria)
+                aplicarLinksDeRetorno();
                 aplicarMascaras();
                 renderizarResumo();
                 console.log('✅ Checkout inicializado');

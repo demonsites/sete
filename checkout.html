@@ -157,7 +157,7 @@
 
     <main class="checkout-wrapper">
         <div class="container">
-            <a href="carrinho.html" class="checkout-back" id="back-link">← Voltar ao carrinho</a>
+            <a href="/" class="checkout-back" id="back-link">← Voltar ao carrinho</a>
             <div id="checkout-content">
                 <div class="checkout-steps">
                     <div class="step completed"><div class="step-number">✓</div><span class="step-text">Identificação</span></div>
@@ -266,7 +266,7 @@
         </div>
     </main>
 
-    <footer><div class="container"><div class="footer-bottom"><p id="footer-copyright">© 2026 S7TE Tecnologia em Odontologia.</p></div></div></footer>
+    <footer><div class="container"><div class="footer-bottom"><p id="footer-copyright">© 2026 E07 IMPORTS Tecnologia em Odontologia.</p></div></div></footer>
     <div class="toast" id="toast"></div>
 
     <script>
@@ -696,7 +696,7 @@
             container.innerHTML = `<div class="success-screen">
                 <div class="success-icon">✓</div>
                 <h1>Pedido Confirmado!</h1>
-                <p>Obrigado por comprar na S7TE! Enviamos os detalhes para <strong>${escapeHTML(pedido.cliente_email)}</strong></p>
+                <p>Obrigado por comprar na E07 IMPORTS! Enviamos os detalhes para <strong>${escapeHTML(pedido.cliente_email)}</strong></p>
                 <div class="order-number-box"><span>Número do Pedido</span><strong>${escapeHTML(numPedido)}</strong></div>
                 <div class="success-info">
                     <div class="info-card"><div class="icon">💳</div><h4>Pagamento</h4><p>${pedido.metodo_pagamento === 'pix' ? 'PIX' : `Cartão (${pedido.parcelas}x)`}</p></div>
